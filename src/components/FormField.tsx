@@ -1,16 +1,13 @@
 import styles from "./FormField.module.css";
-import { InputHTMLAttributes } from "react";
 
-interface FormFieldProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "id" | "name"> {
-  id: string;
-  label: string;
-  error?: string;
+interface FormFieldProps {
+    id: string,
+    label: string,
+    type?: string,
+    placeholder?: string
 }
 
-function FormField({ id, label, type = "text", error, ...inputProps }: FormFieldProps) {
-  const errorId = `${id}Error`;
-
+function FormField({id, label, type ="text", placeholder}: FormFieldProps) {
   return (
     <div className={styles.formRow}>
       <label htmlFor={id} className={styles.formLabel}>
@@ -20,16 +17,9 @@ function FormField({ id, label, type = "text", error, ...inputProps }: FormField
         id={id}
         name={id}
         type={type}
-        className={`${styles.formInput} ${error ? styles.inputError : ""}`}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? errorId : undefined}
-        {...inputProps}
+        placeholder={placeholder}
+        className={styles.formInput}
       />
-      {error ? (
-        <p id={errorId} role="alert" className={styles.errorText}>
-          {error}
-        </p>
-      ) : null}
     </div>
   );
 }
