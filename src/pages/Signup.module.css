@@ -57,20 +57,3 @@
   align-items: center;
   justify-content: center;
 }
-
-.passwordToggle {
-  align-self: flex-start;
-  border: none;
-  background: transparent;
-  color: var(--accent-color-1);
-  font: inherit;
-  font-size: 0.92rem;
-  font-weight: var(--font-weight-bold);
-  padding: 0;
-  cursor: pointer;
-}
-
-.passwordToggle:hover,
-.passwordToggle:focus-visible {
-  text-decoration: underline;
-}

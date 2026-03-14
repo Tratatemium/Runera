@@ -20,12 +20,12 @@ function Home() {
             <ButtonLink
               linkDirection="/signup"
               linkText="Sign Up"
-              style="accent1Inverted"
+              style="accent1"
             ></ButtonLink>
             <ButtonLink
               linkDirection="/login"
               linkText="Log In"
-              style="accent1"
+              style="accent1Inverted"
             ></ButtonLink>
           </div>
         </section>
