@@ -1,11 +1,15 @@
-import logo from './logo.svg';
-import styles from './App.module.css';
+import { BrowserRouter as Router } from "react-router-dom";
+import styles from "./App.module.css";
+
+import { RoutesProvider } from "./RoutesProvider";
 
 function App() {
   return (
-    <div className={styles.App}>
-      <h1>hello</h1>
-    </div>
+    <Router>
+      <div className={styles.App}>
+        <RoutesProvider />
+      </div>
+    </Router>
   );
 }
 
