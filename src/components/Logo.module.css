@@ -1,0 +1,35 @@
+.logoLockup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75em;
+  height: 1.75em;
+  border-radius: 0.5em;
+  background-color: var(--accent-color-1);
+  color: var(--secondary-color);
+}
+.logo svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  width: 1em;
+  height: 1em;
+}
+
+.brandName {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--accent-color-1);
+}

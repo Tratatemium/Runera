@@ -12,6 +12,8 @@ body {
   font-weight: var(--font-weight-regular);
   font-size: var(--font-size-body);
   line-height: 1.5;
+
+  background: var(--gradient-1);
 }
 
 .small-text,
@@ -53,6 +55,10 @@ a {
   font-family: var(--font-primary);
   font-weight: var(--font-weight-medium);
   font-size: 1em;
+}
+
+.hide {
+  display: none;
 }
 
 :focus {
