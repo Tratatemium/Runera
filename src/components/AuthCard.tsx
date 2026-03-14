@@ -8,14 +8,14 @@ interface AuthCardProps {
   title: string;
   subtitle: string;
   action: string;
-  footerConent?: React.ReactNode;
+  footerContent?: React.ReactNode;
 }
 
-function AuthCard({ children, title, subtitle, action, footerConent }: AuthCardProps) {
+function AuthCard({ children, title, subtitle, action, footerContent }: AuthCardProps) {
   return (
     <section className={styles.authCard} aria-labelledby="authTitle">
       <header className={styles.authHeader}>
-        <Logo style={"colorStyleSecondary"}></Logo>
+        <Logo style="colorStyleSecondary" />
         <h1 id="authTitle" className={styles.authTitle}>
           {title}
         </h1>
@@ -26,11 +26,11 @@ function AuthCard({ children, title, subtitle, action, footerConent }: AuthCardP
         {children}
 
         <div className={styles.formActions}>
-          <Button buttonText={action} type="submit" style="accent1"></Button>
+          <Button buttonText={action} type="submit" style="accent1" />
         </div>
       </form>
 
-      <footer className={styles.authFooter}>{footerConent}</footer>
+      <footer className={styles.authFooter}>{footerContent}</footer>
     </section>
   );
 }

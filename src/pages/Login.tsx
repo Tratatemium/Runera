@@ -19,26 +19,26 @@ function Login() {
           title="Welcome Back"
           subtitle="Log in to continue tracking your runs"
           action="Log In"
-          footerConent={footerContent}
+          footerContent={footerContent}
         >
           <FormField
             id="username"
             label="Username"
             type="text"
             placeholder="Your username"
-          ></FormField>
+          />
           <FormField
             id="email"
             label="Email"
             type="email"
             placeholder="your@email.com"
-          ></FormField>
+          />
           <FormField
             id="password"
             label="Password"
-            type="text"
+            type="password"
             placeholder="Your password"
-          ></FormField>
+          />
         </AuthCard>
       </main>
     </div>

@@ -19,32 +19,32 @@ function Signup() {
           title="Create account"
           subtitle="Start tracking your running journey"
           action="Sign Up"
-          footerConent={footerContent}
+          footerContent={footerContent}
         >
           <FormField
             id="username"
             label="Username"
             type="text"
             placeholder="Your username"
-          ></FormField>
+          />
           <FormField
             id="email"
             label="Email"
             type="email"
             placeholder="your@email.com"
-          ></FormField>
+          />
           <FormField
             id="password"
             label="Password"
-            type="text"
+            type="password"
             placeholder="Your password"
-          ></FormField>
+          />
           <FormField
             id="confirmPassword"
             label="Confirm password"
-            type="text"
+            type="password"
             placeholder="Re-enter password"
-          ></FormField>
+          />
         </AuthCard>
       </main>
     </div>
