@@ -12,8 +12,6 @@
   width: 1.75em;
   height: 1.75em;
   border-radius: 0.5em;
-  background-color: var(--accent-color-1);
-  color: var(--secondary-color);
 }
 .logo svg {
   fill: none;
@@ -31,5 +29,22 @@
   letter-spacing: 0.18em;
   font-size: 0.78rem;
   font-weight: var(--font-weight-semibold);
+}
+
+.colorStyleAccent1 .logo {
+  background-color: var(--accent-color-1);
+  color: var(--secondary-color);
+}
+
+.colorStyleAccent1 .brandName {
   color: var(--accent-color-1);
+}
+
+.colorStyleSecondary .logo {
+  background-color: var(--secondary-color);
+  color: var(--accent-color-1);
+}
+
+.colorStyleSecondary .brandName {
+  color: var(--secondary-color);
 }

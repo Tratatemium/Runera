@@ -2,11 +2,12 @@ import styles from "./Logo.module.css";
 
 interface LogoProps {
   showBrandName?: boolean;
+  style: "colorStyleAccent1" | "colorStyleSecondary"
 }
 
-function Logo({ showBrandName = true }: LogoProps) {
+function Logo({ showBrandName = true, style }: LogoProps) {
   return (
-    <div className={styles.logoLockup}>
+    <div className={`${styles.logoLockup} ${styles[style]}`}>
       <div className={styles.logo}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
