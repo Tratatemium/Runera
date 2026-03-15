@@ -39,7 +39,8 @@ function Login() {
     [K in (typeof inputFields)[number]["id"]]: string;
   };
 
-  const { formData, handleChange, handleSubmit } = useForm<LoginForm>(inputFields);
+  const { formData, handleChange, handleSubmit } =
+    useForm<LoginForm>(inputFields);
 
   return (
     <div className={styles.loginPage}>
