@@ -1,17 +1,28 @@
 import styles from "./AuthCard.module.css";
 
+
+
 import { Logo } from "./Logo";
 import { Button } from "./Button";
 
 interface AuthCardProps {
   children?: React.ReactNode;
+  onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void
   title: string;
   subtitle: string;
   action: string;
   footerContent?: React.ReactNode;
 }
 
-function AuthCard({ children, title, subtitle, action, footerContent }: AuthCardProps) {
+function AuthCard({
+  children,
+  onSubmit,
+  title,
+  subtitle,
+  action,
+  footerContent,
+}: AuthCardProps) {  
+
   return (
     <section className={styles.authCard} aria-labelledby="authTitle">
       <header className={styles.authHeader}>
@@ -22,7 +33,7 @@ function AuthCard({ children, title, subtitle, action, footerContent }: AuthCard
         <p className={styles.authSubtitle}>{subtitle}</p>
       </header>
 
-      <form className={styles.authForm} noValidate>
+      <form className={styles.authForm} onSubmit={onSubmit} noValidate>
         {children}
 
         <div className={styles.formActions}>
