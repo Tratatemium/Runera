@@ -1,11 +1,5 @@
 import { useState } from "react";
-
-type FieldConfig = {
-  id: string;
-  label: string;
-  type?: "text" | "email" | "password";
-  placeholder?: string;
-};
+import { FieldConfig } from "../config/inputFields";
 
 function useForm<T extends Record<string, string>>(
   fields: readonly FieldConfig[],

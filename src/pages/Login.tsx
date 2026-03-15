@@ -2,6 +2,7 @@ import styles from "./Login.module.css";
 
 import { useForm } from "../hooks/useForm";
 import { login } from "../api/auth.api";
+import { inputFields } from "../config/inputFields";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -15,27 +16,14 @@ function Login() {
     </>
   );
 
-  const inputFields = [
-    {
-      id: "login",
-      label: "Login",
-      type: "text",
-      placeholder: "Your username or email",
-    },
-    {
-      id: "password",
-      label: "Password",
-      type: "password",
-      placeholder: "Your password",
-    },
-  ] as const;
+  const loginFields = [inputFields.login, inputFields.password] as const;
 
   type LoginForm = {
-    [K in (typeof inputFields)[number]["id"]]: string;
+    [K in (typeof loginFields)[number]["id"]]: string;
   };
 
   const { formData, handleChange, handleSubmit } =
-    useForm<LoginForm>(inputFields);
+    useForm<LoginForm>(loginFields);
 
   async function submitLogin(data: LoginForm) {
     const loginData: { username?: string; email?: string; password: string } = {
@@ -64,7 +52,7 @@ function Login() {
           action="Log In"
           footerContent={footerContent}
         >
-          {inputFields.map((field) => (
+          {loginFields.map((field) => (
             <FormField
               key={field.id}
               id={field.id}

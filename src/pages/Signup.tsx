@@ -2,6 +2,7 @@ import styles from "./Signup.module.css";
 
 import { useForm } from "../hooks/useForm";
 import { signup } from "../api/auth.api";
+import { inputFields } from "../config/inputFields";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -15,43 +16,26 @@ function Signup() {
     </>
   );
 
-  const inputFields = [
-    {
-      id: "username",
-      label: "Username",
-      type: "text",
-      placeholder: "Your username",
-    },
-    {
-      id: "email",
-      label: "Email",
-      type: "email",
-      placeholder: "your@email.com",
-    },
-    {
-      id: "password",
-      label: "Password",
-      type: "password",
-      placeholder: "Your password",
-    },
-    {
-      id: "confirmPassword",
-      label: "Confirm password",
-      type: "password",
-      placeholder: "Re-enter password",
-    },
+  const signupFields = [
+    inputFields.username,
+    inputFields.email,
+    inputFields.password,
+    inputFields.confirmPassword,
   ] as const;
 
   type SignupForm = {
-    [K in (typeof inputFields)[number]["id"]]: string;
+    [K in (typeof signupFields)[number]["id"]]: string;
   };
 
   const { formData, handleChange, handleSubmit } =
-    useForm<SignupForm>(inputFields);
+    useForm<SignupForm>(signupFields);
 
   async function submitSignup(data: SignupForm) {
+    const { username, email, password } = data;
+    const payload = { username, email, password };
+
     try {
-      await signup(data);
+      await signup(payload);
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +51,7 @@ function Signup() {
           action="Sign Up"
           footerContent={footerContent}
         >
-          {inputFields.map((field) => (
+          {signupFields.map((field) => (
             <FormField
               key={field.id}
               id={field.id}
