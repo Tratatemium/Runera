@@ -30,7 +30,6 @@ function FormField({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        required
       />
     </div>
   );
