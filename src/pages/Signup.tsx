@@ -1,8 +1,9 @@
 import styles from "./Signup.module.css";
 
 import { useForm } from "../hooks/useForm";
+import { signup } from "../api/auth.api";
 
-import { data, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
 
@@ -48,30 +49,11 @@ function Signup() {
   const { formData, handleChange, handleSubmit } =
     useForm<SignupForm>(inputFields);
 
-  async function submitForm(data: SignupForm) {
+  async function submitSignup(data: SignupForm) {
     try {
-      const response = await fetch(
-        "https://runners-api-lac.vercel.app/api/v1/auth/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        },
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json(); // parse the body
-        throw new Error(
-          `Server error: ${response.status}, ${JSON.stringify(errorData)}`,
-        );
-      }
-
-      const data = await response.json();
-      console.log(data.status, data.data);
+      await signup(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
     }
   }
 
@@ -79,7 +61,7 @@ function Signup() {
     <div className={styles.signupPage}>
       <main className={styles.signupMain}>
         <AuthCard
-          onSubmit={(e) => handleSubmit(e, (data) => submitForm(data))}
+          onSubmit={(e) => handleSubmit(e, submitSignup)}
           title="Create account"
           subtitle="Start tracking your running journey"
           action="Sign Up"

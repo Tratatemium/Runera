@@ -1,6 +1,7 @@
 import styles from "./Login.module.css";
 
 import { useForm } from "../hooks/useForm";
+import { login } from "../api/auth.api";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -16,16 +17,10 @@ function Login() {
 
   const inputFields = [
     {
-      id: "username",
-      label: "Username",
+      id: "login",
+      label: "Login",
       type: "text",
-      placeholder: "Your username",
-    },
-    {
-      id: "email",
-      label: "Email",
-      type: "email",
-      placeholder: "your@email.com",
+      placeholder: "Your username or email",
     },
     {
       id: "password",
@@ -42,11 +37,28 @@ function Login() {
   const { formData, handleChange, handleSubmit } =
     useForm<LoginForm>(inputFields);
 
+  async function submitLogin(data: LoginForm) {
+    const loginData: { username?: string; email?: string; password: string } = {
+      password: data.password,
+    };
+    if (data.login.includes("@")) {
+      loginData.email = data.login;
+    } else {
+      loginData.username = data.login;
+    }
+    console.log(loginData);
+    try {
+      await login(loginData);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className={styles.loginPage}>
       <main className={styles.loginMain}>
         <AuthCard
-          onSubmit={(e) => handleSubmit(e, (data) => console.log(data))}
+          onSubmit={(e) => handleSubmit(e, submitLogin)}
           title="Welcome Back"
           subtitle="Log in to continue tracking your runs"
           action="Log In"
