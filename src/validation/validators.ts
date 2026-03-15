@@ -6,7 +6,6 @@ function validateUsername(username: string) {
   if (!usernameRegex.test(username)) {
     return "Use letters, numbers, or _.";
   }
-  return "";
 }
 
 function validateEmail(email: string) {
@@ -20,7 +19,6 @@ function validateEmail(email: string) {
   if (!emailRegex.test(email)) {
     return "Enter a valid email.";
   }
-  return "";
 }
 
 function validatePassword(password: string) {
@@ -31,11 +29,10 @@ function validatePassword(password: string) {
   if (length > 128) {
     return "Max 128 characters.";
   }
-  return "";
 }
 
 function validateLogin(login: string) {
-  return "";
+  return undefined
 }
 
 export { validateUsername, validateEmail, validatePassword, validateLogin };
