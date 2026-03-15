@@ -48,11 +48,38 @@ function Signup() {
   const { formData, handleChange, handleSubmit } =
     useForm<SignupForm>(inputFields);
 
+  async function submitForm(data: SignupForm) {
+    try {
+      const response = await fetch(
+        "https://runners-api-lac.vercel.app/api/v1/auth/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json(); // parse the body
+        throw new Error(
+          `Server error: ${response.status}, ${JSON.stringify(errorData)}`,
+        );
+      }
+
+      const data = await response.json();
+      console.log(data.status, data.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   return (
     <div className={styles.signupPage}>
       <main className={styles.signupMain}>
         <AuthCard
-          onSubmit={(e) => handleSubmit(e, (data) => console.log(data))}
+          onSubmit={(e) => handleSubmit(e, (data) => submitForm(data))}
           title="Create account"
           subtitle="Start tracking your running journey"
           action="Sign Up"
