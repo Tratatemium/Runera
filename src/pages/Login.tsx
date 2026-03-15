@@ -1,6 +1,6 @@
 import styles from "./Login.module.css";
 
-import { useState } from "react";
+import { useForm } from "../hooks/useForm";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -33,33 +33,19 @@ function Login() {
       type: "password",
       placeholder: "Your password",
     },
-  ];
+  ] as const;
 
   type LoginForm = {
     [K in (typeof inputFields)[number]["id"]]: string;
   };
 
-  const [formData, setFormData] = useState<LoginForm>(
-    Object.fromEntries(inputFields.map((field) => [field.id, ""])),
-  );
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
-    console.log(formData);
-  }
+  const { formData, handleChange, handleSubmit } = useForm<LoginForm>(inputFields);
 
   return (
     <div className={styles.loginPage}>
       <main className={styles.loginMain}>
         <AuthCard
-          onSubmit={handleSubmit}
+          onSubmit={(e) => handleSubmit(e, (data) => console.log(data))}
           title="Welcome Back"
           subtitle="Log in to continue tracking your runs"
           action="Log In"

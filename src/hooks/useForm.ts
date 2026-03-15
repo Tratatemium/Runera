@@ -7,25 +7,26 @@ type FieldConfig = {
   placeholder?: string;
 };
 
-function useForm<T extends Record<string, string>>(fields: FieldConfig[]) {
+function useForm<T extends Record<string, string>>(
+  fields: readonly FieldConfig[],
+) {
   const [formData, setFormData] = useState<T>(
-    Object.fromEntries(fields.map((field) => [field.id, ""])) as T,
+    Object.fromEntries(fields.map((f) => [f.id, ""])) as T,
   );
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-  function handleSubmit(callback: (data: T) => void) {
-    (e: React.SubmitEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      callback(formData);
-    };
-  }
+  const handleSubmit = (
+    e: React.FormEvent<HTMLFormElement>,
+    callback: (data: T) => void,
+  ) => {
+    e.preventDefault();
+    callback(formData);
+  };
 
   return { formData, handleChange, handleSubmit };
 }
+
+export { useForm };
