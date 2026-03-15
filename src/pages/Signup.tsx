@@ -27,7 +27,7 @@ function Signup() {
     [K in (typeof signupFields)[number]["id"]]: string;
   };
 
-  const { formData, handleChange, handleSubmit } =
+  const { formData, inputErrors, handleChange, handleSubmit } =
     useForm<SignupForm>(signupFields);
 
   async function submitSignup(data: SignupForm) {
@@ -60,6 +60,7 @@ function Signup() {
               placeholder={field.placeholder}
               value={formData[field.id]}
               onChange={handleChange}
+              inputError = {inputErrors[field.id]}
             />
           ))}
         </AuthCard>

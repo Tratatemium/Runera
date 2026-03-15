@@ -22,7 +22,7 @@ function Login() {
     [K in (typeof loginFields)[number]["id"]]: string;
   };
 
-  const { formData, handleChange, handleSubmit } =
+  const { formData, inputErrors, handleChange, handleSubmit } =
     useForm<LoginForm>(loginFields);
 
   async function submitLogin(data: LoginForm) {
@@ -61,6 +61,7 @@ function Login() {
               placeholder={field.placeholder}
               value={formData[field.id]}
               onChange={handleChange}
+              inputError={inputErrors[field.id]}
             />
           ))}
         </AuthCard>

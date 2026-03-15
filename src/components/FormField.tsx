@@ -7,6 +7,7 @@ interface FormFieldProps {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  inputError: string | undefined;
 }
 
 function FormField({
@@ -16,6 +17,7 @@ function FormField({
   placeholder,
   value,
   onChange,
+  inputError,
 }: FormFieldProps) {
   return (
     <div className={styles.formRow}>
@@ -31,6 +33,7 @@ function FormField({
         value={value}
         onChange={onChange}
       />
+      <p className={styles.errorText}>{inputError}</p>
     </div>
   );
 }
