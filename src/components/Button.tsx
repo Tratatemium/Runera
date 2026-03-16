@@ -1,5 +1,5 @@
 import styles from "./Button.module.css";
-import { Spinner } from "./Spinner";
+import { SpinnerIcon } from "./icons/SpinnerIcon";
 
 interface ButtonProps {
   buttonText: string;
@@ -11,7 +11,7 @@ interface ButtonProps {
 function Button({ buttonText, type, style, isSubmiting = false }: ButtonProps) {
   return (
     <button className={`${styles.button} ${styles[style]}`} type={type} disabled={isSubmiting}>
-      {isSubmiting? <Spinner /> :buttonText}
+      {isSubmiting? <SpinnerIcon /> :buttonText}
     </button>
   );
 }

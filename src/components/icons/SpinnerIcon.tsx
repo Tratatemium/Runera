@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-function Spinner(props: SVGProps<SVGSVGElement>) {
+function SpinnerIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -50,4 +50,4 @@ function Spinner(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export {Spinner}
+export { SpinnerIcon };

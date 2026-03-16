@@ -10,9 +10,14 @@
   font-weight: var(--font-weight-bold);
 }
 
-.formInput {
+.inputWrapper {
+  position: relative;
   width: min(100%, 26rem);
-  padding: 0.7em 0.9em;
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.7em 2.8em 0.7em 0.9em;
   border: 1px solid color-mix(in srgb, var(--accent-color-1) 25%, white);
   border-radius: 0.55em;
   background: color-mix(in srgb, var(--secondary-color) 85%, white);
@@ -46,4 +51,19 @@
   margin: 0;
   font-size: 0.875rem;
   color: #b3261e;
+}
+
+.showPasswordIcon {
+  position: absolute;
+  right: 0.8em;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
 }
