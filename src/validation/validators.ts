@@ -1,5 +1,8 @@
 function validateUsername(username: string) {
-  const length = username.length
+  const length = username.length;
+  if (/^[0-9]/.test(username)) {
+    return "Username cannot start with a number.";
+  }
   if (length < 4) {
     return "Username must be at least 4 characters.";
   }
@@ -14,41 +17,47 @@ function validateUsername(username: string) {
 
 function validateEmail(email: string) {
   if (email.length > 254) {
-    return "Email is too long.";
+    return "Email address is too long.";
   }
   if (/\s/.test(email)) {
-    return "No spaces in email.";
+    return "Email address cannot contain spaces.";
   }
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    return "Enter a valid email.";
+    return "Please enter a valid email address.";
   }
 }
 
 function validatePassword(password: string) {
   const length = password.length;
   if (length < 8) {
-    return "At least 8 characters.";
+    return "Password must be at least 8 characters.";
   }
   if (length > 128) {
-    return "Max 128 characters.";
+    return "Password cannot exceed 128 characters.";
   }
 }
 
-function validateConfirmPassword(password:string, confirm?:string) {
+function validateConfirmPassword(password: string, confirm?: string) {
   if (password !== confirm) {
-    return "Passwords do not match."
+    return "Passwords do not match.";
   }
 }
 
 function validateLogin(login: string) {
   const length = login.length;
   if (length < 4) {
-    return "At least 4 characters.";
+    return "Login must be at least 4 characters.";
   }
-  if (length > 128) {
-    return "Max 254 characters.";
+  if (length > 254) {
+    return "Password cannot exceed 254 characters.";
   }
 }
 
-export { validateUsername, validateEmail, validatePassword, validateConfirmPassword, validateLogin };
+export {
+  validateUsername,
+  validateEmail,
+  validatePassword,
+  validateConfirmPassword,
+  validateLogin,
+};
