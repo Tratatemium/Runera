@@ -8,7 +8,9 @@ function useForm<T extends Record<string, string>>(
     Object.fromEntries(fields.map((f) => [f.id, ""])) as T,
   );
 
-  const [inputErrors, setInputErrors] = useState<Record<string, string | undefined>>({});
+  const [inputErrors, setInputErrors] = useState<
+    Record<string, string | undefined>
+  >({});
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -26,6 +28,24 @@ function useForm<T extends Record<string, string>>(
     callback: (data: T) => void,
   ) {
     e.preventDefault();
+
+    const newErrors = { ...inputErrors };
+
+    Object.entries(formData).forEach(([key, value]) => {
+      if (!value) {
+        newErrors[key] = "This field cannot be empty";
+      }
+    });
+
+    setInputErrors(newErrors);
+
+    const hasInputErrors = Object.values(newErrors).some((v) => v);
+
+    if (hasInputErrors) {
+      console.error("Input form has errors!");
+      return;
+    }
+
     callback(formData);
   }
 
