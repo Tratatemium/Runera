@@ -5,7 +5,7 @@ export type FieldConfig = {
   label: string;
   type?: "text" | "email" | "password";
   placeholder?: string;
-  validator?: (input: string) => string | undefined;
+  validator?: (input: string, input2?: string) => string | undefined;
 };
 
 const inputFields: Record<string, FieldConfig> = {
@@ -35,7 +35,7 @@ const inputFields: Record<string, FieldConfig> = {
     label: "Confirm password",
     type: "password",
     placeholder: "Re-enter password",
-    validator: validators.validatePassword,
+    validator: validators.validateConfirmPassword,
   },
   login: {
     id: "login",

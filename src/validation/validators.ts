@@ -31,8 +31,14 @@ function validatePassword(password: string) {
   }
 }
 
+function validateConfirmPassword(password:string, confirm?:string) {
+  if (password !== confirm) {
+    return "Passwords do not match."
+  }
+}
+
 function validateLogin(login: string) {
   return undefined
 }
 
-export { validateUsername, validateEmail, validatePassword, validateLogin };
+export { validateUsername, validateEmail, validatePassword, validateConfirmPassword, validateLogin };

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { signup } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
+import { ServerError } from "../api/client";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -31,7 +32,7 @@ function Signup() {
     [K in (typeof signupFields)[number]["id"]]: string;
   };
 
-  const { formData, inputErrors, handleChange, handleSubmit } =
+  const { formData, inputErrors, setInputErrors, handleChange, handleSubmit } =
     useForm<SignupForm>(signupFields);
 
   const [isSubmiting, setIsSubmiting] = useState(false);
@@ -46,6 +47,16 @@ function Signup() {
       navigate("/login");
     } catch (error) {
       console.error(error);
+      if (error instanceof ServerError && error.status === 409) {
+        const fieldName = error.data.error.split(" ")[0];
+        const newErrors = { ...inputErrors };
+        Object.keys(formData).forEach((key) => {
+          if (key === fieldName) {
+            newErrors[key] = `This ${key} already exsists`;
+          }
+        });
+        setInputErrors(newErrors);
+      }
     }
     setIsSubmiting(false);
   }

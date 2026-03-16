@@ -18,7 +18,16 @@ function useForm<T extends Record<string, string>>(
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     const field = fields.find((field) => field.id === name);
-    const error = field?.validator ? field.validator(value) : undefined;
+    // const error = field?.validator ? field.validator(value) : undefined;
+
+    let error: string | undefined;
+    if (field?.validator){
+      if (name === "confirmPassword") {
+        error = field.validator(formData.password, value);
+      } else {
+        error = field.validator(value)
+      }
+    }
 
     setInputErrors((prev) => ({ ...prev, [name]: error }));
   }
@@ -49,7 +58,7 @@ function useForm<T extends Record<string, string>>(
     callback(formData);
   }
 
-  return { formData, inputErrors, handleChange, handleSubmit };
+  return { formData, inputErrors, setInputErrors, handleChange, handleSubmit };
 }
 
 export { useForm };
