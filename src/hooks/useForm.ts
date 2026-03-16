@@ -1,31 +1,36 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { FieldConfig } from "../config/inputFields";
 import { validateField } from "../validation/validators";
 
-function createInitialState<T>(fields: readonly FieldConfig[]): T {
+function createInitialState<T extends Record<string, string>>(
+  fields: readonly FieldConfig[],
+): T {
   return Object.fromEntries(fields.map((f) => [f.id, ""])) as T;
 }
 
 function useForm<T extends Record<string, string>>(
   fields: readonly FieldConfig[],
 ) {
-  const fieldMap = Object.fromEntries(fields.map((field) => [field.id, field]));
+  const fieldMap = useMemo(
+    () => Object.fromEntries(fields.map((f) => [f.id, f])),
+    [fields],
+  );
 
   const [formData, setFormData] = useState<T>(() => createInitialState(fields));
   const [inputErrors, setInputErrors] = useState<
-    Record<string, string | undefined>
+    Partial<Record<keyof T, string>>
   >({});
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setInputErrors((prev) => ({ ...prev, [name]: undefined }));
   }
 
   function handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
     const field = fieldMap[e.target.name];
     const error = validateField(formData, field);
-    setInputErrors((prev) => ({ ...prev, [name]: error }));
+    setInputErrors((prev) => ({ ...prev, [field.id]: error }));
   }
 
   function handleSubmit(
@@ -34,16 +39,26 @@ function useForm<T extends Record<string, string>>(
   ) {
     e.preventDefault();
 
-    const hasInputErrors = Object.values(inputErrors).some((v) => v);
-    if (hasInputErrors) return;
+    const newErrors: Partial<Record<keyof T, string>> = {};
+    fields.forEach((field) => {
+      const error = validateField(formData, field);
+      if (error) newErrors[field.id as keyof T] = error;
+    });
+    setInputErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) return;
 
     callback(formData);
+  }
+
+  function setServerErrors(errors: Partial<Record<keyof T, string>>) {
+    setInputErrors((prev) => ({ ...prev, ...errors }));
   }
 
   return {
     formData,
     inputErrors,
-    setInputErrors,
+    setServerErrors,
     handleChange,
     handleInputBlur,
     handleSubmit,

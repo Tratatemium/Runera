@@ -32,8 +32,14 @@ function Signup() {
     [K in (typeof signupFields)[number]["id"]]: string;
   };
 
-  const { formData, inputErrors, setInputErrors, handleChange, handleInputBlur, handleSubmit } =
-    useForm<SignupForm>(signupFields);
+  const {
+    formData,
+    inputErrors,
+    setServerErrors,
+    handleChange,
+    handleInputBlur,
+    handleSubmit,
+  } = useForm<SignupForm>(signupFields);
 
   const [isSubmiting, setIsSubmiting] = useState(false);
 
@@ -42,23 +48,22 @@ function Signup() {
     const payload = { username, email, password };
 
     setIsSubmiting(true);
+
     try {
       await signup(payload);
       navigate("/login");
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       if (error instanceof ServerError && error.status === 409) {
         const fieldName = error.data.error.split(" ")[0];
-        const newErrors = { ...inputErrors };
-        Object.keys(formData).forEach((key) => {
-          if (key === fieldName) {
-            newErrors[key] = `This ${key} already exsists`;
-          }
-        });
-        setInputErrors(newErrors);
+        const newError = {
+          [fieldName]: `This ${fieldName} already exists`,
+        };
+        setServerErrors(newError);
       }
+    } finally {
+      setIsSubmiting(false);
     }
-    setIsSubmiting(false);
   }
 
   return (
