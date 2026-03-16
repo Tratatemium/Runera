@@ -1,106 +1,62 @@
 import type { FieldConfig } from "../config/inputFields";
-class ValidationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "ValidationError";
-  }
+
+import { checkEmpty, checkLength, checkWhitespace } from "./validationHelpers";
+
+const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateUsername(value: string, formData: Record<string, string>) {
+  return (
+    checkEmpty(value, "Username") ??
+    (/^[0-9]/.test(value)
+      ? "Username can not start with a number."
+      : undefined) ??
+    checkLength(value, "Username", 4, 20) ??
+    (!USERNAME_REGEX.test(value)
+      ? "Username can only contain letters, numbers, and underscores."
+      : undefined)
+  );
 }
 
-function checkEmpty(value: string, field: FieldConfig) {
-  if (value.trim() === "") {
-    throw new ValidationError(`${field.label} can not be empty.`);
-  }
+function validateEmail(value: string, formData: Record<string, string>) {
+  return (
+    checkEmpty(value, "Email") ??
+    checkLength(value, "Email", null, 254) ??
+    checkWhitespace(value, "Email") ??
+    (!EMAIL_REGEX.test(value)
+      ? "Please enter a valid email address."
+      : undefined)
+  );
 }
 
-function checkLength(
+function validatePassword(value: string, formData: Record<string, string>) {
+  return (
+    checkEmpty(value, "Password") ??
+    checkLength(value, "Password", 8, 128) ??
+    checkWhitespace(value, "Password")
+  );
+}
+
+function validateConfirmPassword(
   value: string,
-  field: FieldConfig,
-  min: number | null,
-  max: number | null,
+  formData: Record<string, string>,
 ) {
-  const length = value.length;
-  if (min !== null && length < min) {
-    throw new ValidationError(
-      `${field.label} must be at least ${min} characters.`,
-    );
-  }
-  if (max !== null && length > max) {
-    throw new ValidationError(
-      `${field.label} cannot exceed ${max} characters.`,
-    );
+  if (formData.password !== value) {
+    return "Passwords do not match.";
   }
 }
 
-function checkWhitespace(value: string, field: FieldConfig) {
-  if (/\s/.test(value)) {
-    throw new ValidationError(`${field.label} cannot contain spaces.`);
-  }
-}
-
-function validateUsername(value: string, field: FieldConfig) {
-  checkEmpty(value, field);
-
-  if (/^[0-9]/.test(value)) {
-    throw new ValidationError(`${field.label} can not start with a number.`);
-  }
-
-  checkLength(value, field, 4, 20);
-
-  const usernameRegex = /^[a-zA-Z0-9_]+$/;
-  if (!usernameRegex.test(value)) {
-    throw new ValidationError(
-      `${field.label} can only contain letters, numbers, and underscores.`,
-    );
-  }
-}
-
-function validateEmail(value: string, field: FieldConfig) {
-  checkEmpty(value, field);
-  checkLength(value, field, null, 254);
-  checkWhitespace(value, field);
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(value)) {
-    throw new ValidationError("Please enter a valid email address.");
-  }
-}
-
-function validatePassword(value: string, field: FieldConfig) {
-  checkEmpty(value, field);
-  checkLength(value, field, 8, 128);
-  checkWhitespace(value, field);
-}
-
-function validateConfirmPassword(password: string, confirm?: string) {
-  if (password !== confirm) {
-    throw new ValidationError("Passwords do not match.");
-  }
-}
-
-function validateLogin(value: string, field: FieldConfig) {
-  checkEmpty(value, field);
-  checkLength(value, field, 4, 254);
-  checkWhitespace(value, field);
+function validateLogin(value: string, formData: Record<string, string>) {
+  return (
+    checkEmpty(value, "Login") ??
+    checkLength(value, "Login", 4, 254) ??
+    checkWhitespace(value, "Login")
+  );
 }
 
 function validateField(formData: Record<string, string>, field: FieldConfig) {
   const value = formData[field.id];
-  let error: string | undefined;
-  if (field.validator) {
-    try {
-      if (field.id === "confirmPassword") {
-        field.validator(formData.password, value);
-      } else {
-        field.validator(value);
-      }
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        error = err.message;
-      } else {
-        throw err;
-      }
-    }
-  }
-  return error;
+  return field.validator?.(value, formData);
 }
 
 export {

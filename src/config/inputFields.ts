@@ -5,7 +5,10 @@ export type FieldConfig = {
   label: string;
   type?: "text" | "email" | "password";
   placeholder?: string;
-  validator?: (input: string, input2?: string) => void;
+  validator?: (
+    value: string,
+    formData: Record<string, string>,
+  ) => string | undefined;
 };
 
 const inputFields: Record<string, FieldConfig> = {
@@ -14,45 +17,35 @@ const inputFields: Record<string, FieldConfig> = {
     label: "Username",
     type: "text",
     placeholder: "Your username",
-    validator: function (value) {
-      validators.validateUsername(value, this);
-    },
+    validator: validators.validateUsername,
   },
   email: {
     id: "email",
     label: "Email",
     type: "email",
     placeholder: "your@email.com",
-    validator: function (value) {
-      validators.validateEmail(value, this);
-    },
+    validator: validators.validateEmail,
   },
   password: {
     id: "password",
     label: "Password",
     type: "password",
     placeholder: "Your password",
-    validator: function (value) {
-      validators.validatePassword(value, this);
-    },
+    validator: validators.validatePassword,
   },
   confirmPassword: {
     id: "confirmPassword",
     label: "Confirm password",
     type: "password",
     placeholder: "Re-enter password",
-    validator: function (value1, value2) {
-      validators.validateConfirmPassword(value1, value2);
-    },
+    validator: validators.validateConfirmPassword,
   },
   login: {
     id: "login",
     label: "Login",
     type: "text",
     placeholder: "Your username or email",
-    validator: function (value) {
-      validators.validateLogin(value, this);
-    },
+    validator: validators.validateLogin,
   },
 };
 
