@@ -1,4 +1,21 @@
+import type { FieldConfig } from "../config/inputFields";
+import { inputFields } from "../config/inputFields";
+
+class ValidationError extends Error {
+  constructor (message:string) {
+    super(message);
+    this.name = "ValidationError"
+  }
+}
+
+function checkEmpty(field: string) {
+  if (field.trim() === "") {
+    throw new ValidationError("can not be empty.")
+  }
+}
+
 function validateUsername(username: string) {
+  checkEmpty(username);
   const length = username.length;
   if (/^[0-9]/.test(username)) {
     return "Username cannot start with a number.";
@@ -54,10 +71,27 @@ function validateLogin(login: string) {
   }
 }
 
+type FieldName = (typeof inputFields)[number]["id"];
+
+function validateField(formData: Record<string, string>, fieldName: FieldName) {
+  const field = inputFields[fieldName];
+  const value = formData[fieldName];
+  let error: string | undefined;
+  if (field.validator) {
+    if (field.id === "confirmPassword") {
+      error = field.validator(formData.password, value);
+    } else {
+      error = field.validator(value);
+    }
+  }
+  return error;
+}
+
 export {
   validateUsername,
   validateEmail,
   validatePassword,
   validateConfirmPassword,
   validateLogin,
+  validateField,
 };

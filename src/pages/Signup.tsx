@@ -32,7 +32,7 @@ function Signup() {
     [K in (typeof signupFields)[number]["id"]]: string;
   };
 
-  const { formData, inputErrors, setInputErrors, handleChange, handleSubmit } =
+  const { formData, inputErrors, setInputErrors, handleChange, handleInputBlur, handleSubmit } =
     useForm<SignupForm>(signupFields);
 
   const [isSubmiting, setIsSubmiting] = useState(false);
@@ -81,6 +81,7 @@ function Signup() {
               placeholder={field.placeholder}
               value={formData[field.id]}
               onChange={handleChange}
+              onBlur={handleInputBlur}
               inputError={inputErrors[field.id]}
             />
           ))}

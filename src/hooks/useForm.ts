@@ -1,34 +1,29 @@
 import { useState } from "react";
 import { FieldConfig } from "../config/inputFields";
+import { validateField } from "../validation/validators";
+
+function createInitialState<T>(fields: readonly FieldConfig[]): T {
+  return Object.fromEntries(fields.map((f) => [f.id, ""])) as T;
+}
 
 function useForm<T extends Record<string, string>>(
   fields: readonly FieldConfig[],
 ) {
-  const [formData, setFormData] = useState<T>(
-    Object.fromEntries(fields.map((f) => [f.id, ""])) as T,
-  );
+  const fieldMap = Object.fromEntries(fields.map((field) => [field.id, field]));
 
+  const [formData, setFormData] = useState<T>(() => createInitialState(fields));
   const [inputErrors, setInputErrors] = useState<
     Record<string, string | undefined>
   >({});
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-
     setFormData((prev) => ({ ...prev, [name]: value }));
+  }
 
-    const field = fields.find((field) => field.id === name);
-    // const error = field?.validator ? field.validator(value) : undefined;
-
-    let error: string | undefined;
-    if (field?.validator) {
-      if (name === "confirmPassword") {
-        error = field.validator(formData.password, value);
-      } else {
-        error = field.validator(value);
-      }
-    }
-
+  function handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    const error = validateField(formData, name);
     setInputErrors((prev) => ({ ...prev, [name]: error }));
   }
 
@@ -41,9 +36,9 @@ function useForm<T extends Record<string, string>>(
     const newErrors = { ...inputErrors };
 
     Object.entries(formData).forEach(([key, value]) => {
-      const field = fields.find((field) => field.id === key);
+      const field = fieldMap[key];
       if (!value) {
-        newErrors[key] = `${field?.label} can not be empty`;
+        newErrors[key] = `${field.label} can not be empty`;
       }
     });
 
@@ -58,7 +53,7 @@ function useForm<T extends Record<string, string>>(
     callback(formData);
   }
 
-  return { formData, inputErrors, setInputErrors, handleChange, handleSubmit };
+  return { formData, inputErrors, setInputErrors, handleChange, handleInputBlur, handleSubmit };
 }
 
 export { useForm };

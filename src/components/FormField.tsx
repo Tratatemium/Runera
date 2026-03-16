@@ -10,6 +10,7 @@ interface FormFieldProps {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   inputError: string | undefined;
 }
 
@@ -20,7 +21,8 @@ function FormField({
   placeholder,
   value,
   onChange,
-  inputError,
+  onBlur,
+  inputError,  
 }: FormFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -43,6 +45,7 @@ function FormField({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
         />
         <span
           className={`${styles.showPasswordIcon} ${id !== "password" && id !== "confirmPassword" ? styles.hide : ""}`}
