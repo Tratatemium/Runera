@@ -1,6 +1,5 @@
 import styles from "./FormField.module.css";
 import { useState } from "react";
-import { useEffect } from "react";
 import { EyeIcon } from "./icons/EyeIcon";
 import { EyeOffIcon } from "./icons/EyeOffIcon";
 
