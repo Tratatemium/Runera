@@ -1,5 +1,7 @@
 import styles from "./Login.module.css";
 
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { login } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
@@ -25,6 +27,8 @@ function Login() {
   const { formData, inputErrors, handleChange, handleSubmit } =
     useForm<LoginForm>(loginFields);
 
+  const [isSubmiting, setIsSubmiting] = useState(false);
+
   async function submitLogin(data: LoginForm) {
     const loginData: { username?: string; email?: string; password: string } = {
       password: data.password,
@@ -35,11 +39,13 @@ function Login() {
       loginData.username = data.login;
     }
     console.log(loginData);
+    setIsSubmiting(true);
     try {
       await login(loginData);
     } catch (error) {
       console.error(error);
     }
+    setIsSubmiting(false);
   }
 
   return (
@@ -51,6 +57,7 @@ function Login() {
           subtitle="Log in to continue tracking your runs"
           action="Log In"
           footerContent={footerContent}
+          isSubmiting={isSubmiting}
         >
           {loginFields.map((field) => (
             <FormField

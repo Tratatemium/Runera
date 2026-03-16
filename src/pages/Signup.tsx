@@ -1,5 +1,7 @@
 import styles from "./Signup.module.css";
 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { signup } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
@@ -9,6 +11,8 @@ import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
 
 function Signup() {
+  const navigate = useNavigate();
+
   const footerContent = (
     <>
       <p>Already have an account?</p>
@@ -30,15 +34,20 @@ function Signup() {
   const { formData, inputErrors, handleChange, handleSubmit } =
     useForm<SignupForm>(signupFields);
 
+  const [isSubmiting, setIsSubmiting] = useState(false);
+
   async function submitSignup(data: SignupForm) {
     const { username, email, password } = data;
     const payload = { username, email, password };
 
+    setIsSubmiting(true);
     try {
       await signup(payload);
+      navigate("/login");
     } catch (error) {
       console.error(error);
     }
+    setIsSubmiting(false);
   }
 
   return (
@@ -50,6 +59,7 @@ function Signup() {
           subtitle="Start tracking your running journey"
           action="Sign Up"
           footerContent={footerContent}
+          isSubmiting={isSubmiting}
         >
           {signupFields.map((field) => (
             <FormField
@@ -60,7 +70,7 @@ function Signup() {
               placeholder={field.placeholder}
               value={formData[field.id]}
               onChange={handleChange}
-              inputError = {inputErrors[field.id]}
+              inputError={inputErrors[field.id]}
             />
           ))}
         </AuthCard>

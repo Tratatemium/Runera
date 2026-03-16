@@ -11,41 +11,16 @@
   position: relative;
 }
 
-.button:hover {
+.button:enabled:hover {
   color: var(--secondary-color);
   background-color: var(--accent-color-2);
   border: 1px solid var(--accent-color-2);
 }
 
 .button:disabled {
-  filter: grayscale(1);
-  opacity: 0.7;
+  filter: grayscale(0.7);
+  opacity: 0.9;
   cursor: not-allowed;
-}
-
-.button:disabled:hover {
-  color: inherit;
-  background-color: inherit;
-  border-color: inherit;
-}
-
-.spinner {
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  border: 0.16em solid currentColor;
-  border-right-color: transparent;
-  animation: spin 0.75s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .accent1 {

@@ -10,6 +10,7 @@ interface AuthCardProps {
   subtitle: string;
   action: string;
   footerContent?: React.ReactNode;
+  isSubmiting?: boolean;
 }
 
 function AuthCard({
@@ -19,6 +20,7 @@ function AuthCard({
   subtitle,
   action,
   footerContent,
+  isSubmiting = false,
 }: AuthCardProps) {
   return (
     <section className={styles.authCard} aria-labelledby="authTitle">
@@ -34,7 +36,12 @@ function AuthCard({
         {children}
 
         <div className={styles.formActions}>
-          <Button buttonText={action} type="submit" style="accent1" />
+          <Button
+            buttonText={action}
+            type="submit"
+            style="accent1"
+            isSubmiting={isSubmiting}
+          />
         </div>
       </form>
 
