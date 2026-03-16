@@ -23,7 +23,8 @@ function useForm<T extends Record<string, string>>(
 
   function handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    const error = validateField(formData, name);
+    const field = fieldMap[e.target.name];
+    const error = validateField(formData, field);
     setInputErrors((prev) => ({ ...prev, [name]: error }));
   }
 
@@ -33,27 +34,20 @@ function useForm<T extends Record<string, string>>(
   ) {
     e.preventDefault();
 
-    const newErrors = { ...inputErrors };
-
-    Object.entries(formData).forEach(([key, value]) => {
-      const field = fieldMap[key];
-      if (!value) {
-        newErrors[key] = `${field.label} can not be empty`;
-      }
-    });
-
-    setInputErrors(newErrors);
-
-    const hasInputErrors = Object.values(newErrors).some((v) => v);
-
-    if (hasInputErrors) {
-      return;
-    }
+    const hasInputErrors = Object.values(inputErrors).some((v) => v);
+    if (hasInputErrors) return;
 
     callback(formData);
   }
 
-  return { formData, inputErrors, setInputErrors, handleChange, handleInputBlur, handleSubmit };
+  return {
+    formData,
+    inputErrors,
+    setInputErrors,
+    handleChange,
+    handleInputBlur,
+    handleSubmit,
+  };
 }
 
 export { useForm };
