@@ -28,9 +28,17 @@
   gap: 1.2em;
 }
 
-.formActions{
+.formActions {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
+}
+
+.errorText {
+  margin: 0;
+  max-width: 40ch;
+  text-align: left;
+  font-size: 0.875rem;
+  color: #b3261e;
 }

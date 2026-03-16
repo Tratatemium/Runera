@@ -11,6 +11,7 @@ interface AuthCardProps {
   action: string;
   footerContent?: React.ReactNode;
   isSubmiting?: boolean;
+  formError?: string | undefined
 }
 
 function AuthCard({
@@ -21,6 +22,7 @@ function AuthCard({
   action,
   footerContent,
   isSubmiting = false,
+  formError
 }: AuthCardProps) {
   return (
     <section className={styles.authCard} aria-labelledby="authTitle">
@@ -34,7 +36,7 @@ function AuthCard({
 
       <form className={styles.authForm} onSubmit={onSubmit} noValidate>
         {children}
-
+        <p className={styles.errorText}>{formError}</p>
         <div className={styles.formActions}>
           <Button
             buttonText={action}

@@ -21,11 +21,11 @@ function useForm<T extends Record<string, string>>(
     // const error = field?.validator ? field.validator(value) : undefined;
 
     let error: string | undefined;
-    if (field?.validator){
+    if (field?.validator) {
       if (name === "confirmPassword") {
         error = field.validator(formData.password, value);
       } else {
-        error = field.validator(value)
+        error = field.validator(value);
       }
     }
 
@@ -41,8 +41,9 @@ function useForm<T extends Record<string, string>>(
     const newErrors = { ...inputErrors };
 
     Object.entries(formData).forEach(([key, value]) => {
+      const field = fields.find((field) => field.id === key);
       if (!value) {
-        newErrors[key] = "This field cannot be empty";
+        newErrors[key] = `${field?.label} can not be empty`;
       }
     });
 
@@ -51,7 +52,6 @@ function useForm<T extends Record<string, string>>(
     const hasInputErrors = Object.values(newErrors).some((v) => v);
 
     if (hasInputErrors) {
-      console.error("Input form has errors!");
       return;
     }
 

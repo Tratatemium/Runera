@@ -49,6 +49,8 @@
 
 .errorText {
   margin: 0;
+  max-width: 40ch;
+  text-align: left;
   font-size: 0.875rem;
   color: #b3261e;
 }

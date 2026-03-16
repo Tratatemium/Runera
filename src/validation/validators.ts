@@ -1,10 +1,14 @@
 function validateUsername(username: string) {
-  if (username.length < 4 || username.length > 20) {
-    return "Username must be 4-20 chars.";
+  const length = username.length
+  if (length < 4) {
+    return "Username must be at least 4 characters.";
+  }
+  if (length > 20) {
+    return "Username cannot exceed 20 characters.";
   }
   const usernameRegex = /^[a-zA-Z0-9_]+$/;
   if (!usernameRegex.test(username)) {
-    return "Use letters, numbers, or _.";
+    return "Username can only contain letters, numbers, and underscores.";
   }
 }
 
@@ -38,7 +42,13 @@ function validateConfirmPassword(password:string, confirm?:string) {
 }
 
 function validateLogin(login: string) {
-  return undefined
+  const length = login.length;
+  if (length < 4) {
+    return "At least 4 characters.";
+  }
+  if (length > 128) {
+    return "Max 254 characters.";
+  }
 }
 
 export { validateUsername, validateEmail, validatePassword, validateConfirmPassword, validateLogin };

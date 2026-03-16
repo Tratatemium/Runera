@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { login } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
+import { ServerError } from "../api/client";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -28,11 +29,13 @@ function Login() {
     useForm<LoginForm>(loginFields);
 
   const [isSubmiting, setIsSubmiting] = useState(false);
+  const [formError, setFormError] = useState<string | undefined>(undefined);
 
   async function submitLogin(data: LoginForm) {
     const loginData: { username?: string; email?: string; password: string } = {
       password: data.password,
     };
+    setFormError(undefined);
     if (data.login.includes("@")) {
       loginData.email = data.login;
     } else {
@@ -43,6 +46,15 @@ function Login() {
     try {
       await login(loginData);
     } catch (error) {
+      if (error instanceof ServerError) {
+        switch (error.status) {
+          case 401:
+            setFormError("Invalid combination of login and password.");
+            break;
+          default:
+            setFormError("Something went wrong. Try again later.");
+        }
+      }
       console.error(error);
     }
     setIsSubmiting(false);
@@ -58,6 +70,7 @@ function Login() {
           action="Log In"
           footerContent={footerContent}
           isSubmiting={isSubmiting}
+          formError={formError}
         >
           {loginFields.map((field) => (
             <FormField
