@@ -1,10 +1,8 @@
-import { data } from "react-router-dom";
-
 class ServerError extends Error {
   status: number;
   data: Record<string, string>;
 
-  constructor (message: string, status:number, data: Record<string, string>) {
+  constructor(message: string, status: number, data: Record<string, string>) {
     super(message);
     this.name = "ServerError";
     this.status = status;
@@ -17,7 +15,11 @@ async function apiRequest<T>(url: string, options: RequestInit): Promise<T> {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new ServerError(`${response.status}, ${data.error}`, response.status, data)
+    throw new ServerError(
+      `${response.status}, ${data.error}`,
+      response.status,
+      data,
+    );
   }
   console.log(data.status, data.data);
   return data;
