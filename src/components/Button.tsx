@@ -6,6 +6,8 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   variant: "accent1" | "accent1Inverted" | "accent2";
   isSubmitting?: boolean;
+  size?: "small";
+  onClick?: () => void;
 }
 
 function Button({
@@ -13,13 +15,16 @@ function Button({
   type = "button",
   variant,
   isSubmitting = false,
+  size,
+  onClick,
 }: ButtonProps) {
   return (
     <button
-      className={`${styles.button} ${styles[variant]}`}
+      className={`${styles.button} ${styles[variant]}${size ? ` ${styles[size]}` : ""}`}
       aria-busy={isSubmitting}
       type={type}
       disabled={isSubmitting}
+      onClick={onClick}
     >
       {isSubmitting ? <SpinnerIcon /> : buttonText}
     </button>

@@ -3,7 +3,7 @@ import styles from "./Signup.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
-import { signup } from "../api/auth.api";
+import { signupApi } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
 import { parseServerError } from "../api/client";
 
@@ -55,7 +55,7 @@ function Signup() {
     setFormError(undefined);
 
     try {
-      await signup(payload);
+      await signupApi(payload);
       navigate("/login");
     } catch (err) {
       const { fieldErrors, generalError } = parseServerError(err);
