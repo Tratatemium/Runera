@@ -5,6 +5,11 @@ interface ErrorData {
   };
 }
 
+interface ParsedServerError {
+  fieldErrors?: Record<string, string>;
+  generalError?: string;
+}
+
 class ServerError extends Error {
   status: number;
   data: ErrorData;
@@ -19,17 +24,53 @@ class ServerError extends Error {
 
 async function apiRequest<T>(url: string, options: RequestInit): Promise<T> {
   const response = await fetch(url, options);
-  const data = await response.json();
+
+  let data;
+
+  try {
+    data = await response.json();
+  } catch {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new ServerError(
-      `${response.status}, ${data.error}`,
+      data?.error?.message ?? "Server error",
       response.status,
       data,
     );
   }
-  console.log(data.status, data.data);
-  return data;
+
+  return data.data ?? data;
 }
 
-export { apiRequest, ServerError };
+function parseServerError(err: unknown): ParsedServerError {
+  if (err instanceof ServerError) {
+    const field = err.data?.error?.field;
+    const message = err.data?.error?.message;
+
+    if (err.status === 409 && field) {
+      return {
+        fieldErrors: {
+          [field]: `This ${field} already exists`,
+        },
+      };
+    }
+
+    if (err.status === 401) {
+      return {
+        generalError: "Invalid combination of login and password.",
+      };
+    }
+
+    return {
+      generalError: message || "Something went wrong",
+    };
+  }
+
+  return {
+    generalError: "Unknown error",
+  };
+}
+
+export { apiRequest, ServerError, parseServerError };

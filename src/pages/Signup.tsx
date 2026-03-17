@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { signup } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
-import { ServerError } from "../api/client";
+import { parseServerError } from "../api/client";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -18,19 +18,15 @@ const signupFooter = (
   </>
 );
 
+const signupFields = [
+  inputFields.username,
+  inputFields.email,
+  inputFields.password,
+  inputFields.confirmPassword,
+] as const;
+
 function Signup() {
   const navigate = useNavigate();
-
-  const signupFields = useMemo(
-    () =>
-      [
-        inputFields.username,
-        inputFields.email,
-        inputFields.password,
-        inputFields.confirmPassword,
-      ] as const,
-    [],
-  );
 
   type SignupForm = {
     [K in (typeof signupFields)[number]["id"]]: string;
@@ -46,6 +42,7 @@ function Signup() {
   } = useForm<SignupForm>(signupFields);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | undefined>(undefined);
 
   async function submitSignup(data: SignupForm) {
     const payload = {
@@ -55,24 +52,15 @@ function Signup() {
     };
 
     setIsSubmitting(true);
+    setFormError(undefined);
 
     try {
       await signup(payload);
       navigate("/login");
     } catch (err) {
-      if (err instanceof ServerError) {
-        const field = err.data.error.field;
-        if (err.status === 409 && field) {
-          const newError = {
-            [field]: `This ${field} already exists`,
-          };
-          setServerErrors(newError);
-        } else {
-          console.error(
-            `${err.name}: ${err.status} ${JSON.stringify(err.data)}`,
-          );
-        }
-      }
+      const { fieldErrors, generalError } = parseServerError(err);
+      if (fieldErrors) setServerErrors(fieldErrors);
+      else if (generalError) setFormError(generalError);
     } finally {
       setIsSubmitting(false);
     }
@@ -92,6 +80,7 @@ function Signup() {
           buttonText="Sign Up"
           footerContent={signupFooter}
           isSubmitting={isSubmitting}
+          formError={formError}
         >
           {signupFields.map((field) => (
             <FormField
