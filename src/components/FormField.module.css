@@ -41,12 +41,6 @@
   background: white;
 }
 
-.inputError,
-.inputError:focus {
-  border-color: #d93025;
-  box-shadow: 0 0 0 3px color-mix(in srgb, #d93025 18%, white);
-}
-
 .errorText {
   margin: 0;
   max-width: 40ch;
@@ -64,8 +58,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-}
-
-.hide {
-  display: none;
+  border: none;
+  background: none;
+  padding: 0;
 }

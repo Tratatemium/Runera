@@ -1,5 +1,5 @@
 import styles from "./FormField.module.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { EyeIcon } from "./icons/EyeIcon";
 import { EyeOffIcon } from "./icons/EyeOffIcon";
 
@@ -11,7 +11,7 @@ interface FormFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  inputError: string | undefined;
+  inputError?: string;
 }
 
 function FormField({
@@ -22,14 +22,14 @@ function FormField({
   value,
   onChange,
   onBlur,
-  inputError,  
+  inputError,
 }: FormFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const inputType =
-    (id === "password" || id === "confirmPassword") && showPassword
-      ? "text"
-      : type;
+  const isPassword = type === "password";
+  const inputType = isPassword && showPassword ? "text" : type;
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className={styles.formRow}>
@@ -38,7 +38,10 @@ function FormField({
       </label>
       <div className={styles.inputWrapper}>
         <input
+          ref={inputRef}
           className={styles.formInput}
+          aria-invalid={!!inputError}
+          aria-describedby={inputError ? `${id}-error` : undefined}
           id={id}
           name={id}
           type={inputType}
@@ -47,14 +50,26 @@ function FormField({
           onChange={onChange}
           onBlur={onBlur}
         />
-        <span
-          className={`${styles.showPasswordIcon} ${id !== "password" && id !== "confirmPassword" ? styles.hide : ""}`}
-          onClick={() => setShowPassword(!showPassword)}
-        >
-          {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-        </span>
+        {isPassword && (
+          <button
+            type="button"
+            className={styles.showPasswordIcon}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => {
+              setShowPassword((v) => !v);
+              inputRef.current?.focus();
+            }}
+          >
+            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+          </button>
+        )}
       </div>
-      <p className={styles.errorText}>{inputError}</p>
+      {inputError && (
+        <p id={`${id}-error`} className={styles.errorText}>
+          {inputError}
+        </p>
+      )}
     </div>
   );
 }
