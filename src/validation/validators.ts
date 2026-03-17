@@ -5,7 +5,7 @@ import { checkEmpty, checkLength, checkWhitespace } from "./validationHelpers";
 const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function validateUsername(value: string, formData: Record<string, string>) {
+function validateUsername(value: string, _formData: Record<string, string>) {
   return (
     checkEmpty(value, "Username") ??
     (/^[0-9]/.test(value)
@@ -18,7 +18,7 @@ function validateUsername(value: string, formData: Record<string, string>) {
   );
 }
 
-function validateEmail(value: string, formData: Record<string, string>) {
+function validateEmail(value: string, _formData: Record<string, string>) {
   return (
     checkEmpty(value, "Email") ??
     checkLength(value, "Email", null, 254) ??
@@ -29,7 +29,7 @@ function validateEmail(value: string, formData: Record<string, string>) {
   );
 }
 
-function validatePassword(value: string, formData: Record<string, string>) {
+function validatePassword(value: string, _formData: Record<string, string>) {
   return (
     checkEmpty(value, "Password") ??
     checkLength(value, "Password", 8, 128) ??
@@ -46,7 +46,7 @@ function validateConfirmPassword(
   }
 }
 
-function validateLogin(value: string, formData: Record<string, string>) {
+function validateLogin(value: string, _formData: Record<string, string>) {
   return (
     checkEmpty(value, "Login") ??
     checkLength(value, "Login", 4, 254) ??

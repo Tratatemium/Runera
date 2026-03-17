@@ -10,7 +10,7 @@ interface ButtonProps {
 
 function Button({
   buttonText,
-  type="button",
+  type = "button",
   variant,
   isSubmitting = false,
 }: ButtonProps) {
