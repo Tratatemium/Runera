@@ -1,0 +1,69 @@
+import type { FieldConfig } from "../config/inputFields";
+
+import { checkEmpty, checkLength, checkWhitespace } from "./validationHelpers";
+
+const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateUsername(value: string, formData: Record<string, string>) {
+  return (
+    checkEmpty(value, "Username") ??
+    (/^[0-9]/.test(value)
+      ? "Username can not start with a number."
+      : undefined) ??
+    checkLength(value, "Username", 4, 20) ??
+    (!USERNAME_REGEX.test(value)
+      ? "Username can only contain letters, numbers, and underscores."
+      : undefined)
+  );
+}
+
+function validateEmail(value: string, formData: Record<string, string>) {
+  return (
+    checkEmpty(value, "Email") ??
+    checkLength(value, "Email", null, 254) ??
+    checkWhitespace(value, "Email") ??
+    (!EMAIL_REGEX.test(value)
+      ? "Please enter a valid email address."
+      : undefined)
+  );
+}
+
+function validatePassword(value: string, formData: Record<string, string>) {
+  return (
+    checkEmpty(value, "Password") ??
+    checkLength(value, "Password", 8, 128) ??
+    checkWhitespace(value, "Password")
+  );
+}
+
+function validateConfirmPassword(
+  value: string,
+  formData: Record<string, string>,
+) {
+  if (formData.password !== value) {
+    return "Passwords do not match.";
+  }
+}
+
+function validateLogin(value: string, formData: Record<string, string>) {
+  return (
+    checkEmpty(value, "Login") ??
+    checkLength(value, "Login", 4, 254) ??
+    checkWhitespace(value, "Login")
+  );
+}
+
+function validateField(formData: Record<string, string>, field: FieldConfig) {
+  const value = formData[field.id];
+  return field.validator?.(value, formData);
+}
+
+export {
+  validateUsername,
+  validateEmail,
+  validatePassword,
+  validateConfirmPassword,
+  validateLogin,
+  validateField,
+};
