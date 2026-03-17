@@ -73,7 +73,7 @@ function Signup() {
           onSubmit={(e) => handleSubmit(e, submitSignup)}
           title="Create account"
           subtitle="Start tracking your running journey"
-          action="Sign Up"
+          buttonText="Sign Up"
           footerContent={footerContent}
           isSubmitting={isSubmitting}
         >

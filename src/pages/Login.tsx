@@ -67,7 +67,7 @@ function Login() {
           onSubmit={(e) => handleSubmit(e, submitLogin)}
           title="Welcome Back"
           subtitle="Log in to continue tracking your runs"
-          action="Log In"
+          buttonText="Log In"
           footerContent={footerContent}
           isSubmitting={isSubmitting}
           formError={formError}

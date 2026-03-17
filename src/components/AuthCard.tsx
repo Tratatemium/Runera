@@ -8,7 +8,7 @@ interface AuthCardProps {
   onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
   title: string;
   subtitle: string;
-  action: string;
+  buttonText: string;
   footerContent?: React.ReactNode;
   isSubmitting?: boolean;
   formError?: string | undefined;
@@ -19,7 +19,7 @@ function AuthCard({
   onSubmit,
   title,
   subtitle,
-  action,
+  buttonText,
   footerContent,
   isSubmitting = false,
   formError,
@@ -36,10 +36,14 @@ function AuthCard({
 
       <form className={styles.authForm} onSubmit={onSubmit} noValidate>
         {children}
-        <p className={styles.errorText}>{formError}</p>
+        {formError && (
+          <p role="alert" className={styles.errorText}>
+            {formError}
+          </p>
+        )}
         <div className={styles.formActions}>
           <Button
-            buttonText={action}
+            buttonText={buttonText}
             type="submit"
             variant="accent1"
             isSubmitting={isSubmitting}
@@ -47,7 +51,9 @@ function AuthCard({
         </div>
       </form>
 
-      <footer className={styles.authFooter}>{footerContent}</footer>
+      {footerContent && (
+        <footer className={styles.authFooter}>{footerContent}</footer>
+      )}
     </section>
   );
 }
