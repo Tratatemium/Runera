@@ -1,6 +1,6 @@
 import styles from "./Signup.module.css";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { signup } from "../api/auth.api";
