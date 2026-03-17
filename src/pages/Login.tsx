@@ -28,7 +28,7 @@ function Login() {
   const { formData, inputErrors, handleChange, handleSubmit } =
     useForm<LoginForm>(loginFields);
 
-  const [isSubmiting, setIsSubmiting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
   async function submitLogin(data: LoginForm) {
@@ -42,7 +42,7 @@ function Login() {
       loginData.username = data.login;
     }
     console.log(loginData);
-    setIsSubmiting(true);
+    setIsSubmitting(true);
     try {
       await login(loginData);
     } catch (error) {
@@ -57,7 +57,7 @@ function Login() {
       }
       console.error(error);
     }
-    setIsSubmiting(false);
+    setIsSubmitting(false);
   }
 
   return (
@@ -69,7 +69,7 @@ function Login() {
           subtitle="Log in to continue tracking your runs"
           action="Log In"
           footerContent={footerContent}
-          isSubmiting={isSubmiting}
+          isSubmitting={isSubmitting}
           formError={formError}
         >
           {loginFields.map((field) => (

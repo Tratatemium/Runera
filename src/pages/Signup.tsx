@@ -41,13 +41,13 @@ function Signup() {
     handleSubmit,
   } = useForm<SignupForm>(signupFields);
 
-  const [isSubmiting, setIsSubmiting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function submitSignup(data: SignupForm) {
     const { username, email, password } = data;
     const payload = { username, email, password };
 
-    setIsSubmiting(true);
+    setIsSubmitting(true);
 
     try {
       await signup(payload);
@@ -62,7 +62,7 @@ function Signup() {
         setServerErrors(newError);
       }
     } finally {
-      setIsSubmiting(false);
+      setIsSubmitting(false);
     }
   }
 
@@ -75,7 +75,7 @@ function Signup() {
           subtitle="Start tracking your running journey"
           action="Sign Up"
           footerContent={footerContent}
-          isSubmiting={isSubmiting}
+          isSubmitting={isSubmitting}
         >
           {signupFields.map((field) => (
             <FormField
