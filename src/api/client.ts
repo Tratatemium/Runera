@@ -1,8 +1,15 @@
+interface ErrorData {
+  error: {
+    field?: string;
+    message: string;
+  };
+}
+
 class ServerError extends Error {
   status: number;
-  data: Record<string, string>;
+  data: ErrorData;
 
-  constructor(message: string, status: number, data: Record<string, string>) {
+  constructor(message: string, status: number, data: ErrorData) {
     super(message);
     this.name = "ServerError";
     this.status = status;

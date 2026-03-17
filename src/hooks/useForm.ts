@@ -34,7 +34,7 @@ function useForm<T extends Record<string, string>>(
   }
 
   function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>,
+    e: React.SubmitEvent<HTMLFormElement>,
     callback: (data: T) => void,
   ) {
     e.preventDefault();

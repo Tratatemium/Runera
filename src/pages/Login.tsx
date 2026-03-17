@@ -1,7 +1,7 @@
 import styles from "./Login.module.css";
 
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useForm } from "../hooks/useForm";
 import { login } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
@@ -11,15 +11,18 @@ import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
 
-function Login() {
-  const footerContent = (
-    <>
-      <p>Don't have an account?</p>
-      <Link to="/signup">Sign Up</Link>
-    </>
-  );
+const loginFooter = (
+  <>
+    <p>Don't have an account?</p>
+    <Link to="/signup">Sign Up</Link>
+  </>
+);
 
-  const loginFields = [inputFields.login, inputFields.password] as const;
+function Login() {
+  const loginFields = useMemo(
+    () => [inputFields.login, inputFields.password] as const,
+    [],
+  );
 
   type LoginForm = {
     [K in (typeof loginFields)[number]["id"]]: string;
@@ -60,15 +63,19 @@ function Login() {
     setIsSubmitting(false);
   }
 
+  function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    handleSubmit(e, submitLogin);
+  }
+
   return (
     <div className={styles.loginPage}>
       <main className={styles.loginMain}>
         <AuthCard
-          onSubmit={(e) => handleSubmit(e, submitLogin)}
+          onSubmit={onSubmit}
           title="Welcome Back"
           subtitle="Log in to continue tracking your runs"
           buttonText="Log In"
-          footerContent={footerContent}
+          footerContent={loginFooter}
           isSubmitting={isSubmitting}
           formError={formError}
         >
