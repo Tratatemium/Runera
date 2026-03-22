@@ -13,16 +13,38 @@ function Welcome() {
       <header className={styles.header}>
         <Logo style="colorStyleAccent1" />
         <div className={styles.headerActions}>
-          <ButtonLink linkDirection="/" linkText="Home" style="accent1Inverted" size="small" />
-          <Button buttonText="Log Out" variant="accent1Inverted" size="small" onClick={logout} />
+          <ButtonLink
+            linkDirection="/"
+            linkText="Home"
+            style="accent1Inverted"
+            size="small"
+          />
+          <Button
+            buttonText="Log Out"
+            variant="accent1Inverted"
+            size="small"
+            onClick={logout}
+          />
         </div>
       </header>
 
       <main className={styles.main}>
-        <div className={styles.greeting}>
-          <h1>Welcome back, {user?.username}!</h1>
-          <p>Here's a snapshot of your running journey.</p>
-        </div>
+        {user ? (
+          <div className={styles.greeting}>
+            <h1>Welcome back, {user?.username}!</h1>
+            <p>Here's a snapshot of your running journey.</p>
+          </div>
+        ) : (
+          <div className={styles.greeting}>
+            <h1>Welcome to Runera</h1>
+            <p>Please log in to see your running stats.</p>
+            <ButtonLink
+              linkDirection="/login"
+              linkText="Go to Login"
+              style="accent1"
+            />
+          </div>
+        )}
 
         <div className={styles.stats}>
           <div className={styles.card}>
@@ -62,4 +84,3 @@ function Welcome() {
 }
 
 export { Welcome };
-
