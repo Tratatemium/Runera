@@ -1,7 +1,7 @@
 import styles from "./Login.module.css";
 
 import { jwtDecode } from "jwt-decode";
-import type { LoginResponse, JwtTokenPayload } from "../api/auth.api";
+import type { JwtTokenPayload } from "../api/auth.api";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -26,7 +26,7 @@ const loginFields = [inputFields.login, inputFields.password] as const;
 
 function Login() {
   const navigate = useNavigate();
-  const { user, login, logout } = useAuth();
+  const { login, logout } = useAuth();
 
   type LoginForm = {
     [K in (typeof loginFields)[number]["id"]]: string;
@@ -50,10 +50,26 @@ function Login() {
     setFormError(undefined);
     logout();
     try {
-      const data = (await loginApi(loginData)) as LoginResponse;
+      const data = await loginApi(loginData);
+      const token = data.token;
+      if (typeof token !== "string" || token.trim() === "") {
+        setFormError(
+          "Unable to log in because the server response was invalid. Please try again.",
+        );
+        return;
+      }
 
-      const decoded = jwtDecode(data?.token) as JwtTokenPayload;
-      login({ username: decoded?.username });
+      let decoded: JwtTokenPayload;
+      try {
+        decoded = jwtDecode(token);
+      } catch {
+        setFormError(
+          "Unable to log in with the received credentials. Please try again.",
+        );
+        return;
+      }
+
+      login({ username: decoded.username });
 
       navigate("/welcome");
     } catch (err) {

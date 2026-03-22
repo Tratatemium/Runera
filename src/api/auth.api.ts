@@ -37,13 +37,16 @@ interface LoginData {
 }
 
 function loginApi(data: LoginData) {
-  return apiRequest("https://runners-api-lac.vercel.app/api/v1/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  return apiRequest<LoginResponse>(
+    "https://runners-api-lac.vercel.app/api/v1/auth/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     },
-    body: JSON.stringify(data),
-  });
+  );
 }
 
 export { signupApi, loginApi };
