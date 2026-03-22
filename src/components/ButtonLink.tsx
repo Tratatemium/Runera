@@ -7,15 +7,27 @@ interface ButtonLinkProps {
   linkText: string;
   style: "accent1" | "accent1Inverted" | "accent2";
   size?: "small";
+  disabled?: boolean;
 }
 
-function ButtonLink({ linkDirection, linkText, style, size }: ButtonLinkProps) {
+function ButtonLink({
+  linkDirection,
+  linkText,
+  style,
+  size,
+  disabled,
+}: ButtonLinkProps) {
   return (
     <Link
       to={linkDirection}
-      className={`${styles.button} ${styles[style]}${size ? ` ${styles[size]}` : ""}`}
+      className={`
+        ${styles.button}
+        ${styles[style]}
+        ${size ? ` ${styles[size]}` : ""}
+        ${disabled ? styles.disabled : styles.enabled}
+      `}
     >
-      <span>{linkText}</span>
+      {linkText}
     </Link>
   );
 }
