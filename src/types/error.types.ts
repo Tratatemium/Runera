@@ -1,5 +1,5 @@
 interface ErrorData {
-  error: {
+  error?: {
     field?: string;
     message: string;
   };
