@@ -9,7 +9,7 @@ import { useForm } from "../hooks/useForm";
 import { useAuth } from "../context/AuthContext";
 import { loginApi } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
-import { parseServerError } from "../api/client";
+import { parseServerError, apiRequest } from "../api/client";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -70,6 +70,14 @@ function Login() {
       }
 
       login({ username: decoded.username });
+      try {
+        const userData = await apiRequest("/users/me", {
+          method: "GET",
+        });
+        console.log(userData);
+      } catch (err) {
+        console.error(err);
+      }
 
       navigate("/welcome");
     } catch (err) {

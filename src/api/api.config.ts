@@ -1,11 +1,12 @@
 const API = {
   auth: {
-    signup: `/auth/signup`,
-    login: `/auth/login`,
+    signup: `auth/signup`,
+    login: `auth/login`,
   },
-  runs: {
-    list: `/runs`,
-    create: `/runs`,
+  users: {
+    me: `users/me`,
+    account: "users/me/account",
+    profile: `users/me/profile`,
   },
 };
 
