@@ -1,3 +1,5 @@
+import type { UserState } from "./users.types";
+
 interface SignupData {
   username: string;
   email: string;
@@ -10,4 +12,10 @@ interface LoginData {
   password: string;
 }
 
-export type { SignupData, LoginData };
+interface AuthContextValue {
+  user: UserState | null;
+  login: (user: UserState) => void;
+  logout: () => void;
+}
+
+export type { SignupData, LoginData, AuthContextValue };

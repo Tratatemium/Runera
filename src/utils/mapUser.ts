@@ -1,6 +1,6 @@
-import type { UserState, UserData } from "../types/users.types";
+import type { UserState, UserApiResponse } from "../types/users.types";
 
-const mapUserDataToState = (data: UserData): UserState => ({
+const mapUserResponseToState = (data: UserApiResponse): UserState => ({
   account: {
     email: data.userData.account.email,
     username: data.userData.account.username,
@@ -15,4 +15,4 @@ const mapUserDataToState = (data: UserData): UserState => ({
   role: data.userData.role,
 });
 
-export { mapUserDataToState };
+export { mapUserResponseToState };

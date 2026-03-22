@@ -13,7 +13,7 @@ interface UserState {
   role: "user" | "admin";
 }
 
-interface UserData {
+interface UserApiResponse {
   userData: {
     userId: string;
     account: {
@@ -34,4 +34,4 @@ interface UserData {
   };
 }
 
-export type { UserState, UserData };
+export type { UserState, UserApiResponse };
