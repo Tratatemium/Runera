@@ -1,5 +1,5 @@
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-console.log(BASE_URL); // https://runners-api-lac.vercel.app/api/v1
+// console.log(BASE_URL);
 
 interface ErrorData {
   error: {

@@ -51,14 +51,7 @@ function Login() {
     setFormError(undefined);
     logout();
     try {
-      const data = await loginApi(loginData);
-      const token = data.token;
-      if (typeof token !== "string" || token.trim() === "") {
-        setFormError(
-          "Unable to log in because the server response was invalid. Please try again.",
-        );
-        return;
-      }
+      await loginApi(loginData);
 
       const userData = await usersApi.getMe();
       login(mapUserDataToState(userData));

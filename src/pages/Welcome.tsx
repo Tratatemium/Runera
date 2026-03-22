@@ -3,15 +3,17 @@ import { useAuth } from "../context/AuthContext";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 import { Button } from "../components/Button";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Welcome() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
 
   return (
     <div className={styles.page}>
@@ -28,7 +30,7 @@ function Welcome() {
             buttonText="Log Out"
             variant="accent1Inverted"
             size="small"
-            onClick={logout}
+            onClick={handleLogout}
           />
         </div>
       </header>
