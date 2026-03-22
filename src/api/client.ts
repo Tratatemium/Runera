@@ -1,5 +1,4 @@
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-// console.log(BASE_URL);
+import { config } from "../config/config";
 
 interface ErrorData {
   error: {
@@ -25,8 +24,12 @@ class ServerError extends Error {
   }
 }
 
+function joinUrl(urlPart1: string, urlPart2: string) {
+  return `${urlPart1.replace(/\/+$/, "")}/${urlPart2.replace(/^\/+/, "")}`;
+}
+
 async function apiRequest<T>(path: string, options: RequestInit): Promise<T> {
-  const response = await fetch(`${BASE_URL}${path}`, {
+  const response = await fetch(joinUrl(config.BASE_URL, path), {
     credentials: "include",
     ...options,
   });
