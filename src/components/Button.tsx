@@ -1,13 +1,11 @@
 import styles from "./Button.module.css";
 import { SpinnerIcon } from "./icons/SpinnerIcon";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   buttonText: string;
-  type?: "button" | "submit" | "reset";
   variant: "accent1" | "accent1Inverted" | "accent2";
   isSubmitting?: boolean;
   size?: "small";
-  onClick?: () => void;
 }
 
 function Button({
@@ -16,7 +14,7 @@ function Button({
   variant,
   isSubmitting = false,
   size,
-  onClick,
+  ...props
 }: ButtonProps) {
   return (
     <button
@@ -24,7 +22,7 @@ function Button({
       aria-busy={isSubmitting}
       type={type}
       disabled={isSubmitting}
-      onClick={onClick}
+      {...props}
     >
       {isSubmitting ? <SpinnerIcon /> : buttonText}
     </button>
