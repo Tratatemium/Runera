@@ -1,16 +1,16 @@
 import styles from "./Login.module.css";
 
-import { jwtDecode } from "jwt-decode";
-import type { JwtTokenPayload } from "../api/auth.api";
-
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useAuth } from "../context/AuthContext";
+
 import { loginApi } from "../api/auth.api";
 import * as usersApi from "../api/users.api";
+import { mapUserDataToState } from "../utils/mapUserData";
+
 import { inputFields } from "../config/inputFields";
-import { parseServerError, apiRequest } from "../api/client";
+import { parseServerError } from "../api/client";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -60,10 +60,8 @@ function Login() {
         return;
       }
 
-      const result = await usersApi.getMe();
-      const userData = result.userData;
-      console.log(userData)
-      login({ username: userData.account.username });
+      const userData = await usersApi.getMe();
+      login(mapUserDataToState(userData));
 
       navigate("/welcome");
     } catch (err) {

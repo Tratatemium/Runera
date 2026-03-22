@@ -3,10 +3,15 @@ import { useAuth } from "../context/AuthContext";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 import { Button } from "../components/Button";
+import { useEffect } from "react";
 
 function Welcome() {
   const { user, logout } = useAuth();
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   return (
     <div className={styles.page}>
