@@ -1,21 +1,12 @@
 import { apiRequest } from "./client";
-import { API } from "./api.config";
+import { API } from "../config/api.config";
 
 interface SignupData {
   username: string;
   email: string;
   password: string;
 }
-interface JwtTokenPayload {
-  userId: string;
-  role: string;
-  username: string;
-  email: string;
-  accessTokenVersion: number;
-  iat: number;
-  exp: number;
-  iss: string;
-}
+
 interface LoginResponse {
   token: string;
   expiresIn: string;
@@ -48,4 +39,4 @@ function loginApi(data: LoginData) {
 }
 
 export { signupApi, loginApi };
-export type { LoginResponse, JwtTokenPayload };
+export type { LoginResponse };
