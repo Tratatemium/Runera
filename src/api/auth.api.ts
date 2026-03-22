@@ -1,31 +1,21 @@
+import type {
+  SignupData,
+  SignupResponse,
+  LoginData,
+  LoginResponse,
+} from "../types/auth.types";
+
 import { apiRequest } from "./client";
-import { API } from "../config/api.config";
-
-interface SignupData {
-  username: string;
-  email: string;
-  password: string;
-}
-
-interface LoginResponse {
-  token: string;
-  expiresIn: string;
-}
+import { API } from "../config/apiConfig";
 
 function signupApi(data: SignupData) {
-  return apiRequest(API.auth.signup, {
+  return apiRequest<SignupResponse>(API.auth.signup, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
-}
-
-interface LoginData {
-  username?: string;
-  email?: string;
-  password: string;
 }
 
 function loginApi(data: LoginData) {
@@ -39,4 +29,3 @@ function loginApi(data: LoginData) {
 }
 
 export { signupApi, loginApi };
-export type { LoginResponse };

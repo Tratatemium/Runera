@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 
 import { loginApi } from "../api/auth.api";
 import * as usersApi from "../api/users.api";
-import { mapUserDataToState } from "../utils/mapUserData";
+import { mapUserResponseToState } from "../utils/mapUser";
 
 import { inputFields } from "../config/inputFields";
 import { parseServerError } from "../api/client";
@@ -54,7 +54,7 @@ function Login() {
       await loginApi(loginData);
 
       const userData = await usersApi.getMe();
-      login(mapUserDataToState(userData));
+      login(mapUserResponseToState(userData));
 
       navigate("/welcome");
     } catch (err) {

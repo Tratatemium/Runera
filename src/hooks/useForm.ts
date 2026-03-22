@@ -1,15 +1,16 @@
+import type { InputFieldConfig } from "../types/forms.types";
+
 import { useState, useMemo } from "react";
-import { FieldConfig } from "../config/inputFields";
 import { validateField } from "../validation/validators";
 
 function createInitialState<T extends Record<string, string>>(
-  fields: readonly FieldConfig[],
+  fields: readonly InputFieldConfig[],
 ): T {
   return Object.fromEntries(fields.map((f) => [f.id, ""])) as T;
 }
 
 function useForm<T extends Record<string, string>>(
-  fields: readonly FieldConfig[],
+  fields: readonly InputFieldConfig[],
 ) {
   const fieldMap = useMemo(
     () => Object.fromEntries(fields.map((f) => [f.id, f])),

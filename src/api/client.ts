@@ -1,17 +1,6 @@
-import { config } from "../config/config";
+import type { ErrorData, ParsedServerError } from "../types/error.types";
 
-interface ErrorData {
-  error: {
-    field?: string;
-    message: string;
-  };
-}
-
-interface ParsedServerError {
-  fieldErrors?: Record<string, string>;
-  generalError?: string;
-}
-
+import { config } from "../config/appConfig";
 class ServerError extends Error {
   status: number;
   data: ErrorData;

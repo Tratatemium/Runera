@@ -1,17 +1,8 @@
+import type { InputFieldConfig } from "../types/forms.types";
+
 import * as validators from "../validation/validators";
 
-export type FieldConfig = {
-  id: string;
-  label: string;
-  type?: "text" | "email" | "password";
-  placeholder?: string;
-  validator?: (
-    value: string,
-    formData: Record<string, string>,
-  ) => string | undefined;
-};
-
-const inputFields: Record<string, FieldConfig> = {
+const inputFields: Record<string, InputFieldConfig> = {
   username: {
     id: "username",
     label: "Username",
