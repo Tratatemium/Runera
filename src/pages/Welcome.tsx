@@ -22,7 +22,7 @@ function Welcome() {
         <div className={styles.headerActions}>
           <ButtonLink
             linkDirection="/"
-            linkText="Home"
+            linkText="My Profile"
             style="accent1Inverted"
             size="small"
           />
