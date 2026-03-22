@@ -1,4 +1,5 @@
 import { apiRequest } from "./client";
+import { API } from "./api.config";
 
 interface SignupData {
   username: string;
@@ -21,7 +22,7 @@ interface LoginResponse {
 }
 
 function signupApi(data: SignupData) {
-  return apiRequest("https://runners-api-lac.vercel.app/api/v1/auth/signup", {
+  return apiRequest(API.auth.signup, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -37,16 +38,13 @@ interface LoginData {
 }
 
 function loginApi(data: LoginData) {
-  return apiRequest<LoginResponse>(
-    "https://runners-api-lac.vercel.app/api/v1/auth/login",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+  return apiRequest<LoginResponse>(API.auth.login, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify(data),
+  });
 }
 
 export { signupApi, loginApi };

@@ -1,3 +1,6 @@
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+console.log(BASE_URL); // https://runners-api-lac.vercel.app/api/v1
+
 interface ErrorData {
   error: {
     field?: string;
@@ -22,8 +25,8 @@ class ServerError extends Error {
   }
 }
 
-async function apiRequest<T>(url: string, options: RequestInit): Promise<T> {
-  const response = await fetch(url, {
+async function apiRequest<T>(path: string, options: RequestInit): Promise<T> {
+  const response = await fetch(`${BASE_URL}${path}`, {
     credentials: "include",
     ...options,
   });
