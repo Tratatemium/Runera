@@ -1,11 +1,11 @@
-import styles from "./Welcome.module.css";
+import styles from "./Dashboard.module.css";
 import { useAuth } from "../context/AuthContext";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 import { Button } from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
-function Welcome() {
+function Dashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
@@ -89,4 +89,4 @@ function Welcome() {
   );
 }
 
-export { Welcome };
+export { Dashboard };
