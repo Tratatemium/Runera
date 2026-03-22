@@ -1,6 +1,6 @@
 import type { ErrorData, ParsedServerError } from "../types/error.types";
 
-import { config } from "../config/config";
+import { config } from "../config/appConfig";
 class ServerError extends Error {
   status: number;
   data: ErrorData;

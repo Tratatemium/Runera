@@ -1,6 +1,6 @@
 import type { FieldConfig } from "../config/inputFields";
 
-import { checkEmpty, checkLength, checkWhitespace } from "./validationHelpers";
+import { checkEmpty, checkLength, checkWhitespace } from "./validationUtils";
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

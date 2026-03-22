@@ -1,7 +1,7 @@
 import type { SignupData, LoginData } from "../types/auth.types";
 
 import { apiRequest } from "./client";
-import { API } from "../config/api.config";
+import { API } from "../config/apiConfig";
 
 function signupApi(data: SignupData) {
   return apiRequest(API.auth.signup, {
