@@ -1,4 +1,4 @@
-import type { FieldConfig } from "../config/inputFields";
+import type { InputFieldConfig } from "../types/forms.types";
 
 import { checkEmpty, checkLength, checkWhitespace } from "./validationUtils";
 
@@ -54,7 +54,10 @@ function validateLogin(value: string, _formData: Record<string, string>) {
   );
 }
 
-function validateField(formData: Record<string, string>, field: FieldConfig) {
+function validateField(
+  formData: Record<string, string>,
+  field: InputFieldConfig,
+) {
   const value = formData[field.id];
   return field.validator?.(value, formData);
 }
