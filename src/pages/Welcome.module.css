@@ -22,6 +22,13 @@
   gap: 0.75rem;
 }
 
+.loginAction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
 
 .main {
   width: min(1100px, 92%);
@@ -35,6 +42,7 @@
 .greeting {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.4rem;
 }
 
@@ -51,8 +59,10 @@
 }
 
 .stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
 }
 
