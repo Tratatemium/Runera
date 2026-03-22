@@ -3,10 +3,17 @@ import { useAuth } from "../context/AuthContext";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 import { Button } from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 function Welcome() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
+
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
 
   return (
     <div className={styles.page}>
@@ -23,7 +30,7 @@ function Welcome() {
             buttonText="Log Out"
             variant="accent1Inverted"
             size="small"
-            onClick={logout}
+            onClick={handleLogout}
           />
         </div>
       </header>
@@ -31,7 +38,7 @@ function Welcome() {
       <main className={styles.main}>
         {user ? (
           <div className={styles.greeting}>
-            <h1>Welcome back, {user?.username}!</h1>
+            <h1>Welcome back, {user.account.username}!</h1>
             <p>Here's a snapshot of your running journey.</p>
           </div>
         ) : (

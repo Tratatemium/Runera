@@ -1,12 +1,10 @@
+import type { UserState } from "../types/users.types";
+
 import { createContext, ReactNode, useContext, useState } from "react";
 
-export type User = {
-  username: string;
-};
-
 type AuthContextType = {
-  user: User | null;
-  login: (user: User) => void;
+  user: UserState | null;
+  login: (user: UserState) => void;
   logout: () => void;
 };
 
@@ -17,9 +15,9 @@ type AuthProviderProps = {
 };
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserState | null>(null);
 
-  const login = (user: User) => setUser(user);
+  const login = (user: UserState) => setUser(user);
   const logout = () => setUser(null);
 
   return (
