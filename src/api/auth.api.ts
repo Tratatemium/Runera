@@ -1,10 +1,15 @@
-import type { SignupData, LoginData } from "../types/auth.types";
+import type {
+  SignupData,
+  SignupResponse,
+  LoginData,
+  LoginResponse,
+} from "../types/auth.types";
 
 import { apiRequest } from "./client";
 import { API } from "../config/apiConfig";
 
 function signupApi(data: SignupData) {
-  return apiRequest(API.auth.signup, {
+  return apiRequest<SignupResponse>(API.auth.signup, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +19,7 @@ function signupApi(data: SignupData) {
 }
 
 function loginApi(data: LoginData) {
-  return apiRequest(API.auth.login, {
+  return apiRequest<LoginResponse>(API.auth.login, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

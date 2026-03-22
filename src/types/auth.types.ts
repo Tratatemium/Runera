@@ -6,11 +6,17 @@ interface SignupData {
   password: string;
 }
 
+interface SignupResponse {
+  userId: string;
+}
+
 interface LoginData {
   username?: string;
   email?: string;
   password: string;
 }
+
+type LoginResponse = void;
 
 interface AuthContextValue {
   user: UserState | null;
@@ -18,4 +24,10 @@ interface AuthContextValue {
   logout: () => void;
 }
 
-export type { SignupData, LoginData, AuthContextValue };
+export type {
+  SignupData,
+  SignupResponse,
+  LoginData,
+  LoginResponse,
+  AuthContextValue,
+};
