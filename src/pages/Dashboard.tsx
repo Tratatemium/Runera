@@ -1,9 +1,10 @@
 import styles from "./Dashboard.module.css";
+
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 import { Button } from "../components/Button";
-import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const { user, logout } = useAuth();
@@ -21,7 +22,7 @@ function Dashboard() {
         <Logo style="colorStyleAccent1" />
         <div className={styles.headerActions}>
           <ButtonLink
-            linkDirection="/"
+            linkDirection="/user-page"
             linkText="My Profile"
             style="accent1Inverted"
             size="small"

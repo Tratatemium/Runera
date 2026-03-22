@@ -4,6 +4,7 @@ import { Home } from "./pages/Home";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/Dashboard";
+import { UserPage } from "./pages/UserPage";
 
 function RoutesProvider() {
   return (
@@ -12,6 +13,7 @@ function RoutesProvider() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/user-page" element={<UserPage />} />
     </Routes>
   );
 }
