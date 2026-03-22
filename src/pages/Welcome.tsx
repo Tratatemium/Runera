@@ -31,7 +31,7 @@ function Welcome() {
       <main className={styles.main}>
         {user ? (
           <div className={styles.greeting}>
-            <h1>Welcome back, {user?.username}!</h1>
+            <h1>Welcome back, {user.account.username}!</h1>
             <p>Here's a snapshot of your running journey.</p>
           </div>
         ) : (

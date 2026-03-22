@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useAuth } from "../context/AuthContext";
 import { loginApi } from "../api/auth.api";
+import * as usersApi from "../api/users.api";
 import { inputFields } from "../config/inputFields";
 import { parseServerError, apiRequest } from "../api/client";
 
@@ -59,25 +60,10 @@ function Login() {
         return;
       }
 
-      let decoded: JwtTokenPayload;
-      try {
-        decoded = jwtDecode(token);
-      } catch {
-        setFormError(
-          "Unable to log in with the received credentials. Please try again.",
-        );
-        return;
-      }
-
-      login({ username: decoded.username });
-      try {
-        const userData = await apiRequest("/users/me", {
-          method: "GET",
-        });
-        console.log(userData);
-      } catch (err) {
-        console.error(err);
-      }
+      const result = await usersApi.getMe();
+      const userData = result.userData;
+      console.log(userData)
+      login({ username: userData.account.username });
 
       navigate("/welcome");
     } catch (err) {
