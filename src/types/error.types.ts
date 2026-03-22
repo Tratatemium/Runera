@@ -1,7 +1,7 @@
 interface ErrorData {
   error?: {
     field?: string;
-    message: string;
+    message?: string;
   };
 }
 
