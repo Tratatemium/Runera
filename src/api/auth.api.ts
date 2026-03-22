@@ -5,8 +5,22 @@ interface SignupData {
   email: string;
   password: string;
 }
+interface JwtTokenPayload {
+  userId: string;
+  role: string;
+  username: string;
+  email: string;
+  accessTokenVersion: number;
+  iat: number;
+  exp: number;
+  iss: string;
+}
+interface LoginResponse {
+  token: string;
+  expiresIn: string;
+}
 
-function signup(data: SignupData) {
+function signupApi(data: SignupData) {
   return apiRequest("https://runners-api-lac.vercel.app/api/v1/auth/signup", {
     method: "POST",
     headers: {
@@ -22,14 +36,18 @@ interface LoginData {
   password: string;
 }
 
-function login(data: LoginData) {
-  return apiRequest("https://runners-api-lac.vercel.app/api/v1/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+function loginApi(data: LoginData) {
+  return apiRequest<LoginResponse>(
+    "https://runners-api-lac.vercel.app/api/v1/auth/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     },
-    body: JSON.stringify(data),
-  });
+  );
 }
 
-export { signup, login };
+export { signupApi, loginApi };
+export type { LoginResponse, JwtTokenPayload };

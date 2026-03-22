@@ -1,11 +1,11 @@
 import styles from "./Button.module.css";
 import { SpinnerIcon } from "./icons/SpinnerIcon";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   buttonText: string;
-  type?: "button" | "submit" | "reset";
   variant: "accent1" | "accent1Inverted" | "accent2";
   isSubmitting?: boolean;
+  size?: "small";
 }
 
 function Button({
@@ -13,13 +13,16 @@ function Button({
   type = "button",
   variant,
   isSubmitting = false,
+  size,
+  ...props
 }: ButtonProps) {
   return (
     <button
-      className={`${styles.button} ${styles[variant]}`}
+      className={`${styles.button} ${styles[variant]}${size ? ` ${styles[size]}` : ""}`}
       aria-busy={isSubmitting}
       type={type}
       disabled={isSubmitting}
+      {...props}
     >
       {isSubmitting ? <SpinnerIcon /> : buttonText}
     </button>

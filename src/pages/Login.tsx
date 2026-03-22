@@ -1,9 +1,13 @@
 import styles from "./Login.module.css";
 
+import { jwtDecode } from "jwt-decode";
+import type { JwtTokenPayload } from "../api/auth.api";
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "../hooks/useForm";
-import { login } from "../api/auth.api";
+import { useAuth } from "../context/AuthContext";
+import { loginApi } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
 import { parseServerError } from "../api/client";
 
@@ -22,6 +26,8 @@ const loginFields = [inputFields.login, inputFields.password] as const;
 
 function Login() {
   const navigate = useNavigate();
+  const { login, logout } = useAuth();
+
   type LoginForm = {
     [K in (typeof loginFields)[number]["id"]]: string;
   };
@@ -42,9 +48,30 @@ function Login() {
 
     setIsSubmitting(true);
     setFormError(undefined);
+    logout();
     try {
-      await login(loginData);
-      navigate("/");
+      const data = await loginApi(loginData);
+      const token = data.token;
+      if (typeof token !== "string" || token.trim() === "") {
+        setFormError(
+          "Unable to log in because the server response was invalid. Please try again.",
+        );
+        return;
+      }
+
+      let decoded: JwtTokenPayload;
+      try {
+        decoded = jwtDecode(token);
+      } catch {
+        setFormError(
+          "Unable to log in with the received credentials. Please try again.",
+        );
+        return;
+      }
+
+      login({ username: decoded.username });
+
+      navigate("/welcome");
     } catch (err) {
       const { generalError } = parseServerError(err);
       if (generalError) setFormError(generalError);
