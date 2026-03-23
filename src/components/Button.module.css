@@ -86,7 +86,7 @@
 }
 
 .transparent {
-  --bg: tranaparent;
+  --bg: transparent;
   --color: var(--secondary-color);
   --border: transparent;
 
