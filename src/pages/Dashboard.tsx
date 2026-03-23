@@ -1,21 +1,13 @@
 import styles from "./Dashboard.module.css";
 
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { Header } from "../components/Header";
 import { ButtonLink } from "../components/ButtonLink";
-import { Button } from "../components/Button";
 
 function Dashboard() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth();
   const currentYear = new Date().getFullYear();
-
-  function handleLogout() {
-    logout();
-    navigate("/");
-  }
 
   return (
     <div className={styles.page}>
