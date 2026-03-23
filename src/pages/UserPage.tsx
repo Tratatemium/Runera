@@ -35,7 +35,7 @@ function UserPage() {
         <ButtonLink
           linkDirection="/dashboard"
           linkText="Dashboard"
-          style="accent1Inverted"
+          variant="accent1Inverted"
           size="small"
         />
         <Button

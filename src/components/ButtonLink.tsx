@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 interface ButtonLinkProps {
   linkDirection: string;
   linkText: string;
-  style: "accent1" | "accent1Inverted" | "accent2";
+  variant: "accent1" | "accent1Inverted" | "accent2";
   size?: "small";
   disabled?: boolean;
 }
@@ -13,7 +13,7 @@ interface ButtonLinkProps {
 function ButtonLink({
   linkDirection,
   linkText,
-  style,
+  variant,
   size,
   disabled,
 }: ButtonLinkProps) {
@@ -22,7 +22,7 @@ function ButtonLink({
       to={linkDirection}
       className={`
         ${styles.button}
-        ${styles[style]}
+        ${styles[variant]}
         ${size ? ` ${styles[size]}` : ""}
         ${disabled ? styles.disabled : styles.enabled}
       `}

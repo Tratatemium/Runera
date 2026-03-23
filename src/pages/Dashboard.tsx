@@ -23,7 +23,7 @@ function Dashboard() {
         <ButtonLink
           linkDirection="/user-page"
           linkText="My Profile"
-          style="accent1Inverted"
+          variant="accent1Inverted"
           size="small"
         />
         <Button
@@ -75,7 +75,7 @@ function Dashboard() {
           <ButtonLink
             linkDirection="/login"
             linkText="Go to Login"
-            style="accent1"
+            variant="accent1"
           />
         </div>
       )}
