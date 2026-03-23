@@ -28,7 +28,7 @@ function ButtonLink({
         ${styles.button}
         ${styles[variant]}
         ${size ? ` ${styles[size]}` : ""}
-        ${disabled ? styles.disabled : styles.enabled}
+        ${disabled ? styles.disabled : ""}
         ${active ? styles.active : ""}
       `}
     >
