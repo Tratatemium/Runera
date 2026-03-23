@@ -8,6 +8,7 @@ interface ButtonLinkProps {
   variant: "primary" | "secondary" | "transparent";
   size?: "small";
   disabled?: boolean;
+  active?: boolean;
 }
 
 function ButtonLink({
@@ -16,6 +17,7 @@ function ButtonLink({
   variant,
   size,
   disabled,
+  active,
 }: ButtonLinkProps) {
   return (
     <Link
@@ -25,6 +27,7 @@ function ButtonLink({
         ${styles[variant]}
         ${size ? ` ${styles[size]}` : ""}
         ${disabled ? styles.disabled : styles.enabled}
+        ${active ? styles.active : ""}
       `}
     >
       {linkText}
