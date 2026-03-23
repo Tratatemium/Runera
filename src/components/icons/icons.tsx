@@ -53,6 +53,42 @@ const icons: Record<string, Icon> = {
     );
   },
 
+  run: (props: SVGProps<SVGSVGElement>) => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="1em"
+        height="1em"
+        viewBox="0 0 24 24"
+        {...props}
+      >
+        {/* Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE */}
+        <path
+          fill="currentColor"
+          d="M13.5 5.5c1.09 0 2-.92 2-2a2 2 0 0 0-2-2c-1.11 0-2 .88-2 2c0 1.08.89 2 2 2M9.89 19.38l1-4.38L13 17v6h2v-7.5l-2.11-2l.61-3A7.3 7.3 0 0 0 19 13v-2c-1.91 0-3.5-1-4.31-2.42l-1-1.58c-.4-.62-1-1-1.69-1c-.31 0-.5.08-.81.08L6 8.28V13h2V9.58l1.79-.7L8.19 17l-4.9-1l-.4 2z"
+        />
+      </svg>
+    );
+  },
+
+  runFast: (props: SVGProps<SVGSVGElement>) => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="1em"
+        height="1em"
+        viewBox="0 0 24 24"
+        {...props}
+      >
+        {/* Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE */}
+        <path
+          fill="currentColor"
+          d="M16.5 5.5a2 2 0 0 0 2-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2a2 2 0 0 0 2 2m-3.6 13.9l1-4.4l2.1 2v6h2v-7.5l-2.1-2l.6-3A7.3 7.3 0 0 0 22 13v-2c-1.76.03-3.4-.89-4.3-2.4l-1-1.6c-.36-.6-1-1-1.7-1c-.3 0-.5.1-.8.1L9 8.3V13h2V9.6l1.8-.7l-1.6 8.1l-4.9-1l-.4 2zM4 9a1 1 0 0 1-1-1a1 1 0 0 1 1-1h3v2zm1-4a1 1 0 0 1-1-1a1 1 0 0 1 1-1h5v2zm-2 8a1 1 0 0 1-1-1a1 1 0 0 1 1-1h4v2z"
+        />
+      </svg>
+    );
+  },
+
   eye: (props: SVGProps<SVGSVGElement>) => {
     return (
       <svg
@@ -139,6 +175,76 @@ const icons: Record<string, Icon> = {
           fill="currentColor"
           d="M12 20c4.4 0 8-3.6 8-8s-3.6-8-8-8s-8 3.6-8 8s3.6 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10S2 17.5 2 12S6.5 2 12 2m5 11.9l-.7 1.3l-5.3-2.9V7h1.5v4.4z"
         />
+      </svg>
+    );
+  },
+
+  speed: (props: SVGProps<SVGSVGElement>) => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="1em"
+        height="1em"
+        viewBox="0 0 24 24"
+        {...props}
+      >
+        {/* Icon from Tabler Icons by Paweł Kuna - https://github.com/tabler/tabler-icons/blob/master/LICENSE */}
+        <path
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M5.636 19.364a9 9 0 1 1 12.728 0M16 9l-4 4"
+        />
+      </svg>
+    );
+  },
+
+  calendar: (props: SVGProps<SVGSVGElement>) => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="1em"
+        height="1em"
+        viewBox="0 0 24 24"
+        {...props}
+      >
+        {/* Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE */}
+        <path
+          fill="currentColor"
+          d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.11 0 2-.89 2-2V5a2 2 0 0 0-2-2m0 16H5V9h14zm0-12H5V5h14z"
+        />
+      </svg>
+    );
+  },
+
+  distance: (props: SVGProps<SVGSVGElement>) => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="1em"
+        height="1em"
+        viewBox="0 0 24 24"
+        {...props}
+      >
+        {/* Icon from TDesign Icons by TDesign - https://github.com/Tencent/tdesign-icons/blob/main/LICENSE */}
+        <g fill="none">
+          <path d="M21 3H3v18h18z" />
+          <path d="M18 7.5c0 1.219-1.5 2.25-1.5 2.25S15 8.719 15 7.5a1.5 1.5 0 0 1 3 0m-8 3c0 1.219-1.5 2.25-1.5 2.25S7 11.719 7 10.5a1.5 1.5 0 1 1 3 0" />
+          <path
+            stroke="currentColor"
+            strokeLinecap="square"
+            strokeWidth="2"
+            d="M21 3H3v18h18z"
+          />
+          <path
+            stroke="currentColor"
+            strokeLinecap="square"
+            strokeWidth="2"
+            d="m14.5 14.5l4-1.5m-12 4.5l4-1.5M18 7.5c0 1.219-1.5 2.25-1.5 2.25S15 8.719 15 7.5a1.5 1.5 0 0 1 3 0Zm-8 3c0 1.219-1.5 2.25-1.5 2.25S7 11.719 7 10.5a1.5 1.5 0 1 1 3 0Z"
+          />
+        </g>
       </svg>
     );
   },
