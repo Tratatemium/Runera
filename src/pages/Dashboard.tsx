@@ -2,7 +2,8 @@ import styles from "./Dashboard.module.css";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Logo } from "../components/Logo";
+
+import { Header } from "../components/Header";
 import { ButtonLink } from "../components/ButtonLink";
 import { Button } from "../components/Button";
 
@@ -18,23 +19,20 @@ function Dashboard() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <Logo style="colorStyleAccent1" />
-        <div className={styles.headerActions}>
-          <ButtonLink
-            linkDirection="/user-page"
-            linkText="My Profile"
-            style="accent1Inverted"
-            size="small"
-          />
-          <Button
-            buttonText="Log Out"
-            variant="accent1Inverted"
-            size="small"
-            onClick={handleLogout}
-          />
-        </div>
-      </header>
+      <Header>
+        <ButtonLink
+          linkDirection="/user-page"
+          linkText="My Profile"
+          style="accent1Inverted"
+          size="small"
+        />
+        <Button
+          buttonText="Log Out"
+          variant="accent1Inverted"
+          size="small"
+          onClick={handleLogout}
+        />
+      </Header>
 
       {user ? (
         <main className={styles.main}>

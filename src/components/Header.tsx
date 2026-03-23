@@ -4,11 +4,12 @@ import { Logo } from "../components/Logo";
 
 interface HeaderProps {
   children?: React.ReactNode;
+  className?: string;
 }
 
-function Header({ children }: HeaderProps) {
+function Header({ children, className }: HeaderProps) {
   return (
-    <header className={styles.header}>
+    <header className={[styles.header, className].filter(Boolean).join(" ")}>
       <Logo style="colorStyleAccent1" />
       <div className={styles.headerContent}>
         {children}

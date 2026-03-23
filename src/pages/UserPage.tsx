@@ -2,7 +2,8 @@ import styles from "./UserPage.module.css";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Logo } from "../components/Logo";
+
+import { Header } from "../components/Header";
 import { ButtonLink } from "../components/ButtonLink";
 import { Button } from "../components/Button";
 import { useEffect } from "react";
@@ -13,7 +14,7 @@ function UserPage() {
 
   useEffect(() => {
     if (!user) navigate("/");
-  }, [user]);
+  }, [user, navigate]);
   if (!user) return null;
 
   const { account, profile } = user;
@@ -30,23 +31,20 @@ function UserPage() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <Logo style="colorStyleAccent1" />
-        <div className={styles.headerActions}>
-          <ButtonLink
-            linkDirection="/dashboard"
-            linkText="Dashboard"
-            style="accent1Inverted"
-            size="small"
-          />
-          <Button
-            buttonText="Log Out"
-            variant="accent1Inverted"
-            size="small"
-            onClick={handleLogout}
-          />
-        </div>
-      </header>
+      <Header>
+        <ButtonLink
+          linkDirection="/dashboard"
+          linkText="Dashboard"
+          style="accent1Inverted"
+          size="small"
+        />
+        <Button
+          buttonText="Log Out"
+          variant="accent1Inverted"
+          size="small"
+          onClick={handleLogout}
+        />
+      </Header>
 
       <main className={styles.main}>
         <div className={styles.avatar}>
