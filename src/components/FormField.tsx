@@ -66,7 +66,7 @@ function FormField({
         )}
       </div>
       {inputError && (
-        <div id={`${id}-error`} className={styles.errorWraper}>
+        <div id={`${id}-error`} className={styles.errorWrapper}>
           <p className={styles.errorText}>{inputError}</p>
         </div>
       )}
