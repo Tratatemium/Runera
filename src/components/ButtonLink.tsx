@@ -3,6 +3,7 @@ import styles from "./Button.module.css";
 import { Link } from "react-router-dom";
 
 interface ButtonLinkProps {
+  children?: React.ReactNode;
   linkDirection: string;
   linkText: string;
   variant: "primary" | "secondary" | "transparent";
@@ -12,6 +13,7 @@ interface ButtonLinkProps {
 }
 
 function ButtonLink({
+  children,
   linkDirection,
   linkText,
   variant,
@@ -30,6 +32,7 @@ function ButtonLink({
         ${active ? styles.active : ""}
       `}
     >
+      {children}
       {linkText}
     </Link>
   );

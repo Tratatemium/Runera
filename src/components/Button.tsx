@@ -2,6 +2,7 @@ import styles from "./Button.module.css";
 import { icons } from "./icons/icons";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode;
   buttonText: string;
   variant: "primary" | "secondary" | "transparent";
   isSubmitting?: boolean;
@@ -9,6 +10,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({
+  children,
   buttonText,
   type = "button",
   variant,
@@ -25,6 +27,7 @@ function Button({
       disabled={isSubmitting}
       {...props}
     >
+      {children}
       {isSubmitting ? <SpinnerIcon /> : buttonText}
     </button>
   );
