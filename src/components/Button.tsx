@@ -1,14 +1,16 @@
 import styles from "./Button.module.css";
-import { SpinnerIcon } from "./icons/SpinnerIcon";
+import { icons } from "./icons/icons";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode;
   buttonText: string;
-  variant: "accent1" | "accent1Inverted" | "accent2";
+  variant: "primary" | "secondary" | "transparent";
   isSubmitting?: boolean;
   size?: "small";
 }
 
 function Button({
+  children,
   buttonText,
   type = "button",
   variant,
@@ -16,6 +18,7 @@ function Button({
   size,
   ...props
 }: ButtonProps) {
+  const SpinnerIcon = icons.spinner;
   return (
     <button
       className={`${styles.button} ${styles[variant]}${size ? ` ${styles[size]}` : ""}`}
@@ -24,7 +27,9 @@ function Button({
       disabled={isSubmitting}
       {...props}
     >
-      {isSubmitting ? <SpinnerIcon /> : buttonText}
+      {children && <span className={styles.icon}>{children}</span>}
+      <span>{isSubmitting ? <SpinnerIcon /> : buttonText}</span>
+      
     </button>
   );
 }

@@ -27,7 +27,7 @@ function AuthCard({
   return (
     <section className={styles.authCard} aria-labelledby="authTitle">
       <header className={styles.authHeader}>
-        <Logo style="colorStyleSecondary" />
+        <Logo variant="secondary" />
         <h1 id="authTitle" className={styles.authTitle}>
           {title}
         </h1>
@@ -36,18 +36,21 @@ function AuthCard({
 
       <form className={styles.authForm} onSubmit={onSubmit} noValidate>
         {children}
-        {formError && (
-          <p role="alert" className={styles.errorText}>
-            {formError}
-          </p>
-        )}
-        <div className={styles.formActions}>
-          <Button
-            buttonText={buttonText}
-            type="submit"
-            variant="accent1"
-            isSubmitting={isSubmitting}
-          />
+
+        <div className={styles.submitWrapper}>
+          {formError && (
+            <div role="alert" className={styles.errorWrapper}>
+              <p className={styles.errorText}>{formError}</p>
+            </div>
+          )}
+          <div className={`${styles.submit} ${formError ? styles.error : ""}`}>
+            <Button
+              buttonText={buttonText}
+              type="submit"
+              variant="primary"
+              isSubmitting={isSubmitting}
+            />
+          </div>
         </div>
       </form>
 

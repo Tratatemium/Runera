@@ -1,8 +1,12 @@
 .logoLockup {
+  --bg-logo: var(--accent-color-1);
+  --color-logo: var(--secondary-color);
+  --color-name: var(--accent-color-1);
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.8em;
+  border-radius: 0.2em;
 }
 
 .logo {
@@ -12,6 +16,8 @@
   width: 1.75em;
   height: 1.75em;
   border-radius: 0.5em;
+  background-color: var(--bg-logo);
+  color: var(--color-logo);
 }
 .logo svg {
   fill: none;
@@ -29,22 +35,17 @@
   letter-spacing: 0.18em;
   font-size: 0.78rem;
   font-weight: var(--font-weight-semibold);
+  color: var(--color-name);
 }
 
-.colorStyleAccent1 .logo {
-  background-color: var(--accent-color-1);
-  color: var(--secondary-color);
+.primary {
+  --bg-logo: var(--accent-color-1);
+  --color-logo: var(--secondary-color);
+  --color-name: var(--accent-color-1);
 }
 
-.colorStyleAccent1 .brandName {
-  color: var(--accent-color-1);
-}
-
-.colorStyleSecondary .logo {
-  background-color: var(--secondary-color);
-  color: var(--accent-color-1);
-}
-
-.colorStyleSecondary .brandName {
-  color: var(--secondary-color);
+.secondary {
+  --bg-logo: var(--secondary-color);
+  --color-logo: var(--accent-color-1);
+  --color-name: var(--secondary-color);
 }

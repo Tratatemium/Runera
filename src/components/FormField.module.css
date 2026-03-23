@@ -4,6 +4,11 @@
   align-items: start;
   color: var(--primary-color);
   gap: 0.5em;
+  margin-bottom: 1.6em;
+}
+
+.error {
+  margin-bottom: 0em;
 }
 
 .formLabel {
@@ -41,12 +46,19 @@
   background: white;
 }
 
+.errorWrapper {
+  margin: 0;
+  padding: 0;
+  min-height: 1.1em;
+  max-width: 40ch;
+}
+
 .errorText {
   margin: 0;
-  max-width: 40ch;
+  font-size: 0.85em;
+  line-height: 1.1em;
   text-align: left;
-  font-size: 0.875em;
-  color: #b3261e;
+  color: var(--error-color);
 }
 
 .showPasswordIcon {
@@ -61,4 +73,5 @@
   border: none;
   background: none;
   padding: 0;
+  color: var(--accent-color-1);
 }

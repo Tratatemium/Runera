@@ -1,5 +1,6 @@
 import styles from "./Home.module.css";
 
+import { Header } from "../components/Header";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 
@@ -8,9 +9,10 @@ function Home() {
 
   return (
     <div className={styles.home}>
+      <Header />
       <main>
         <section className={styles.hero}>
-          <Logo style={"colorStyleAccent1"}></Logo>
+          <Logo variant="primary"></Logo>
           <h1 className={styles.title}>Track Every Step</h1>
           <p className={styles.subtitle}>
             Log your runs, monitor progress, and achieve your goals with Runera.
@@ -20,12 +22,12 @@ function Home() {
             <ButtonLink
               linkDirection="/signup"
               linkText="Sign Up"
-              style="accent1"
+              variant="primary"
             ></ButtonLink>
             <ButtonLink
               linkDirection="/login"
               linkText="Log In"
-              style="accent1Inverted"
+              variant="secondary"
             ></ButtonLink>
           </div>
         </section>

@@ -3,7 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
-import { Welcome } from "./pages/Welcome";
+import { Dashboard } from "./pages/Dashboard";
+import { UserPage } from "./pages/UserPage";
 
 function RoutesProvider() {
   return (
@@ -11,7 +12,8 @@ function RoutesProvider() {
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/welcome" element={<Welcome />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/user-page" element={<UserPage />} />
     </Routes>
   );
 }

@@ -1,7 +1,6 @@
 import styles from "./FormField.module.css";
 import { useState, useRef } from "react";
-import { EyeIcon } from "./icons/EyeIcon";
-import { EyeOffIcon } from "./icons/EyeOffIcon";
+import { icons } from "./icons/icons";
 
 interface FormFieldProps {
   id: string;
@@ -25,6 +24,7 @@ function FormField({
   inputError,
 }: FormFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const EyeIcon = showPassword ? icons.eyeOff : icons.eye;
 
   const isPassword = type === "password";
   const inputType = isPassword && showPassword ? "text" : type;
@@ -32,7 +32,7 @@ function FormField({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={styles.formRow}>
+    <div className={`${styles.formRow} ${inputError ? styles.error : ""}`}>
       <label htmlFor={id} className={styles.formLabel}>
         {label}
       </label>
@@ -61,14 +61,14 @@ function FormField({
               inputRef.current?.focus();
             }}
           >
-            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            <EyeIcon />
           </button>
         )}
       </div>
       {inputError && (
-        <p id={`${id}-error`} className={styles.errorText}>
-          {inputError}
-        </p>
+        <div id={`${id}-error`} className={styles.errorWrapper}>
+          <p className={styles.errorText}>{inputError}</p>
+        </div>
       )}
     </div>
   );
