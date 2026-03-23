@@ -1,7 +1,6 @@
 import styles from "./FormField.module.css";
 import { useState, useRef } from "react";
-import { EyeIcon } from "./icons/EyeIcon";
-import { EyeOffIcon } from "./icons/EyeOffIcon";
+import { icons } from "./icons/icons";
 
 interface FormFieldProps {
   id: string;
@@ -25,6 +24,7 @@ function FormField({
   inputError,
 }: FormFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const EyeIcon = showPassword ? icons.eyeOff : icons.eye;
 
   const isPassword = type === "password";
   const inputType = isPassword && showPassword ? "text" : type;
@@ -61,7 +61,7 @@ function FormField({
               inputRef.current?.focus();
             }}
           >
-            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            <EyeIcon />
           </button>
         )}
       </div>

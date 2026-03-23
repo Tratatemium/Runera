@@ -1,5 +1,5 @@
 import styles from "./Button.module.css";
-import { SpinnerIcon } from "./icons/SpinnerIcon";
+import { icons } from "./icons/icons";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   buttonText: string;
@@ -16,6 +16,7 @@ function Button({
   size,
   ...props
 }: ButtonProps) {
+  const SpinnerIcon = icons.spinner;
   return (
     <button
       className={`${styles.button} ${styles[variant]}${size ? ` ${styles[size]}` : ""}`}
