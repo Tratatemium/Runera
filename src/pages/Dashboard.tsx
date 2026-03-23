@@ -19,20 +19,7 @@ function Dashboard() {
 
   return (
     <div className={styles.page}>
-      <Header>
-        <ButtonLink
-          linkDirection="/user-page"
-          linkText="My Profile"
-          variant="accent1Inverted"
-          size="small"
-        />
-        <Button
-          buttonText="Log Out"
-          variant="accent1Inverted"
-          size="small"
-          onClick={handleLogout}
-        />
-      </Header>
+      <Header />
 
       {user ? (
         <main className={styles.main}>
@@ -75,7 +62,7 @@ function Dashboard() {
           <ButtonLink
             linkDirection="/login"
             linkText="Go to Login"
-            variant="accent1"
+            variant="primary"
           />
         </div>
       )}

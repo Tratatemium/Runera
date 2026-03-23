@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 interface ButtonLinkProps {
   linkDirection: string;
   linkText: string;
-  variant: "accent1" | "accent1Inverted" | "accent2";
+  variant: "primary" | "secondary" | "transparent";
   size?: "small";
   disabled?: boolean;
 }

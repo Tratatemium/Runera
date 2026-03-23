@@ -47,7 +47,7 @@ function AuthCard({
             <Button
               buttonText={buttonText}
               type="submit"
-              variant="accent1"
+              variant="primary"
               isSubmitting={isSubmitting}
             />
           </div>

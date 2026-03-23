@@ -31,20 +31,7 @@ function UserPage() {
 
   return (
     <div className={styles.page}>
-      <Header>
-        <ButtonLink
-          linkDirection="/dashboard"
-          linkText="Dashboard"
-          variant="accent1Inverted"
-          size="small"
-        />
-        <Button
-          buttonText="Log Out"
-          variant="accent1Inverted"
-          size="small"
-          onClick={handleLogout}
-        />
-      </Header>
+      <Header />
 
       <main className={styles.main}>
         <div className={styles.avatar}>

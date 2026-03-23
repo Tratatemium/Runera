@@ -34,13 +34,13 @@ function Header({ children }: HeaderProps) {
             <ButtonLink
               linkDirection="/dashboard"
               linkText="Dashboard"
-              variant="accent1Inverted"
+              variant="transparent"
               size="small"
             />
             <ButtonLink
               linkDirection="/runs"
               linkText="My Runs"
-              variant="accent1Inverted"
+              variant="transparent"
               size="small"
             />
             <button className={styles.user}>
@@ -52,7 +52,7 @@ function Header({ children }: HeaderProps) {
           <ButtonLink
             linkDirection="/login"
             linkText="Log In"
-            variant="accent1Inverted"
+            variant="primary"
             size="small"
           />
         )}

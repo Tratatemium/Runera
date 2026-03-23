@@ -3,7 +3,7 @@ import { SpinnerIcon } from "./icons/SpinnerIcon";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   buttonText: string;
-  variant: "accent1" | "accent1Inverted" | "accent2";
+  variant: "primary" | "secondary" | "transparent";
   isSubmitting?: boolean;
   size?: "small";
 }
