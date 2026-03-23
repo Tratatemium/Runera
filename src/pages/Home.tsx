@@ -1,5 +1,6 @@
 import styles from "./Home.module.css";
 
+import { Header } from "../components/Header";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 
@@ -8,6 +9,7 @@ function Home() {
 
   return (
     <div className={styles.home}>
+      <Header />
       <main>
         <section className={styles.hero}>
           <Logo variant="primary"></Logo>
