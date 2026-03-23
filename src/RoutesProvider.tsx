@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
+import { NotFound } from "./pages/NotFound";
 import { Home } from "./pages/Home";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
@@ -14,6 +15,8 @@ function RoutesProvider() {
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/user-page" element={<UserPage />} />
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
