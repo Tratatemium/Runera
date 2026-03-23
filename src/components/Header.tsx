@@ -1,18 +1,13 @@
 import styles from "./Header.module.css";
 
 import { Logo } from "../components/Logo";
-import { Link } from "react-router-dom";
-import { Button } from "./Button";
+import { Link, useLocation } from "react-router-dom";
 import { ButtonLink } from "./ButtonLink";
 
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
 
-interface HeaderProps {
-  children?: React.ReactNode;
-}
-
-function Header({ children }: HeaderProps) {
+function Header() {
+  const location = useLocation();
   const { user } = useAuth();
   const username = user?.account?.username;
   const firstName = user?.profile?.firstName;
@@ -26,19 +21,21 @@ function Header({ children }: HeaderProps) {
   return (
     <header className={styles.header}>
       <Link to={"/"}>
-        <Logo style="colorStyleAccent1" />
+        <Logo variant="secondary" />
       </Link>
       <div className={styles.headerContent}>
         {user ? (
           <>
             <ButtonLink
               linkDirection="/dashboard"
+              active={location.pathname === "/dashboard"}
               linkText="Dashboard"
               variant="transparent"
               size="small"
             />
             <ButtonLink
               linkDirection="/runs"
+              active={location.pathname === "/runs"}
               linkText="My Runs"
               variant="transparent"
               size="small"

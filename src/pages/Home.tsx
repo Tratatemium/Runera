@@ -10,7 +10,7 @@ function Home() {
     <div className={styles.home}>
       <main>
         <section className={styles.hero}>
-          <Logo style={"colorStyleAccent1"}></Logo>
+          <Logo variant="primary"></Logo>
           <h1 className={styles.title}>Track Every Step</h1>
           <p className={styles.subtitle}>
             Log your runs, monitor progress, and achieve your goals with Runera.

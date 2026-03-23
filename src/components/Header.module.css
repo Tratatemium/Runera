@@ -6,7 +6,7 @@
   margin: 0;
   padding: 1.4em 1em;
   border-bottom: 1px solid rgba(12, 22, 24, 0.1);
-  background: rgba(12, 22, 24, 0.15);
+  background: var(--accent-color-1);
   backdrop-filter: blur(10px);
 }
 

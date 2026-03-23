@@ -27,7 +27,7 @@ function AuthCard({
   return (
     <section className={styles.authCard} aria-labelledby="authTitle">
       <header className={styles.authHeader}>
-        <Logo style="colorStyleSecondary" />
+        <Logo variant="secondary" />
         <h1 id="authTitle" className={styles.authTitle}>
           {title}
         </h1>
