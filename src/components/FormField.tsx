@@ -32,7 +32,7 @@ function FormField({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={styles.formRow}>
+    <div className={`${styles.formRow} ${inputError ? styles.error : ""}`}>
       <label htmlFor={id} className={styles.formLabel}>
         {label}
       </label>
@@ -66,9 +66,9 @@ function FormField({
         )}
       </div>
       {inputError && (
-        <p id={`${id}-error`} className={styles.errorText}>
-          {inputError}
-        </p>
+        <div id={`${id}-error`} className={styles.errorWraper}>
+          <p className={styles.errorText}>{inputError}</p>
+        </div>
       )}
     </div>
   );

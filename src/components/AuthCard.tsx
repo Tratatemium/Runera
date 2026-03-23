@@ -36,18 +36,21 @@ function AuthCard({
 
       <form className={styles.authForm} onSubmit={onSubmit} noValidate>
         {children}
-        {formError && (
-          <p role="alert" className={styles.errorText}>
-            {formError}
-          </p>
-        )}
-        <div className={styles.formActions}>
-          <Button
-            buttonText={buttonText}
-            type="submit"
-            variant="accent1"
-            isSubmitting={isSubmitting}
-          />
+
+        <div className={styles.submitWrapper}>
+          {formError && (
+            <div role="alert" className={styles.errorWrapper}>
+              <p className={styles.errorText}>{formError}</p>
+            </div>
+          )}
+          <div className={`${styles.submit} ${formError ? styles.error : ""}`}>
+            <Button
+              buttonText={buttonText}
+              type="submit"
+              variant="accent1"
+              isSubmitting={isSubmitting}
+            />
+          </div>
         </div>
       </form>
 
