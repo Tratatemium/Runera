@@ -23,7 +23,8 @@ function ButtonLink({
 }: ButtonLinkProps) {
   return (
     <Link
-      to={linkDirection}
+      to={disabled ? "" : linkDirection}
+      aria-disabled={disabled}
       className={`
         ${styles.button}
         ${styles[variant]}
