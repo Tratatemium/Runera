@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(12, 22, 24, 0.1);
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}

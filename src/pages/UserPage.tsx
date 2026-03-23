@@ -5,15 +5,16 @@ import { useAuth } from "../context/AuthContext";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 import { Button } from "../components/Button";
+import { useEffect } from "react";
 
 function UserPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
-  if (!user) {
-    navigate("/");
-    return null;
-  }
+  useEffect(() => {
+    if (!user) navigate("/");
+  }, [user]);
+  if (!user) return null;
 
   const { account, profile } = user;
 
