@@ -1,7 +1,9 @@
 import styles from "./Header.module.css";
 
-import { Logo } from "../components/Logo";
 import { Link, useLocation } from "react-router-dom";
+
+import { icons } from "./icons/icons";
+import { Logo } from "../components/Logo";
 import { ButtonLink } from "./ButtonLink";
 
 import { useAuth } from "../context/AuthContext";
@@ -18,6 +20,9 @@ function Header() {
 
   const avatarLetter = (firstName?.[0] ?? username?.[0] ?? "?").toUpperCase();
 
+  const ListIcon = icons.list;
+  const DashboardIcon = icons.dashboard;
+
   return (
     <header className={styles.header}>
       <Link to={"/"}>
@@ -32,14 +37,20 @@ function Header() {
               linkText="Dashboard"
               variant="transparent"
               size="small"
-            />
+            >
+              <DashboardIcon />
+            </ButtonLink>
+
             <ButtonLink
               linkDirection="/runs"
               active={location.pathname === "/runs"}
               linkText="My Runs"
               variant="transparent"
               size="small"
-            />
+            >
+              <ListIcon />
+            </ButtonLink>
+
             <button className={styles.user}>
               <div className={styles.avatar}>{avatarLetter}</div>
               <p className={styles.name}>{fullName ?? username}</p>

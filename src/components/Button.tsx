@@ -27,8 +27,9 @@ function Button({
       disabled={isSubmitting}
       {...props}
     >
-      {children}
-      {isSubmitting ? <SpinnerIcon /> : buttonText}
+      {children && <span className={styles.icon}>{children}</span>}
+      <span>{isSubmitting ? <SpinnerIcon /> : buttonText}</span>
+      
     </button>
   );
 }

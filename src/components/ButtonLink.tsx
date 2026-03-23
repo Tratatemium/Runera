@@ -32,8 +32,8 @@ function ButtonLink({
         ${active ? styles.active : ""}
       `}
     >
-      {children}
-      {linkText}
+      {children && <span className={styles.icon}>{children}</span>}
+      <span>{linkText}</span>
     </Link>
   );
 }
