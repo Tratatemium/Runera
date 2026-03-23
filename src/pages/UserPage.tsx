@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { Header } from "../components/Header";
-import { ButtonLink } from "../components/ButtonLink";
-import { Button } from "../components/Button";
 import { useEffect } from "react";
 
 function UserPage() {

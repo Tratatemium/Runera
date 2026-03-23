@@ -1,12 +1,20 @@
 import styles from "./Dashboard.module.css";
 
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
 import { Header } from "../components/Header";
 import { ButtonLink } from "../components/ButtonLink";
 
 function Dashboard() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  useEffect(() => {
+    if (!user) navigate("/");
+  }, [user, navigate]);
+  if (!user) return null;
   const currentYear = new Date().getFullYear();
 
   return (
