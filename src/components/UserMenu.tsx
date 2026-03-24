@@ -18,7 +18,7 @@ function UserMenu() {
 
   return (
     <>
-      <button className={styles.userButton} onClick={() => setIsOpen(!isOpen)}>
+      <button className={`${styles.userButton}${isOpen ? ` ${styles.open}` : ""}`} onClick={() => setIsOpen(!isOpen)}>
         <div className={styles.avatar}>{avatarLetter}</div>
         <p className={styles.name}>{fullName ?? username}</p>
       </button>

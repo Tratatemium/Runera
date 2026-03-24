@@ -7,6 +7,18 @@
   border: none;
   cursor: pointer;
   gap: 0.3em;
+  border-radius: 2rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+  transition: background 0.15s ease;
+}
+
+.userButton:hover {
+  background-color: color-mix(in srgb, var(--secondary-color) 15%, transparent);
+}
+
+.userButton.open {
+  background-color: color-mix(in srgb, var(--secondary-color) 20%, transparent);
+  outline: 1.5px solid color-mix(in srgb, var(--secondary-color) 50%, transparent);
 }
 
 .avatar {
