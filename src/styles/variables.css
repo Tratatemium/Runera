@@ -19,15 +19,16 @@
   --cornsilk: #faf4d3;
   --metallic-gold: #d1ac00;
   --peach-glow: #f6be9a;
-  --success: #2e7d32;
-  --error: #c62828;
-  --warning: #ed6c02;
+  --burnt-orange: #b93e00;
+  --dark-gold: #a97c02;
 
   --primary-color: var(--ink-black);
   --secondary-color: var(--cornsilk);
   --accent-color-1: var(--pine-teal);
   --accent-color-2: var(--metallic-gold);
   --accent-color-3: var(--peach-glow);
+  --color-chart: var(--burnt-orange);
+  --color-medal: var(--dark-gold);
   --success-color: #2e7d32;
   --error-color: #c62828;
   --warning-color: #ed6c02;
