@@ -53,9 +53,9 @@ function FormField({
           id={id}
           name={id}
           type={inputType}
-          min={min ?? undefined}
-          max={max ?? undefined}
-          step={step ?? undefined}
+          min={min}
+          max={max}
+          step={step}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
