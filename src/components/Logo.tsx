@@ -3,10 +3,10 @@ import styles from "./Logo.module.css";
 interface LogoProps {
   showBrandName?: boolean;
   variant: "primary" | "secondary";
-  size?: "small" | "big"
+  size?: "small" | "big";
 }
 
-function Logo({ showBrandName = true, variant, size="small" }: LogoProps) {
+function Logo({ showBrandName = true, variant, size = "small" }: LogoProps) {
   return (
     <div className={`${styles.logoLockup} ${styles[variant]} ${styles[size]}`}>
       <div className={styles.logo}>
