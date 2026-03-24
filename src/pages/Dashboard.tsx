@@ -16,7 +16,6 @@ function Dashboard() {
     if (!user) navigate("/");
   }, [user, navigate]);
   if (!user) return null;
-  const currentYear = new Date().getFullYear();
 
   return (
     <div className={styles.page}>
