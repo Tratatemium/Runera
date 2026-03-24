@@ -28,4 +28,10 @@ function loginApi(data: LoginData) {
   });
 }
 
-export { signupApi, loginApi };
+function logoutApi() {
+  return apiRequest<LoginResponse>(API.auth.logout, {
+    method: "POST",
+  });
+}
+
+export { signupApi, loginApi, logoutApi };

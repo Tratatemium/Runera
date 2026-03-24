@@ -2,6 +2,7 @@ const API = {
   auth: {
     signup: "auth/signup",
     login: "auth/login",
+    logout: "auth/logout",
   },
   users: {
     me: "users/me",

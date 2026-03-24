@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 function UserPage() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user) navigate("/");
@@ -18,10 +18,7 @@ function UserPage() {
 
   const { account, profile } = user;
 
-  function handleLogout() {
-    logout();
-    navigate("/");
-  }
+
 
   const fullName =
     profile.firstName || profile.lastName
