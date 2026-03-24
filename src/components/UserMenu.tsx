@@ -1,5 +1,6 @@
 import styles from "./UserMenu.module.css";
 
+import { logoutApi } from "../api/auth.api";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
@@ -7,8 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 function UserMenu() {
   const navigate = useNavigate();
-  const { user, logoutUser } = useAuth();
 
+  const { user, logoutUser } = useAuth();
   const username = user?.account?.username;
   const firstName = user?.profile?.firstName;
   const lastName = user?.profile?.lastName;
@@ -19,6 +20,7 @@ function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleLogout() {
+    logoutApi();
     logoutUser();
     navigate("/");
   }
