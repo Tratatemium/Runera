@@ -92,15 +92,15 @@
   box-shadow: 0 18px 40px rgba(12, 22, 24, 0.08);
 }
 
-.feature:has(.graph) {
+.feature.graph {
   border-top-color: var(--pine-teal);
 }
 
-.feature:has(.chart) {
+.feature.chart {
   border-top-color: var(--color-chart);
 }
 
-.feature:has(.medal) {
+.feature.medal {
   border-top-color: var(--color-medal);
 }
 

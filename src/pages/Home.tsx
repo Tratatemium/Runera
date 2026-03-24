@@ -61,7 +61,7 @@ function Home() {
         <section className={styles.highlights}>
           <h2>Everything You Need</h2>
           <div className={styles.featuresWrapper}>
-            <div className={styles.feature}>
+            <div className={`${styles.feature} ${styles.graph}`}>
               <GraphIcon className={`${styles.icon} ${styles.graph}`} />
               <h3 className={styles.graph}>Track Runs</h3>
               <p>
@@ -69,7 +69,7 @@ function Home() {
                 interface designed for speed.
               </p>
             </div>
-            <div className={styles.feature}>
+            <div className={`${styles.feature} ${styles.chart}`}>
               <ChartIcon className={`${styles.icon} ${styles.chart}`} />
               <h3 className={styles.chart}>View Statistics</h3>
               <p>
@@ -77,7 +77,7 @@ function Home() {
                 weekly progress.
               </p>
             </div>
-            <div className={styles.feature}>
+            <div className={`${styles.feature} ${styles.medal}`}>
               <MedalIcon className={`${styles.icon} ${styles.medal}`} />
               <h3 className={styles.medal}>Monitor Progress</h3>
               <p>
