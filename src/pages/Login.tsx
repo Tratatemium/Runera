@@ -58,7 +58,7 @@ function Login() {
       const userData = await usersApi.getMe();
       loginUser(mapUserResponseToState(userData));
 
-      navigate("/dashboard");
+      navigate("/user/dashboard");
     } catch (err) {
       const { generalError } = parseServerError(err);
       if (generalError) setFormError(generalError);

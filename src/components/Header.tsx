@@ -26,7 +26,7 @@ function Header() {
         {user ? (
           <>
             <ButtonLink
-              linkDirection="/dashboard"
+              linkDirection="/user/dashboard"
               active={location.pathname === "/dashboard"}
               linkText="Dashboard"
               variant="transparent"

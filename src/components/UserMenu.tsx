@@ -77,14 +77,18 @@ function UserMenu() {
       </button>
       {isOpen && (
         <div className={styles.menuWrapper}>
-          <ul id={menuId} className={styles.userMenu} aria-label="User account actions">
+          <ul
+            id={menuId}
+            className={styles.userMenu}
+            aria-label="User account actions"
+          >
             <li className={styles.menuItem}>
-              <Link to="/user-page" onClick={() => setIsOpen(false)}>
+              <Link to="/user/profile" onClick={() => setIsOpen(false)}>
                 My Profile
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link to="/edit-user" onClick={() => setIsOpen(false)}>
+              <Link to="/user/edit" onClick={() => setIsOpen(false)}>
                 Edit Profile
               </Link>
             </li>
