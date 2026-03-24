@@ -6,6 +6,9 @@ interface FormFieldProps {
   id: string;
   label: string;
   type?: string;
+  min?: number;
+  max?: number;
+  step?: number;
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,6 +21,9 @@ function FormField({
   id,
   label,
   type = "text",
+  min,
+  max,
+  step,
   placeholder,
   value,
   onChange,
@@ -47,6 +53,9 @@ function FormField({
           id={id}
           name={id}
           type={inputType}
+          min={min ?? undefined}
+          max={max ?? undefined}
+          step={step ?? undefined}
           placeholder={placeholder}
           value={value}
           onChange={onChange}

@@ -56,7 +56,22 @@ const inputFields: Record<string, InputFieldConfig> = {
     id: "dateOfBirth",
     label: "Date of birth",
     type: "date",
-    // placeholder: "Your last name",
+  },
+  heightCm: {
+    id: "heightCm",
+    label: "Height, cm",
+    type: "number",
+    min: 1,
+    max: 300,
+    step: 1,
+  },
+  weightKg: {
+    id: "weightKg",
+    label: "Weight, kg",
+    type: "number",
+    min: 1,
+    max: 300,
+    step: 1,
   },
 };
 

@@ -34,9 +34,35 @@ function useForm<T extends Record<string, string>>(
   }
 
   function handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
-    const field = fieldMap[e.target.name];
-    const error = validateField(formData, field);
-    setInputErrors((prev) => ({ ...prev, [field.id]: error }));
+    const input = e.currentTarget;
+
+    let value = input.value;
+
+    if (input.type === "number") {
+      const num = Number(value);
+      console.log(input.max)
+
+      if (input.min) value = String(Math.max(num, Number(input.min)));
+      if (input.max !== "") {
+        console.log("bop")
+        value = String(Math.min(Number(value), Number(input.max)))
+      };
+    }
+
+    const field = fieldMap[input.name];
+
+    setFormData((prev) => {
+      const next = { ...prev, [input.name]: value };
+
+      const error = validateField(next, field);
+
+      setInputErrors((errors) => ({
+        ...errors,
+        [field.id]: error,
+      }));
+
+      return next;
+    });
   }
 
   function handleSubmit(

@@ -16,6 +16,8 @@ const userFields = [
   inputFields.firstName,
   inputFields.lastName,
   inputFields.dateOfBirth,
+  inputFields.heightCm,
+  inputFields.weightKg,
 ] as const;
 
 function UserEdit() {
