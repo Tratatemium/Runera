@@ -12,11 +12,11 @@ type AuthProviderProps = {
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserState | null>(null);
 
-  const login = (user: UserState) => setUser(user);
-  const logout = () => setUser(null);
+  const loginUser = (user: UserState) => setUser(user);
+  const logoutUser = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

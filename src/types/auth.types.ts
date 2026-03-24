@@ -20,8 +20,8 @@ type LoginResponse = void;
 
 interface AuthContextValue {
   user: UserState | null;
-  login: (user: UserState) => void;
-  logout: () => void;
+  loginUser: (user: UserState) => void;
+  logoutUser: () => void;
 }
 
 export type {

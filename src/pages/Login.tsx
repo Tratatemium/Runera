@@ -29,7 +29,7 @@ const loginFields = [inputFields.login, inputFields.password] as const;
 
 function Login() {
   const navigate = useNavigate();
-  const { login, logout } = useAuth();
+  const { loginUser, logoutUserUser } = useAuth();
 
   type LoginForm = {
     [K in (typeof loginFields)[number]["id"]]: string;
@@ -51,12 +51,12 @@ function Login() {
 
     setIsSubmitting(true);
     setFormError(undefined);
-    logout();
+    logoutUser();
     try {
       await loginApi(loginData);
 
       const userData = await usersApi.getMe();
-      login(mapUserResponseToState(userData));
+      loginUser(mapUserResponseToState(userData));
 
       navigate("/dashboard");
     } catch (err) {
