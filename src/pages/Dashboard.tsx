@@ -5,11 +5,12 @@ import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { ButtonLink } from "../components/ButtonLink";
 
 function Dashboard() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user) navigate("/");
@@ -56,7 +57,7 @@ function Dashboard() {
           </div>
         </main>
       ) : (
-        <div className={styles.loginAction}>
+        <main className={styles.loginAction}>
           <h1>Welcome to Runera</h1>
           <p>Please log in to see your running stats.</p>
           <ButtonLink
@@ -64,13 +65,10 @@ function Dashboard() {
             linkText="Go to Login"
             variant="primary"
           />
-        </div>
+        </main>
       )}
 
-      <footer className={styles.footer}>
-        <p>© {currentYear} Runera</p>
-        <p>Built for steady progress, one run at a time.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

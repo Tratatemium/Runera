@@ -119,23 +119,6 @@
   background: var(--accent-color-2);
 }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.6rem 1.5rem;
-  width: min(1100px, 92%);
-  margin: 0 auto;
-  padding: 1.4rem 0 1.8rem;
-  border-top: 1px solid rgba(12, 22, 24, 0.12);
-  font-size: 0.9rem;
-  color: rgba(12, 22, 24, 0.6);
-}
-
-.footer p {
-  margin: 0;
-}
-
 @media (max-width: 600px) {
   .greeting h1 {
     font-size: var(--font-size-h2);
