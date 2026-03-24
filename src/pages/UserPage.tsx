@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { useEffect } from "react";
 
 function UserPage() {
@@ -70,6 +71,8 @@ function UserPage() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
