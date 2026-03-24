@@ -1,4 +1,5 @@
 import styles from "./Login.module.css";
+import runners from "../assets/runners-wide-1.jpg";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -12,6 +13,7 @@ import { mapUserResponseToState } from "../utils/mapUser";
 import { inputFields } from "../config/inputFields";
 import { parseServerError } from "../api/client";
 
+import { Footer } from "../components/Footer";
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
@@ -71,7 +73,10 @@ function Login() {
 
   return (
     <div className={styles.loginPage}>
-      <main className={styles.loginMain}>
+      <main
+        className={styles.loginMain}
+        style={{ backgroundImage: `url(${runners})` }}
+      >
         <AuthCard
           onSubmit={onSubmit}
           title="Welcome Back"
@@ -95,6 +100,7 @@ function Login() {
           ))}
         </AuthCard>
       </main>
+      <Footer />
     </div>
   );
 }

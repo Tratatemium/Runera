@@ -1,4 +1,5 @@
 import styles from "./Signup.module.css";
+import runners from "../assets/runners-wide-3.jpg";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +8,7 @@ import { signupApi } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
 import { parseServerError } from "../api/client";
 
+import { Footer } from "../components/Footer";
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
@@ -72,7 +74,10 @@ function Signup() {
 
   return (
     <div className={styles.signupPage}>
-      <main className={styles.signupMain}>
+      <main
+        className={styles.signupMain}
+        style={{ backgroundImage: `url(${runners})` }}
+      >
         <AuthCard
           onSubmit={onSubmit}
           title="Create account"
@@ -97,6 +102,7 @@ function Signup() {
           ))}
         </AuthCard>
       </main>
+      <Footer />
     </div>
   );
 }
