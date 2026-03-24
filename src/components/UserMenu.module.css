@@ -16,6 +16,11 @@
   background-color: color-mix(in srgb, var(--secondary-color) 15%, transparent);
 }
 
+.userButton:focus-visible {
+  outline: 2px solid var(--accent-color-2);
+  outline-offset: 2px;
+}
+
 .userButton.open {
   background-color: color-mix(in srgb, var(--secondary-color) 20%, transparent);
   outline: 1.5px solid color-mix(in srgb, var(--secondary-color) 50%, transparent);
@@ -88,6 +93,13 @@
 .menuItem button:hover {
   background-color: color-mix(in srgb, var(--accent-color-1) 12%, transparent);
   color: var(--accent-color-1);
+}
+
+.menuItem a:focus-visible,
+.menuItem button:focus-visible {
+  outline: 2px solid var(--accent-color-2);
+  outline-offset: -2px;
+  background-color: color-mix(in srgb, var(--accent-color-1) 12%, transparent);
 }
 
 .menuItem:last-child {
