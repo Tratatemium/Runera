@@ -29,7 +29,7 @@ const loginFields = [inputFields.login, inputFields.password] as const;
 
 function Login() {
   const navigate = useNavigate();
-  const { loginUser, logoutUserUser } = useAuth();
+  const { loginUser, logoutUser } = useAuth();
 
   type LoginForm = {
     [K in (typeof loginFields)[number]["id"]]: string;
