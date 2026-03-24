@@ -5,8 +5,8 @@ import { Home } from "./pages/Home";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/user/Dashboard";
-import { UserPage } from "./pages/UserPage";
-import { UserEdit } from "./pages/UserEdit";
+import { UserPage } from "./pages/user/UserPage";
+import { UserEdit } from "./pages/user/UserEdit";
 
 function RoutesProvider() {
   return (
