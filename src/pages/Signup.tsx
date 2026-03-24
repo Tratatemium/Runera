@@ -93,6 +93,9 @@ function Signup() {
               id={field.id}
               label={field.label}
               type={field.type}
+              min={field.min}
+              max={field.max}
+              step={field.step}
               placeholder={field.placeholder}
               value={formData[field.id]}
               onChange={handleChange}
