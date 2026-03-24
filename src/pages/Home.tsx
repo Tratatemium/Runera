@@ -1,12 +1,11 @@
 import styles from "./Home.module.css";
 
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 
 function Home() {
-  const currentYear = new Date().getFullYear();
-
   return (
     <div className={styles.home}>
       <Header />
@@ -32,11 +31,7 @@ function Home() {
           </div>
         </section>
       </main>
-
-      <footer className={styles.footer}>
-        <p>© {currentYear} Runera</p>
-        <p>Built for steady progress, one run at a time.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

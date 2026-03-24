@@ -16,6 +16,10 @@ body {
   background: var(--gradient-1);
 }
 
+main {
+  flex: 1;
+}
+
 .small-text,
 span.small {
   font-size: var(--font-size-small);
