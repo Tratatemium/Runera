@@ -20,9 +20,14 @@ function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleLogout() {
-    logoutApi();
-    logoutUser();
-    navigate("/");
+    try {
+      logoutApi();
+    } catch (err) {
+      console.error("Failed to log out via API: ", err);
+    } finally {
+      logoutUser();
+      navigate("/");
+    }
   }
 
   return (
