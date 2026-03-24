@@ -1,7 +1,7 @@
 interface InputFieldConfig {
   id: string;
   label: string;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "date";
   placeholder?: string;
   validator?: (
     value: string,

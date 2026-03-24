@@ -10,7 +10,13 @@ import { FormField } from "../../components/FormField";
 
 import { inputFields } from "../../config/inputFields";
 
-const userFields = [inputFields.username, inputFields.email] as const;
+const userFields = [
+  inputFields.username,
+  inputFields.email,
+  inputFields.firstName,
+  inputFields.lastName,
+  inputFields.dateOfBirth,
+] as const;
 
 function UserEdit() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,6 +31,7 @@ function UserEdit() {
     inputErrors,
     setServerErrors,
     handleChange,
+    handleInputFocus,
     handleInputBlur,
     handleSubmit,
   } = useForm<UserEditForm>(userFields);
@@ -49,6 +56,7 @@ function UserEdit() {
               placeholder={field.placeholder}
               value={formData[field.id]}
               onChange={handleChange}
+              onFocus={handleInputFocus}
               onBlur={handleInputBlur}
               inputError={inputErrors[field.id]}
             />

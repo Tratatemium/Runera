@@ -9,6 +9,7 @@ interface FormFieldProps {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   inputError?: string;
 }
@@ -20,6 +21,7 @@ function FormField({
   placeholder,
   value,
   onChange,
+  onFocus,
   onBlur,
   inputError,
 }: FormFieldProps) {
@@ -48,6 +50,7 @@ function FormField({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          onFocus={onFocus}
           onBlur={onBlur}
         />
         {isPassword && (

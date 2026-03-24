@@ -28,6 +28,11 @@ function useForm<T extends Record<string, string>>(
     setInputErrors((prev) => ({ ...prev, [name]: undefined }));
   }
 
+  function handleInputFocus(e: React.FocusEvent<HTMLInputElement>) {
+    const field = fieldMap[e.target.name];
+    setInputErrors((prev) => ({ ...prev, [field.id]: undefined }));
+  }
+
   function handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
     const field = fieldMap[e.target.name];
     const error = validateField(formData, field);
@@ -61,6 +66,7 @@ function useForm<T extends Record<string, string>>(
     inputErrors,
     setServerErrors,
     handleChange,
+    handleInputFocus,
     handleInputBlur,
     handleSubmit,
   };
