@@ -3,6 +3,8 @@ import styles from "./Header.module.css";
 import { Link, useLocation } from "react-router-dom";
 
 import { icons } from "./icons/icons";
+
+import { UserMenu } from "./UserMenu";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "./ButtonLink";
 
@@ -11,14 +13,6 @@ import { useAuth } from "../context/AuthContext";
 function Header() {
   const location = useLocation();
   const { user } = useAuth();
-  const username = user?.account?.username;
-  const firstName = user?.profile?.firstName;
-  const lastName = user?.profile?.lastName;
-
-  const fullName =
-    firstName && lastName ? `${firstName} ${lastName}` : undefined;
-
-  const avatarLetter = (firstName?.[0] ?? username?.[0] ?? "?").toUpperCase();
 
   const ListIcon = icons.list;
   const DashboardIcon = icons.dashboard;
@@ -51,10 +45,7 @@ function Header() {
               <ListIcon />
             </ButtonLink>
 
-            <button className={styles.user}>
-              <div className={styles.avatar}>{avatarLetter}</div>
-              <p className={styles.name}>{fullName ?? username}</p>
-            </button>
+            <UserMenu />
           </>
         ) : (
           <ButtonLink
