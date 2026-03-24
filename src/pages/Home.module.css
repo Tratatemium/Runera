@@ -5,16 +5,16 @@
 	color: var(--primary-color);
 }
 
-.hero {
-	width: min(900px, 92%);
-	margin: 0 auto;
+.auth {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: center;
+
+	margin: 0 auto;
 	gap: 1.25rem;
 	padding: 5rem 0 3rem;
-	text-align: left;
+	text-align: center;
 }
 
 .title {

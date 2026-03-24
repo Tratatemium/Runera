@@ -5,13 +5,17 @@ import { Footer } from "../components/Footer";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 
+import { useAuth } from "../context/AuthContext";
+
 function Home() {
+  const { user } = useAuth();
+
   return (
     <div className={styles.home}>
       <Header />
       <main>
-        <section className={styles.hero}>
-          <Logo variant="primary"></Logo>
+        <section className={styles.auth}>
+          <Logo variant="primary" size="big"></Logo>
           <h1 className={styles.title}>Track Every Step</h1>
           <p className={styles.subtitle}>
             Log your runs, monitor progress, and achieve your goals with Runera.
