@@ -1,3 +1,9 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .userButton {
   display: flex;
   flex-direction: row;

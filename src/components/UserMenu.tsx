@@ -61,7 +61,7 @@ function UserMenu() {
   }
 
   return (
-    <div ref={wrapperRef}>
+    <div ref={wrapperRef} className={styles.wrapper}>
       <button
         ref={buttonRef}
         className={`${styles.userButton}${isOpen ? ` ${styles.open}` : ""}`}
