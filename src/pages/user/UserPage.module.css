@@ -7,7 +7,7 @@
 }
 
 .main {
-  width: min(480px, 92%);
+  width: 100%;
   margin: 0 auto;
   padding: 3rem 0 4rem;
   display: flex;
