@@ -2,6 +2,7 @@ import styles from "./EditProfile.module.css";
 
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
+import { useAuthContext } from "../../context/AuthContext";
 import { updateProfile } from "../../api/users.api";
 
 import { Button } from "../../components/Button";
@@ -36,16 +37,25 @@ function EditProfile() {
     handleSubmit,
   } = useForm<UserEditForm>(userFields);
 
+  const { updateUser } = useAuthContext();
+
   async function submitUserEdit(data: UserEditForm) {
     const profileData = {
-      profile: data
-    }
+      profile: data,
+    };
     console.log(profileData);
+
+    setIsSubmitting(true);
+    setFormError(undefined);
+
     try {
       const response = await updateProfile(profileData);
-      console.log(response)
+      const update = {profile: response.savedProfile};
+      updateUser(update);
     } catch (err) {
-      console.error(err)
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
