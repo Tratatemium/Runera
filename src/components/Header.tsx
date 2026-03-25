@@ -27,7 +27,7 @@ function Header() {
           <>
             <ButtonLink
               linkDirection="/user/dashboard"
-              active={location.pathname === "/dashboard"}
+              active={location.pathname === "/user/dashboard"}
               linkText="Dashboard"
               variant="transparent"
               size="small"
@@ -36,8 +36,8 @@ function Header() {
             </ButtonLink>
 
             <ButtonLink
-              linkDirection="/runs"
-              active={location.pathname === "/runs"}
+              linkDirection="/user/runs"
+              active={location.pathname === "/user/runs"}
               linkText="My Runs"
               variant="transparent"
               size="small"
