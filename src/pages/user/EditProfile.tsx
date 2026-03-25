@@ -3,8 +3,6 @@ import styles from "./EditProfile.module.css";
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 
-import { Header } from "../../components/Header";
-import { Footer } from "../../components/Footer";
 import { Button } from "../../components/Button";
 import { FormField } from "../../components/FormField";
 
@@ -43,50 +41,44 @@ function EditProfile() {
   }
 
   return (
-    <div className={styles.page}>
-      <Header />
-      <main className={styles.main}>
-        <form className={styles.form} onSubmit={onSubmit} noValidate>
-          {userFields.map((field) => (
-            <FormField
-              key={field.id}
-              id={field.id}
-              label={field.label}
-              layout="row"
-              type={field.type}
-              min={field.min}
-              max={field.max}
-              step={field.step}
-              placeholder={field.placeholder}
-              value={formData[field.id]}
-              onChange={handleChange}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-              inputError={inputErrors[field.id]}
-            />
-          ))}
+    <main className={styles.main}>
+      <form className={styles.form} onSubmit={onSubmit} noValidate>
+        {userFields.map((field) => (
+          <FormField
+            key={field.id}
+            id={field.id}
+            label={field.label}
+            layout="row"
+            type={field.type}
+            min={field.min}
+            max={field.max}
+            step={field.step}
+            placeholder={field.placeholder}
+            value={formData[field.id]}
+            onChange={handleChange}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            inputError={inputErrors[field.id]}
+          />
+        ))}
 
-          <div className={styles.submitWrapper}>
-            {formError && (
-              <div role="alert" className={styles.errorWrapper}>
-                <p className={styles.errorText}>{formError}</p>
-              </div>
-            )}
-            <div
-              className={`${styles.submit} ${formError ? styles.error : ""}`}
-            >
-              <Button
-                buttonText="Save changes"
-                type="submit"
-                variant="primary"
-                isSubmitting={isSubmitting}
-              />
+        <div className={styles.submitWrapper}>
+          {formError && (
+            <div role="alert" className={styles.errorWrapper}>
+              <p className={styles.errorText}>{formError}</p>
             </div>
+          )}
+          <div className={`${styles.submit} ${formError ? styles.error : ""}`}>
+            <Button
+              buttonText="Save changes"
+              type="submit"
+              variant="primary"
+              isSubmitting={isSubmitting}
+            />
           </div>
-        </form>
-      </main>
-      <Footer />
-    </div>
+        </div>
+      </form>
+    </main>
   );
 }
 

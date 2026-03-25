@@ -1,7 +1,5 @@
 import styles from "./Home.module.css";
 
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 
@@ -19,8 +17,6 @@ function Home() {
   const MedalIcon = icons.medal;
 
   return (
-    <div className={styles.home}>
-      <Header />
       <main>
         <section className={styles.hero}>
           <img src={runners1} alt="" className={styles.image} />
@@ -103,8 +99,6 @@ function Home() {
           </section>
         )}
       </main>
-      <Footer />
-    </div>
   );
 }
 
