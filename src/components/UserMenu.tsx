@@ -56,7 +56,7 @@ function UserMenu() {
       console.error("Failed to log out via API: ", err);
     } finally {
       logoutUser();
-      navigate("/");
+      navigate("/", { replace: true });
     }
   }
 

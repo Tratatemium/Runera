@@ -1,24 +1,16 @@
 import styles from "./UserPage.module.css";
 
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/Footer";
 
 function UserPage() {
-  const navigate = useNavigate();
-  const { user } = useAuth();
 
-  useEffect(() => {
-    if (!user) navigate("/");
-  }, [user, navigate]);
+  const { user } = useAuth();
   if (!user) return null;
 
   const { account, profile } = user;
-
-
 
   const fullName =
     profile.firstName || profile.lastName

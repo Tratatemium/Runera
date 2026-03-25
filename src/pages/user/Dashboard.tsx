@@ -1,7 +1,5 @@
 import styles from "./Dashboard.module.css";
 
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import { Header } from "../../components/Header";
@@ -9,12 +7,7 @@ import { Footer } from "../../components/Footer";
 import { ButtonLink } from "../../components/ButtonLink";
 
 function Dashboard() {
-  const navigate = useNavigate();
   const { user } = useAuth();
-
-  useEffect(() => {
-    if (!user) navigate("/");
-  }, [user, navigate]);
   if (!user) return null;
 
   return (
