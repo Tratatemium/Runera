@@ -1,6 +1,6 @@
-import styles from "./UserEdit.module.css";
+import styles from "./EditProfile.module.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 
 import { Header } from "../../components/Header";
@@ -9,7 +9,6 @@ import { Button } from "../../components/Button";
 import { FormField } from "../../components/FormField";
 
 import { inputFields } from "../../config/inputFields";
-import { useAuth } from "../../context/AuthContext";
 
 const userFields = [
   inputFields.firstName,
@@ -19,7 +18,7 @@ const userFields = [
   inputFields.weightKg,
 ] as const;
 
-function UserEdit() {
+function EditProfile() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
@@ -42,8 +41,6 @@ function UserEdit() {
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     handleSubmit(e, submitUserEdit);
   }
-
-  const {user} = useAuth()
 
   return (
     <div className={styles.page}>
@@ -93,4 +90,4 @@ function UserEdit() {
   );
 }
 
-export { UserEdit };
+export { EditProfile };

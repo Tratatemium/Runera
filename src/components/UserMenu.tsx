@@ -83,12 +83,17 @@ function UserMenu() {
             aria-label="User account actions"
           >
             <li className={styles.menuItem}>
-              <Link to="/user/profile" onClick={() => setIsOpen(false)}>
+              <Link to="/user/info" onClick={() => setIsOpen(false)}>
                 My Profile
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link to="/user/edit" onClick={() => setIsOpen(false)}>
+              <Link to="/user/edit-account" onClick={() => setIsOpen(false)}>
+                Edit Account
+              </Link>
+            </li>
+            <li className={styles.menuItem}>
+              <Link to="/user/edit-profile" onClick={() => setIsOpen(false)}>
                 Edit Profile
               </Link>
             </li>

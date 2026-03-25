@@ -1,11 +1,11 @@
-import styles from "./UserPage.module.css";
+import styles from "./UserInfo.module.css";
 
 import { useAuth } from "../../context/AuthContext";
 
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/Footer";
 
-function UserPage() {
+function UserInfo() {
 
   const { user } = useAuth();
   if (!user) return null;
@@ -66,4 +66,4 @@ function UserPage() {
   );
 }
 
-export { UserPage };
+export { UserInfo };
