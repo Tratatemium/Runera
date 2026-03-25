@@ -1,6 +1,6 @@
 import styles from "./EditProfile.module.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import { useAuthContext } from "../../context/AuthContext";
 import { updateProfile } from "../../api/users.api";
@@ -37,7 +37,8 @@ function EditProfile() {
     handleSubmit,
   } = useForm<UserEditForm>(userFields);
 
-  const { updateUser } = useAuthContext();
+  const { user, updateUser } = useAuthContext();
+  useEffect(() => console.log(user), [])
 
   function normalizeDate(dateString: string) {
     const date = new Date(dateString);
