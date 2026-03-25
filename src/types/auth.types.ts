@@ -22,6 +22,7 @@ interface AuthContextValue {
   user: UserState | null;
   loginUser: (user: UserState) => void;
   logoutUser: () => void;
+  updateUser: (updates: Partial<UserState>) => void;
 }
 
 export type {

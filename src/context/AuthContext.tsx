@@ -2,6 +2,7 @@ import type { AuthContextValue } from "../types/auth.types";
 import type { UserState } from "../types/users.types";
 
 import { createContext, ReactNode, useContext, useState } from "react";
+import merge from "lodash.merge";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -14,9 +15,12 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   const loginUser = (user: UserState) => setUser(user);
   const logoutUser = () => setUser(null);
+  const updateUser = (updates: Partial<UserState>) => {
+    setUser((prev) => merge({}, prev, updates));
+  };
 
   return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ user, loginUser, logoutUser, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
