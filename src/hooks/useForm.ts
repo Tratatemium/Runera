@@ -47,8 +47,6 @@ function useForm<T extends Record<string, string>>(
     createInitialState(fields, user),
   );
 
-  console.log(formData);
-
   const [inputErrors, setInputErrors] = useState<
     Partial<Record<keyof T, string>>
   >({});
