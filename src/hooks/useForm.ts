@@ -1,15 +1,28 @@
 import type { InputFieldConfig } from "../types/forms.types";
+import type { UserKey } from "../utils/user.utils";
 
 import { useState, useMemo } from "react";
+import { useAuth } from "../context/AuthContext";
 import { validateField } from "../validation/validators";
+import { getUserValue } from "../utils/user.utils";
+import { UserState } from "../types/users.types";
 
 function createInitialState<T extends Record<string, string>>(
   fields: readonly InputFieldConfig[],
+  user: UserState | null,
 ): T {
-  return Object.fromEntries(fields.map((f) => [f.id, ""])) as T;
+  const entries = fields.map((f) => {
+    const userValue = user ? getUserValue(user, f.id as UserKey) : undefined;
+    return [f.id, userValue ?? ""];
+  });
+
+  return Object.fromEntries(entries) as T;
 }
 
-function normalizeNumberValue(input: HTMLInputElement, rawValue: string): string {
+function normalizeNumberValue(
+  input: HTMLInputElement,
+  rawValue: string,
+): string {
   if (rawValue.trim() === "") return rawValue;
 
   const parsed = Number(rawValue);
@@ -26,12 +39,16 @@ function normalizeNumberValue(input: HTMLInputElement, rawValue: string): string
 function useForm<T extends Record<string, string>>(
   fields: readonly InputFieldConfig[],
 ) {
+  const { user } = useAuth();
+
   const fieldMap = useMemo(
     () => Object.fromEntries(fields.map((f) => [f.id, f])),
     [fields],
   );
 
-  const [formData, setFormData] = useState<T>(() => createInitialState(fields));
+  const [formData, setFormData] = useState<T>(() =>
+    createInitialState(fields, user),
+  );
   const [inputErrors, setInputErrors] = useState<
     Partial<Record<keyof T, string>>
   >({});

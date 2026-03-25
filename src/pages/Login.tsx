@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 
 import { loginApi } from "../api/auth.api";
 import * as usersApi from "../api/users.api";
-import { mapUserResponseToState } from "../utils/mapUser";
+import { mapUserResponseToState } from "../utils/user.utils";
 
 import { inputFields } from "../config/inputFields";
 import { parseServerError } from "../api/client";

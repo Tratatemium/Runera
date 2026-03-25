@@ -1,6 +1,6 @@
 import styles from "./UserEdit.module.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 
 import { Header } from "../../components/Header";
@@ -9,10 +9,9 @@ import { Button } from "../../components/Button";
 import { FormField } from "../../components/FormField";
 
 import { inputFields } from "../../config/inputFields";
+import { useAuth } from "../../context/AuthContext";
 
 const userFields = [
-  inputFields.username,
-  inputFields.email,
   inputFields.firstName,
   inputFields.lastName,
   inputFields.dateOfBirth,
@@ -43,6 +42,8 @@ function UserEdit() {
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     handleSubmit(e, submitUserEdit);
   }
+
+  const {user} = useAuth()
 
   return (
     <div className={styles.page}>
