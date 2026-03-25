@@ -23,9 +23,10 @@
 
 .formWrapper.row {
   display: grid;
-  grid-template-columns: var(--form-label-width) minmax(0, 26rem);
+  grid-template-columns: var(--form-label-width) minmax(0, 20rem);
   align-items: center;
   justify-content: left;
+  gap: 0;
 }
 
 .error {
@@ -35,16 +36,15 @@
 .formLabel {
   display: block;
   font-weight: var(--font-weight-bold);
+  width: var(--form-label-width);
 }
 
 .formWrapper.column .formLabel {
   margin-left: 1em;
-  width: 15ch;
 }
 
 .formWrapper.row .formLabel {
   margin-left: 0;
-  width: var(--form-label-width);
 }
 
 .inputWrapper {
@@ -88,6 +88,10 @@
   padding: 0;
   min-height: 1.1em;
   max-width: 40ch;
+}
+
+.errorWrapper.row {
+  margin-left: var(--form-label-width);
 }
 
 .errorText {
