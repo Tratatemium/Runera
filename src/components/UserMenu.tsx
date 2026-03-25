@@ -2,7 +2,7 @@ import styles from "./UserMenu.module.css";
 
 import { logoutApi } from "../api/auth.api";
 import { useEffect, useId, useRef, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function UserMenu() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser } = useAuthContext();
   const username = user?.account?.username;
   const firstName = user?.profile?.firstName;
   const lastName = user?.profile?.lastName;

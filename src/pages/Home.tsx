@@ -3,14 +3,14 @@ import styles from "./Home.module.css";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 import runners1 from "../assets/runners-1.jpg";
 import runners3 from "../assets/runners-3.jpg";
 import { icons } from "../components/icons/icons";
 
 function Home() {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   const GraphIcon = icons.graph;
   const ChartIcon = icons.chart;

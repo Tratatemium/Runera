@@ -1,9 +1,9 @@
 import styles from "./Dashboard.module.css";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 function Dashboard() {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   if (!user) return null;
 
   return (

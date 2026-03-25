@@ -1,9 +1,9 @@
 import styles from "./UserInfo.module.css";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 function UserInfo() {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   if (!user) return null;
 
   const { account, profile } = user;

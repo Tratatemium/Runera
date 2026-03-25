@@ -4,7 +4,7 @@ import runners from "../assets/runners-wide-1.jpg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "../hooks/useForm";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 import { loginApi } from "../api/auth.api";
 import * as usersApi from "../api/users.api";
@@ -28,7 +28,7 @@ const loginFields = [inputFields.login, inputFields.password] as const;
 
 function Login() {
   const navigate = useNavigate();
-  const { loginUser, logoutUser } = useAuth();
+  const { loginUser, logoutUser } = useAuthContext();
 
   type LoginForm = {
     [K in (typeof loginFields)[number]["id"]]: string;

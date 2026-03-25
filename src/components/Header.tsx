@@ -8,11 +8,11 @@ import { UserMenu } from "./UserMenu";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "./ButtonLink";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 function Header() {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   const ListIcon = icons.list;
   const DashboardIcon = icons.dashboard;

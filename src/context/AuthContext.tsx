@@ -22,14 +22,14 @@ function AuthProvider({ children }: AuthProviderProps) {
   );
 }
 
-function useAuth() {
+function useAuthContext() {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth must be used inside AuthProvider");
+    throw new Error("useAuthContext must be used inside AuthProvider");
   }
 
   return context;
 }
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuthContext };

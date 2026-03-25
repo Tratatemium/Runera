@@ -2,7 +2,7 @@ import type { InputFieldConfig } from "../types/forms.types";
 import type { UserKey } from "../utils/user.utils";
 
 import { useState, useMemo } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import { validateField } from "../validation/validators";
 import { getUserValue } from "../utils/user.utils";
 import { UserState } from "../types/users.types";
@@ -36,7 +36,7 @@ function clampNumber(input: HTMLInputElement, rawValue: string): string {
 function useForm<T extends Record<string, string>>(
   fields: readonly InputFieldConfig[],
 ) {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   const fieldMap = useMemo(
     () => Object.fromEntries(fields.map((f) => [f.id, f])),
