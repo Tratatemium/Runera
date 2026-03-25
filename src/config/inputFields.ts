@@ -38,6 +38,41 @@ const inputFields: Record<string, InputFieldConfig> = {
     placeholder: "Your username or email",
     validator: validators.validateLogin,
   },
+  firstName: {
+    id: "firstName",
+    label: "First Name",
+    type: "text",
+    placeholder: "Your first name",
+    validator: validators.validateName,
+  },
+  lastName: {
+    id: "lastName",
+    label: "Last Name",
+    type: "text",
+    placeholder: "Your last name",
+    validator: validators.validateName,
+  },
+  dateOfBirth: {
+    id: "dateOfBirth",
+    label: "Date of birth",
+    type: "date",
+  },
+  heightCm: {
+    id: "heightCm",
+    label: "Height, cm",
+    type: "number",
+    min: 1,
+    max: 300,
+    step: 1,
+  },
+  weightKg: {
+    id: "weightKg",
+    label: "Weight, kg",
+    type: "number",
+    min: 1,
+    max: 300,
+    step: 1,
+  },
 };
 
 export { inputFields };

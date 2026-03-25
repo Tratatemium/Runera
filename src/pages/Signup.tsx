@@ -8,7 +8,6 @@ import { signupApi } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
 import { parseServerError } from "../api/client";
 
-import { Footer } from "../components/Footer";
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
@@ -73,37 +72,37 @@ function Signup() {
   }
 
   return (
-    <div className={styles.signupPage}>
-      <main
-        className={styles.signupMain}
-        style={{ backgroundImage: `url(${runners})` }}
+    <main
+      className={styles.main}
+      style={{ backgroundImage: `url(${runners})` }}
+    >
+      <AuthCard
+        onSubmit={onSubmit}
+        title="Create account"
+        subtitle="Start tracking your running journey"
+        buttonText="Sign Up"
+        footerContent={signupFooter}
+        isSubmitting={isSubmitting}
+        formError={formError}
       >
-        <AuthCard
-          onSubmit={onSubmit}
-          title="Create account"
-          subtitle="Start tracking your running journey"
-          buttonText="Sign Up"
-          footerContent={signupFooter}
-          isSubmitting={isSubmitting}
-          formError={formError}
-        >
-          {signupFields.map((field) => (
-            <FormField
-              key={field.id}
-              id={field.id}
-              label={field.label}
-              type={field.type}
-              placeholder={field.placeholder}
-              value={formData[field.id]}
-              onChange={handleChange}
-              onBlur={handleInputBlur}
-              inputError={inputErrors[field.id]}
-            />
-          ))}
-        </AuthCard>
-      </main>
-      <Footer />
-    </div>
+        {signupFields.map((field) => (
+          <FormField
+            key={field.id}
+            id={field.id}
+            label={field.label}
+            type={field.type}
+            min={field.min}
+            max={field.max}
+            step={field.step}
+            placeholder={field.placeholder}
+            value={formData[field.id]}
+            onChange={handleChange}
+            onBlur={handleInputBlur}
+            inputError={inputErrors[field.id]}
+          />
+        ))}
+      </AuthCard>
+    </main>
   );
 }
 

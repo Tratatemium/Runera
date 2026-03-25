@@ -1,26 +1,22 @@
 import styles from "./Home.module.css";
 
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "../components/ButtonLink";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 import runners1 from "../assets/runners-1.jpg";
 import runners3 from "../assets/runners-3.jpg";
 import { icons } from "../components/icons/icons";
 
 function Home() {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   const GraphIcon = icons.graph;
   const ChartIcon = icons.chart;
   const MedalIcon = icons.medal;
 
   return (
-    <div className={styles.home}>
-      <Header />
       <main>
         <section className={styles.hero}>
           <img src={runners1} alt="" className={styles.image} />
@@ -103,8 +99,6 @@ function Home() {
           </section>
         )}
       </main>
-      <Footer />
-    </div>
   );
 }
 

@@ -8,11 +8,11 @@ import { UserMenu } from "./UserMenu";
 import { Logo } from "../components/Logo";
 import { ButtonLink } from "./ButtonLink";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 function Header() {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   const ListIcon = icons.list;
   const DashboardIcon = icons.dashboard;
@@ -26,8 +26,8 @@ function Header() {
         {user ? (
           <>
             <ButtonLink
-              linkDirection="/dashboard"
-              active={location.pathname === "/dashboard"}
+              linkDirection="/user/dashboard"
+              active={location.pathname === "/user/dashboard"}
               linkText="Dashboard"
               variant="transparent"
               size="small"
@@ -36,8 +36,8 @@ function Header() {
             </ButtonLink>
 
             <ButtonLink
-              linkDirection="/runs"
-              active={location.pathname === "/runs"}
+              linkDirection="/user/runs"
+              active={location.pathname === "/user/runs"}
               linkText="My Runs"
               variant="transparent"
               size="small"

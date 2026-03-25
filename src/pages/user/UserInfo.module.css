@@ -1,13 +1,5 @@
-.page {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  background: var(--gradient-1);
-  color: var(--primary-color);
-}
-
 .main {
-  width: min(480px, 92%);
+  width: 100%;
   margin: 0 auto;
   padding: 3rem 0 4rem;
   display: flex;

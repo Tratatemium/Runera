@@ -1,6 +1,6 @@
 import styles from "./Button.module.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ButtonLinkProps {
   children?: React.ReactNode;
@@ -10,6 +10,7 @@ interface ButtonLinkProps {
   size?: "small";
   disabled?: boolean;
   active?: boolean;
+  goBack?: boolean;
 }
 
 function ButtonLink({
@@ -20,11 +21,25 @@ function ButtonLink({
   size,
   disabled,
   active,
+  goBack = false,
 }: ButtonLinkProps) {
+  const navigate = useNavigate();
+
   return (
     <Link
-      to={disabled ? "" : linkDirection}
+      to={goBack ? "." : linkDirection}
       aria-disabled={disabled}
+      onClick={(e) => {
+        if (disabled) {
+          e.preventDefault();
+          return;
+        }
+
+        if (goBack) {
+          e.preventDefault();
+          navigate(-1);
+        }
+      }}
       className={`
         ${styles.button}
         ${styles[variant]}

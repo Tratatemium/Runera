@@ -2,7 +2,7 @@ import styles from "./UserMenu.module.css";
 
 import { logoutApi } from "../api/auth.api";
 import { useEffect, useId, useRef, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function UserMenu() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser } = useAuthContext();
   const username = user?.account?.username;
   const firstName = user?.profile?.firstName;
   const lastName = user?.profile?.lastName;
@@ -56,7 +56,7 @@ function UserMenu() {
       console.error("Failed to log out via API: ", err);
     } finally {
       logoutUser();
-      navigate("/");
+      navigate("/", { replace: true });
     }
   }
 
@@ -77,14 +77,23 @@ function UserMenu() {
       </button>
       {isOpen && (
         <div className={styles.menuWrapper}>
-          <ul id={menuId} className={styles.userMenu} aria-label="User account actions">
+          <ul
+            id={menuId}
+            className={styles.userMenu}
+            aria-label="User account actions"
+          >
             <li className={styles.menuItem}>
-              <Link to="/user-page" onClick={() => setIsOpen(false)}>
+              <Link to="/user/info" onClick={() => setIsOpen(false)}>
                 My Profile
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link to="/edit-user" onClick={() => setIsOpen(false)}>
+              <Link to="/user/edit-account" onClick={() => setIsOpen(false)}>
+                Edit Account
+              </Link>
+            </li>
+            <li className={styles.menuItem}>
+              <Link to="/user/edit-profile" onClick={() => setIsOpen(false)}>
                 Edit Profile
               </Link>
             </li>

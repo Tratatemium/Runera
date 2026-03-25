@@ -34,4 +34,8 @@ interface UserApiResponse {
   };
 }
 
-export type { UserState, UserApiResponse };
+interface UserUpdateResponse {
+  savedProfile: UserApiResponse["userData"]["profile"]
+}
+
+export type { UserState, UserApiResponse, UserUpdateResponse };

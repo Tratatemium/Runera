@@ -4,6 +4,8 @@ import { checkEmpty, checkLength, checkWhitespace } from "./validationUtils";
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const NAME_REGEX =
+  /^[A-Za-z\u00C0-\u024F\u0400-\u04FF]+([ '-][A-Za-z\u00C0-\u024F\u0400-\u04FF]+)*$/;
 
 function validateUsername(value: string, _formData: Record<string, string>) {
   return (
@@ -54,6 +56,14 @@ function validateLogin(value: string, _formData: Record<string, string>) {
   );
 }
 
+function validateName(value: string, _formData: Record<string, string>) {
+  if (!value) return undefined;
+  return (
+    checkLength(value, "Name", 2, 50) ??
+    (!NAME_REGEX.test(value) ? "Use letters, spaces, ' and - only." : undefined)
+  );
+}
+
 function validateField(
   formData: Record<string, string>,
   field: InputFieldConfig,
@@ -68,5 +78,6 @@ export {
   validatePassword,
   validateConfirmPassword,
   validateLogin,
+  validateName,
   validateField,
 };
