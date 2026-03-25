@@ -47,6 +47,8 @@ function useForm<T extends Record<string, string>>(
     createInitialState(fields, user),
   );
 
+  console.log(formData);
+
   const [inputErrors, setInputErrors] = useState<
     Partial<Record<keyof T, string>>
   >({});
@@ -92,7 +94,7 @@ function useForm<T extends Record<string, string>>(
     const entries = Object.entries(formData);
     const normalized = entries.map(([key, value]) => {
       if (isNumberField(key)) {
-        const trimmed = value.trim();
+        const trimmed = typeof value === "string" ? value.trim() : value;
         if (trimmed === "") return [key, null];
         const parsed = Number(trimmed);
         return Number.isFinite(parsed) ? [key, parsed] : [key, null];
@@ -119,7 +121,7 @@ function useForm<T extends Record<string, string>>(
 
     if (Object.keys(newErrors).length > 0) return;
 
-    const normalizedData = normalizeFormData()
+    const normalizedData = normalizeFormData();
     callback(normalizedData);
   }
 

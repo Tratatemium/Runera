@@ -39,6 +39,11 @@ function EditProfile() {
 
   const { updateUser } = useAuthContext();
 
+  function normalizeDate(dateString: string) {
+    const date = new Date(dateString);
+    return date.toISOString().slice(0, 10);
+  }
+
   async function submitUserEdit(data: UserEditForm) {
     const profileData = {
       profile: data,
@@ -50,7 +55,12 @@ function EditProfile() {
 
     try {
       const response = await updateProfile(profileData);
-      const update = {profile: response.savedProfile};
+      const updateFields = response.savedProfile;
+      if (updateFields.dateOfBirth) {
+        updateFields.dateOfBirth = normalizeDate(updateFields.dateOfBirth);
+      }
+
+      const update = { profile: updateFields };
       updateUser(update);
     } catch (err) {
       console.error(err);
