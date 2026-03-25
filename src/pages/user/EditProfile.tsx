@@ -2,6 +2,7 @@ import styles from "./EditProfile.module.css";
 
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
+import { updateProfile } from "../../api/users.api";
 
 import { Button } from "../../components/Button";
 import { ButtonLink } from "../../components/ButtonLink";
@@ -35,7 +36,18 @@ function EditProfile() {
     handleSubmit,
   } = useForm<UserEditForm>(userFields);
 
-  function submitUserEdit() {}
+  async function submitUserEdit(data: UserEditForm) {
+    const profileData = {
+      profile: data
+    }
+    console.log(profileData);
+    try {
+      const response = await updateProfile(profileData);
+      console.log(response)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     handleSubmit(e, submitUserEdit);
