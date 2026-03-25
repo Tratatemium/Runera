@@ -13,7 +13,9 @@ function createInitialState<T extends Record<string, string>>(
 ): T {
   const entries = fields.map((f) => {
     const userValue = user ? getUserValue(user, f.id as UserKey) : undefined;
-    return [f.id, userValue ?? ""];
+    const normalizedValue =
+      userValue === undefined || userValue === null ? "" : String(userValue);
+    return [f.id, normalizedValue];
   });
 
   return Object.fromEntries(entries) as T;
