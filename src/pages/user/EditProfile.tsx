@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 
 import { Button } from "../../components/Button";
+import { ButtonLink } from "../../components/ButtonLink";
 import { FormField } from "../../components/FormField";
 
 import { inputFields } from "../../config/inputFields";
@@ -74,6 +75,12 @@ function EditProfile() {
               type="submit"
               variant="primary"
               isSubmitting={isSubmitting}
+            />
+            <ButtonLink
+              linkDirection="."
+              linkText="Go Back"
+              variant="secondary"
+              goBack={true}
             />
           </div>
         </div>
