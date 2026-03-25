@@ -35,7 +35,7 @@ function Login() {
     [K in (typeof loginFields)[number]["id"]]: string;
   };
 
-  const { formData, inputErrors, handleChange, handleSubmit } =
+  const { formData, inputErrors, handleChange, handleInputBlur, handleSubmit } =
     useForm<LoginForm>(loginFields);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -98,6 +98,7 @@ function Login() {
               placeholder={field.placeholder}
               value={formData[field.id]}
               onChange={handleChange}
+              onBlur={handleInputBlur}
               inputError={inputErrors[field.id]}
             />
           ))}
