@@ -19,10 +19,7 @@ function createInitialState<T extends Record<string, string>>(
   return Object.fromEntries(entries) as T;
 }
 
-function normalizeNumberValue(
-  input: HTMLInputElement,
-  rawValue: string,
-): string {
+function clampNumber(input: HTMLInputElement, rawValue: string): string {
   if (rawValue.trim() === "") return rawValue;
 
   const parsed = Number(rawValue);
@@ -49,6 +46,7 @@ function useForm<T extends Record<string, string>>(
   const [formData, setFormData] = useState<T>(() =>
     createInitialState(fields, user),
   );
+
   const [inputErrors, setInputErrors] = useState<
     Partial<Record<keyof T, string>>
   >({});
@@ -69,9 +67,7 @@ function useForm<T extends Record<string, string>>(
   function handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
     const input = e.currentTarget;
     const value =
-      input.type === "number"
-        ? normalizeNumberValue(input, input.value)
-        : input.value;
+      input.type === "number" ? clampNumber(input, input.value) : input.value;
 
     const field = fieldMap[input.name];
     if (!field) return;
@@ -90,6 +86,24 @@ function useForm<T extends Record<string, string>>(
     });
   }
 
+  function normalizeFormData() {
+    const isNumberField = (key: string) => fieldMap[key].type === "number";
+
+    const entries = Object.entries(formData);
+    const normalized = entries.map(([key, value]) => {
+      if (isNumberField(key)) {
+        const trimmed = value.trim();
+        if (trimmed === "") return [key, null];
+        const parsed = Number(trimmed);
+        return Number.isFinite(parsed) ? [key, parsed] : [key, null];
+      }
+
+      return [key, value];
+    });
+
+    return Object.fromEntries(normalized);
+  }
+
   function handleSubmit(
     e: React.SubmitEvent<HTMLFormElement>,
     callback: (data: T) => void,
@@ -105,7 +119,8 @@ function useForm<T extends Record<string, string>>(
 
     if (Object.keys(newErrors).length > 0) return;
 
-    callback(formData);
+    const normalizedData = normalizeFormData()
+    callback(normalizedData);
   }
 
   function setServerErrors(errors: Partial<Record<keyof T, string>>) {
