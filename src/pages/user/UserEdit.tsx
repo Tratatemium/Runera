@@ -54,6 +54,7 @@ function UserEdit() {
               key={field.id}
               id={field.id}
               label={field.label}
+              layout="row"
               type={field.type}
               min={field.min}
               max={field.max}
