@@ -26,7 +26,10 @@ function AuthProvider({ children }: AuthProviderProps) {
   };
 
   useEffect(() => {
-    const handler = () => logoutUser();
+    const handler = () => {
+      window.alert("Session expired. Please login again.");
+      logoutUser();
+    };
     window.addEventListener("unauthorized", handler);
     return () => window.removeEventListener("unauthorized", handler);
   }, [logoutUser]);
