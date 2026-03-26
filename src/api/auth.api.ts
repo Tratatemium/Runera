@@ -8,7 +8,7 @@ import type {
 import { apiRequest } from "./client";
 import { API } from "../config/apiConfig";
 
-function signupApi(data: SignupData) {
+function signup(data: SignupData) {
   return apiRequest<SignupResponse>(API.auth.signup, {
     method: "POST",
     headers: {
@@ -18,7 +18,7 @@ function signupApi(data: SignupData) {
   });
 }
 
-function loginApi(data: LoginData) {
+function login(data: LoginData) {
   return apiRequest<LoginResponse>(API.auth.login, {
     method: "POST",
     headers: {
@@ -28,10 +28,10 @@ function loginApi(data: LoginData) {
   });
 }
 
-function logoutApi() {
+function logout() {
   return apiRequest<LoginResponse>(API.auth.logout, {
     method: "POST",
   });
 }
 
-export { signupApi, loginApi, logoutApi };
+export { signup, login, logout };
