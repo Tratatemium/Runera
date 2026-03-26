@@ -1,6 +1,10 @@
-interface ServerResponse {
+interface ApiResponse {
   data?: unknown;
-  error?: unknown;
+  error?: {
+    message: string;
+    name: string;
+    field?: string;
+  };
 }
 
-export type { ServerResponse };
+export type { ApiResponse };

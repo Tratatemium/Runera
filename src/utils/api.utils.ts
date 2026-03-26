@@ -1,5 +1,6 @@
 import type { ErrorData } from "../types/error.types";
-import { ServerError } from "../api/errors";
+import { ApiResponse } from "../types/api.types";
+import { ApiError } from "../api/errors";
 
 function joinUrl(urlPart1: string, urlPart2: string) {
   return `${urlPart1.replace(/\/+$/, "")}/${urlPart2.replace(/^\/+/, "")}`;
@@ -15,18 +16,18 @@ async function getResponseData(response: Response): Promise<unknown> {
   }
 }
 
-function handleServerErrors(response: Response, data: ErrorData, path: string) {
+function handleServerErrors(response: Response, data: ApiResponse) {
   const status = response.status;
+  const message = data.error?.message ?? "Unknown server error.";
+  const code = data.error?.name;
+  const field = data.error?.field;
 
-  if (status === 401 && !path.includes("/login")) {
-    return window.dispatchEvent(new Event("unauthorized"));
+  const isLoginError = code === "LoginError";
+  if (status === 401 && !isLoginError) {
+    window.dispatchEvent(new Event("unauthorized"));
   }
 
-  throw new ServerError(
-    data?.error?.message ?? "Server error",
-    response.status,
-    data,
-  );
+  throw new ApiError(message, status, code, field);
 }
 
 export { joinUrl, getResponseData, handleServerErrors };
