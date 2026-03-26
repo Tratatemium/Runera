@@ -1,4 +1,3 @@
-import type { ErrorData } from "../types/error.types";
 import { ApiResponse } from "../types/api.types";
 import { ApiError } from "../api/errors";
 
