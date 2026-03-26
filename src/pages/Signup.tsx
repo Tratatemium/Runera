@@ -1,16 +1,14 @@
 import styles from "./Signup.module.css";
 import runners from "../assets/runners-wide-3.jpg";
 
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
-import { signupApi } from "../api/auth.api";
 import { inputFields } from "../config/inputFields";
-import { parseServerError } from "../api/client";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
+import { useAuth } from "../hooks/useAuth";
 
 const signupFooter = (
   <>
@@ -42,33 +40,18 @@ function Signup() {
     handleSubmit,
   } = useForm<SignupForm>(signupFields);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formError, setFormError] = useState<string | undefined>(undefined);
-
-  async function submitSignup(data: SignupForm) {
-    const payload = {
-      username: data.username,
-      email: data.email,
-      password: data.password,
-    };
-
-    setIsSubmitting(true);
-    setFormError(undefined);
-
-    try {
-      await signupApi(payload);
-      navigate("/login");
-    } catch (err) {
-      const { fieldErrors, generalError } = parseServerError(err);
-      if (fieldErrors) setServerErrors(fieldErrors);
-      else if (generalError) setFormError(generalError);
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
+  const { signup, isFetching, fieldError, formError } = useAuth();
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, submitSignup);
+    handleSubmit(e, async () => {
+      const payload = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      };
+      await signup(payload);
+      if (fieldError) setServerErrors(fieldError);
+    });
   }
 
   return (
@@ -82,7 +65,7 @@ function Signup() {
         subtitle="Start tracking your running journey"
         buttonText="Sign Up"
         footerContent={signupFooter}
-        isSubmitting={isSubmitting}
+        isSubmitting={isFetching}
         formError={formError}
       >
         {signupFields.map((field) => (

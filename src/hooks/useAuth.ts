@@ -9,7 +9,7 @@ interface UseAuthReturn {
   login: () => Promise<void>;
   logout: () => Promise<void>;
   isFetching: boolean;
-  fieldError: string | undefined;
+  fieldError: Record<string, string> | undefined;
   formError: string | undefined;
 }
 
@@ -17,7 +17,9 @@ function useAuth(): UseAuthReturn {
   const navigate = useNavigate();
 
   const [isFetching, setIsFetching] = useState(false);
-  const [fieldError, setFieldError] = useState<string | undefined>(undefined);
+  const [fieldError, setFieldError] = useState<
+    Record<string, string> | undefined
+  >(undefined);
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
   async function signup(payload: SignupData) {
@@ -31,9 +33,8 @@ function useAuth(): UseAuthReturn {
       if (err instanceof ApiError) {
         console.error(err.code, err.message);
 
-        if (err.field) setFieldError(err.message);
+        if (err.field) setFieldError({ [err.field]: err.message });
         else setFormError(err.message);
-        
       } else {
         console.error("Unexpected error", err);
         setFormError("Something went wrong.");
