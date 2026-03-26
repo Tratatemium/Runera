@@ -1,7 +1,6 @@
 import styles from "./Signup.module.css";
 import runners from "../assets/runners-wide-3.jpg";
 
-import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { inputFields } from "../config/inputFields";
 
@@ -9,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
 import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
 
 const signupFooter = (
   <>
@@ -25,8 +25,6 @@ const signupFields = [
 ] as const;
 
 function Signup() {
-  const navigate = useNavigate();
-
   type SignupForm = {
     [K in (typeof signupFields)[number]["id"]]: string;
   };
@@ -50,9 +48,12 @@ function Signup() {
         password: formData.password,
       };
       await signup(payload);
-      if (fieldError) setServerErrors(fieldError);
     });
   }
+
+  useEffect(() => {
+    if (fieldError) setServerErrors(fieldError);
+  }, [fieldError]);
 
   return (
     <main
