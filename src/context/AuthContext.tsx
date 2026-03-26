@@ -1,7 +1,13 @@
 import type { AuthContextValue } from "../types/auth.types";
 import type { UserState } from "../types/users.types";
 
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import merge from "lodash/merge";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -18,6 +24,12 @@ function AuthProvider({ children }: AuthProviderProps) {
   const updateUser = (updates: Partial<UserState>) => {
     setUser((prev) => merge({}, prev, updates));
   };
+
+  useEffect(() => {
+    const handler = () => logoutUser();
+    window.addEventListener("unauthorized", handler);
+    return () => window.removeEventListener("unauthorized", handler);
+  }, [logoutUser]);
 
   return (
     <AuthContext.Provider value={{ user, loginUser, logoutUser, updateUser }}>
