@@ -1,15 +1,32 @@
-import type { ErrorData } from "../types/error.types";
-
-class ServerError extends Error {
-  status: number;
-  data: ErrorData;
-
-  constructor(message: string, status: number, data: ErrorData) {
+class ApiError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
     super(message);
-    this.name = "ServerError";
-    this.status = status;
-    this.data = data;
   }
 }
 
-export { ServerError };
+class ApiValidationError extends ApiError {
+  constructor(
+    message: string,
+    status: number,
+    public field: string,
+  ) {
+    super(message, status);
+  }
+}
+
+class ApiLoginError extends ApiError {}
+class ApiAuthError extends ApiError {}
+class ApiGuardError extends ApiError {}
+class ApiNotFoundError extends ApiError {}
+
+export {
+  ApiError,
+  ApiValidationError,
+  ApiLoginError,
+  ApiAuthError,
+  ApiGuardError,
+  ApiNotFoundError,
+};
