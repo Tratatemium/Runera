@@ -1,13 +1,9 @@
 interface ErrorData {
-  error?: {
+  error: {
+    message: string;
+    name: string;
     field?: string;
-    message?: string;
   };
 }
 
-interface ParsedServerError {
-  fieldErrors?: Record<string, string>;
-  generalError?: string;
-}
-
-export type { ErrorData, ParsedServerError };
+export type { ErrorData };
