@@ -1,6 +1,8 @@
 class AppError extends Error {
   constructor(message: string) {
-    (super(message), (this.name = "AppError"));
+    super(message);
+    this.name = "AppError";
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
@@ -13,13 +15,16 @@ class ApiError extends AppError {
   ) {
     super(message);
     this.name = "ApiError";
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
 class ResponseError extends AppError {
   constructor(message: string) {
-    (super(message), (this.name = "ResponseError"));
+    super(message);
+    this.name = "ResponseError";
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
-export { ApiError, ResponseError };
+export { AppError, ApiError, ResponseError };
