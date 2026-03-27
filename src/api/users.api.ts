@@ -6,7 +6,6 @@ import type {
 
 import { apiRequest } from "./client";
 import { API } from "../config/apiConfig";
-import { ResponseError } from "../errors/errors";
 
 function getMe() {
   return apiRequest<UserApiResponse>({
