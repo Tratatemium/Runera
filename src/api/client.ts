@@ -31,8 +31,8 @@ async function apiRequest<T>({
     credentials: "include",
     ...options,
   });
-  const data = await getResponseData(response);
-  if (!response.ok) handleServerErrors(response, data as ApiResponse);
+  const data = (await getResponseData(response)) as ApiResponse | undefined;
+  if (!response.ok) handleServerErrors(response, data);
 
   if (assertData && !data)
     throw new ResponseError("Empty responce from server.");
