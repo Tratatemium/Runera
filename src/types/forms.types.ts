@@ -12,4 +12,17 @@ interface InputFieldConfig {
   ) => string | undefined;
 }
 
-export type { InputFieldConfig };
+type FormStateValue = Record<
+  string,
+  {
+    value: string;
+    error?: string;
+  }
+>;
+
+type FormAction =
+  | { type: "setValue"; key: string; value: string }
+  | { type: "setError"; key: string; error?: string }
+  | { type: "mergeServerErrors"; errors: Record<string, string> };
+
+export type { InputFieldConfig, FormStateValue, FormAction };

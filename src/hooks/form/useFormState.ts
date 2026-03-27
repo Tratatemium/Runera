@@ -1,27 +1,18 @@
-import { act } from "@testing-library/react";
-import type { InputFieldConfig } from "../../types/forms.types";
+import type {
+  InputFieldConfig,
+  FormStateValue,
+  FormAction,
+} from "../../types/forms.types";
 import type { UserState } from "../../types/users.types";
 import type { UserKey } from "../../utils/user.utils";
 
 import { getUserValue } from "../../utils/user.utils";
-import { values } from "lodash";
+import { normalizeValue } from "../../utils/form.utils";
+import { useReducer } from "react";
 
-type FormStateValue = Record<
-  string,
-  {
-    value: string;
-    error?: string;
-  }
->;
-
-type FormAction =
-  | { type: "setValue"; key: string; value: string }
-  | { type: "setError"; key: string; error?: string }
-  | { type: "mergeServerErrors"; errors: Record<string, string> };
-
-function normalizeValue(value: string | number | undefined): string {
-  return value == null ? "" : String(value);
-}
+/* ────────────────────────────── */
+/* initial state creator          */
+/* ────────────────────────────── */
 
 function createFieldState(field: InputFieldConfig, user: UserState | null) {
   const value = user ? getUserValue(user, field.id as UserKey) : undefined;
@@ -36,73 +27,66 @@ function createInitialState<T extends FormStateValue>(
   return Object.fromEntries(entries) as T;
 }
 
-function mergeErrors(
+/* ────────────────────────────── */
+/* reducer                        */
+/* ────────────────────────────── */
+
+function formReducer(
   state: FormStateValue,
-  errors: Record<string, string>,
+  action: FormAction,
 ): FormStateValue {
-  return {
-    ...state,
-    ...Object.keys(errors).reduce((acc, key) => {
-      if (state[key]) {
-        acc[key] = { ...state[key], error: errors[key] };
-      }
-      return acc;
-    }, {} as FormStateValue),
-  };
+  switch (action.type) {
+    case "setValue": {
+      const { key, value } = action;
+      return {
+        ...state,
+        [key]: { ...state[key], value: value },
+      };
+    }
+    case "setError": {
+      const { key, error } = action;
+      return {
+        ...state,
+        [key]: { ...state[key], error: error },
+      };
+    }
+    case "mergeServerErrors": {
+      return {
+        ...state,
+        ...Object.keys(action.errors).reduce((acc, key) => {
+          if (state[key]) {
+            acc[key] = { ...state[key], error: action.errors[key] };
+          }
+          return acc;
+        }, {} as FormStateValue),
+      };
+    }
+    default:
+      return state;
+  }
 }
 
-function setValue(
-  state: FormStateValue,
-  action: Extract<FormAction, { type: "setValue" }>,
-): FormStateValue {
-  const { key, value } = action;
-  return {
-    ...state,
-    [key]: { ...state[key], value: value },
-  };
-}
-
-function setError(
-  state: FormStateValue,
-  action: Extract<FormAction, { type: "setError" }>,
-): FormStateValue {
-  const { key, error } = action;
-  return {
-    ...state,
-    [key]: { ...state[key], error: error },
-  };
-}
+/* ────────────────────────────── */
+/* useFormState                   */
+/* ────────────────────────────── */
 
 function useFormState<T extends FormStateValue>(
   fields: readonly InputFieldConfig[],
+  user: UserState,
 ) {
-  function formReducer(
-    state: FormStateValue,
-    action: FormAction,
-  ): FormStateValue {
-    switch (action.type) {
-      case "setValue": {
-        const { key, value } = action;
-        return {
-          ...state,
-          [key]: { ...state[key], value: value },
-        };
-      }
-      case "setError": {
-        const { key, error } = action;
-        return {
-          ...state,
-          [key]: { ...state[key], error: error },
-        };
-      }
-      case "mergeServerErrors": {
-        return mergeErrors(state, action.errors);
-      }
-      default:
-        return state;
-    }
-  }
-  return {};
+  const [state, dispatch] = useReducer(
+    formReducer,
+    createInitialState(fields, user),
+  );
+
+  const setValue = (key: string, value: string) =>
+    dispatch({ type: "setValue", key, value });
+  const setError = (key: string, error?: string) =>
+    dispatch({ type: "setError", key, error });
+  const mergeServerErrors = (errors: Record<string, string>) =>
+    dispatch({ type: "mergeServerErrors", errors });
+
+  return { formState: state, setValue, setError, mergeServerErrors };
 }
 
 export { useFormState };
