@@ -7,6 +7,8 @@ import {
   useContext,
   useState,
   useEffect,
+  useCallback,
+  useMemo,
 } from "react";
 import merge from "lodash/merge";
 
@@ -19,11 +21,11 @@ type AuthProviderProps = {
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserState | null>(null);
 
-  const loginUser = (user: UserState) => setUser(user);
-  const logoutUser = () => setUser(null);
-  const updateUser = (updates: Partial<UserState>) => {
+  const loginUser = useCallback((user: UserState) => setUser(user), []);
+  const logoutUser = useCallback(() => setUser(null), []);
+  const updateUser = useCallback((updates: Partial<UserState>) => {
     setUser((prev) => merge({}, prev, updates));
-  };
+  }, []);
 
   useEffect(() => {
     const handler = () => {
@@ -34,11 +36,12 @@ function AuthProvider({ children }: AuthProviderProps) {
     return () => window.removeEventListener("unauthorized", handler);
   }, [logoutUser]);
 
-  return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser, updateUser }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({ user, loginUser, logoutUser, updateUser }),
+    [user, loginUser, logoutUser, updateUser],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 function useAuthContext() {
