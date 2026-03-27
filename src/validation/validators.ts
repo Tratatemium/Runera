@@ -64,14 +64,6 @@ function validateName(value: string, _formData: Record<string, string>) {
   );
 }
 
-function validateField(
-  formData: Record<string, string>,
-  field: InputFieldConfig,
-) {
-  const value = formData[field.id];
-  return field.validator?.(value, formData);
-}
-
 export {
   validateUsername,
   validateEmail,
@@ -79,5 +71,4 @@ export {
   validateConfirmPassword,
   validateLogin,
   validateName,
-  validateField,
 };
