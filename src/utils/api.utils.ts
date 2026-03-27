@@ -16,7 +16,7 @@ async function getResponseData(response: Response): Promise<unknown> {
 }
 
 function handleServerErrors(response: Response, data: ApiResponse | undefined) {
-  if (!data) throw new ResponseError("Emtpy Error from server.");
+  if (!data) throw new ResponseError("Empty Error from server.");
   if (!data.error) throw new ResponseError("Malformed Error from server.");
 
   const status = response.status;
