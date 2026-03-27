@@ -12,6 +12,10 @@ interface InputFieldConfig {
   ) => string | undefined;
 }
 
+/* ────────────────────────────── */
+/* useFormState types             */
+/* ────────────────────────────── */
+
 type FormStateValue = Record<
   string,
   {
@@ -27,4 +31,18 @@ type FormAction =
   | { type: "reset"; state: FormStateValue }
   | { type: "clearErrors" };
 
-export type { InputFieldConfig, FormStateValue, FormAction };
+interface UseFormStateReturn {
+  formState: FormStateValue;
+  setValue: (key: string, value: string) => void;
+  setError: (key: string, error?: string) => void;
+  mergeServerErrors: (errors: Record<string, string>) => void;
+  resetFormState: () => void;
+  clearErrors: () => void;
+}
+
+export type {
+  InputFieldConfig,
+  FormStateValue,
+  FormAction,
+  UseFormStateReturn,
+};

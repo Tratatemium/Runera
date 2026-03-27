@@ -2,6 +2,7 @@ import type {
   InputFieldConfig,
   FormStateValue,
   FormAction,
+  UseFormStateReturn,
 } from "../../types/forms.types";
 import type { UserState } from "../../types/users.types";
 import type { UserKey } from "../../utils/user.utils";
@@ -81,7 +82,7 @@ function formReducer(
 function useFormState<T extends FormStateValue>(
   fields: readonly InputFieldConfig[],
   user: UserState,
-) {
+): UseFormStateReturn {
   const [state, dispatch] = useReducer(
     formReducer,
     createInitialState(fields, user),
