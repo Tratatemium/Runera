@@ -48,12 +48,13 @@ function Signup() {
         password: data.password,
       };
       await signup(payload);
+      if (fieldError) setServerErrors(fieldError);
     });
   }
 
-  useEffect(() => {
-    if (fieldError) setServerErrors(fieldError);
-  }, [fieldError]);
+  // useEffect(() => {
+  //   if (fieldError) setServerErrors(fieldError);
+  // }, [fieldError, setServerErrors]);
 
   return (
     <main
