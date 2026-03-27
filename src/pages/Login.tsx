@@ -30,12 +30,12 @@ function Login() {
   const { login, isFetching, formError } = useAuth();
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, async () => {
+    handleSubmit(e, async (data) => {
       const loginData = {
-        password: formData.password,
-        ...(formData.login.includes("@")
-          ? { email: formData.login }
-          : { username: formData.login }),
+        password: data.password,
+        ...(data.login.includes("@")
+          ? { email: data.login }
+          : { username: data.login }),
       };
       await login(loginData);
     });

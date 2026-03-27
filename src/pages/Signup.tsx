@@ -41,11 +41,11 @@ function Signup() {
   const { signup, isFetching, fieldError, formError } = useAuth();
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, async () => {
+    handleSubmit(e, async (data) => {
       const payload = {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
+        username: data.username,
+        email: data.email,
+        password: data.password,
       };
       await signup(payload);
     });
