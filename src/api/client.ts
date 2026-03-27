@@ -35,7 +35,7 @@ async function apiRequest<T>({
   if (!response.ok) handleServerErrors(response, data);
 
   if (assertData && !data)
-    throw new ResponseError("Empty responce from server.");
+    throw new ResponseError("Empty response from server.");
 
   if (!data) return null;
 
