@@ -61,6 +61,14 @@ function formReducer(
         }, {} as FormStateValue),
       };
     }
+    case "reset": {
+      return action.state;
+    }
+    case "clearErrors": {
+      return Object.fromEntries(
+        Object.entries(state).map(([k, v]) => [k, { ...v, error: undefined }]),
+      );
+    }
     default:
       return state;
   }
@@ -85,8 +93,18 @@ function useFormState<T extends FormStateValue>(
     dispatch({ type: "setError", key, error });
   const mergeServerErrors = (errors: Record<string, string>) =>
     dispatch({ type: "mergeServerErrors", errors });
+  const resetFormState = () =>
+    dispatch({ type: "reset", state: createInitialState(fields, user) });
+  const clearErrors = () => dispatch({ type: "clearErrors" });
 
-  return { formState: state, setValue, setError, mergeServerErrors };
+  return {
+    formState: state,
+    setValue,
+    setError,
+    mergeServerErrors,
+    resetFormState,
+    clearErrors,
+  };
 }
 
 export { useFormState };

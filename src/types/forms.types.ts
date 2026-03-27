@@ -23,6 +23,8 @@ type FormStateValue = Record<
 type FormAction =
   | { type: "setValue"; key: string; value: string }
   | { type: "setError"; key: string; error?: string }
-  | { type: "mergeServerErrors"; errors: Record<string, string> };
+  | { type: "mergeServerErrors"; errors: Record<string, string> }
+  | { type: "reset"; state: FormStateValue }
+  | { type: "clearErrors" };
 
 export type { InputFieldConfig, FormStateValue, FormAction };
