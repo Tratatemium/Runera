@@ -51,6 +51,7 @@ function useAuth(): UseAuthReturn {
   }
 
   async function login(payload: LoginData) {
+    logoutUser();
     setIsFetching(true);
     setFieldError(undefined);
     setFormError(undefined);
