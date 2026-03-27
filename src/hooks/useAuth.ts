@@ -1,5 +1,5 @@
 import type { SignupData, LoginData } from "../types/auth.types";
-import { ApiError } from "../api/errors";
+import { ApiError } from "../errors/errors";
 
 import * as authApi from "../api/auth.api";
 import * as usersApi from "../api/users.api";
@@ -58,6 +58,7 @@ function useAuth(): UseAuthReturn {
     try {
       await authApi.login(payload);
       const userData = await usersApi.getMe();
+      
       loginUser(mapUserResponseToState(userData));
       navigate("/user/dashboard");
     } catch (err) {

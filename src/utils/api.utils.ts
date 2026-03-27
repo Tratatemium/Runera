@@ -1,5 +1,5 @@
 import { ApiResponse } from "../types/api.types";
-import { ApiError } from "../api/errors";
+import { ApiError } from "../errors/errors";
 
 function joinUrl(urlPart1: string, urlPart2: string) {
   return `${urlPart1.replace(/\/+$/, "")}/${urlPart2.replace(/^\/+/, "")}`;
