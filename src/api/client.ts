@@ -1,74 +1,45 @@
-import type { ErrorData, ParsedServerError } from "../types/error.types";
+import type { ApiResponse } from "../types/api.types";
 
 import { config } from "../config/appConfig";
-class ServerError extends Error {
-  status: number;
-  data: ErrorData;
+import {
+  joinUrl,
+  getResponseData,
+  handleServerErrors,
+} from "../utils/api.utils";
+import { ResponseError } from "../errors/errors";
 
-  constructor(message: string, status: number, data: ErrorData) {
-    super(message);
-    this.name = "ServerError";
-    this.status = status;
-    this.data = data;
-  }
+interface ApiRequestOptions {
+  path: string;
+  assertData: boolean;
+  options: RequestInit;
 }
 
-function joinUrl(urlPart1: string, urlPart2: string) {
-  return `${urlPart1.replace(/\/+$/, "")}/${urlPart2.replace(/^\/+/, "")}`;
-}
+async function apiRequest<T>(
+  config: ApiRequestOptions & { assertData: true },
+): Promise<T>;
 
-async function apiRequest<T>(path: string, options: RequestInit): Promise<T> {
+async function apiRequest<T>(
+  config: ApiRequestOptions & { assertData: false },
+): Promise<T | null>;
+
+async function apiRequest<T>({
+  path,
+  assertData,
+  options,
+}: ApiRequestOptions & { assertData?: boolean }): Promise<T | null> {
   const response = await fetch(joinUrl(config.BASE_URL, path), {
     credentials: "include",
     ...options,
   });
+  const data = (await getResponseData(response)) as ApiResponse | undefined;
+  if (!response.ok) handleServerErrors(response, data);
 
-  let data;
+  if (assertData && !data)
+    throw new ResponseError("Empty response from server.");
 
-  try {
-    data = await response.json();
-  } catch {
-    data = {};
-  }
+  if (!data) return null;
 
-  if (!response.ok) {
-    throw new ServerError(
-      data?.error?.message ?? "Server error",
-      response.status,
-      data,
-    );
-  }
-
-  return data.data ?? data;
+  return (data as { data: T }).data;
 }
 
-function parseServerError(err: unknown): ParsedServerError {
-  if (err instanceof ServerError) {
-    const field = err.data?.error?.field;
-    const message = err.data?.error?.message;
-
-    if (err.status === 409 && field) {
-      return {
-        fieldErrors: {
-          [field]: `This ${field} already exists`,
-        },
-      };
-    }
-
-    if (err.status === 401) {
-      return {
-        generalError: "Invalid combination of login and password.",
-      };
-    }
-
-    return {
-      generalError: message || "Something went wrong",
-    };
-  }
-
-  return {
-    generalError: "Unknown error",
-  };
-}
-
-export { apiRequest, ServerError, parseServerError };
+export { apiRequest };

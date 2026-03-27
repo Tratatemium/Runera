@@ -8,30 +8,42 @@ import type {
 import { apiRequest } from "./client";
 import { API } from "../config/apiConfig";
 
-function signupApi(data: SignupData) {
-  return apiRequest<SignupResponse>(API.auth.signup, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+function signup(data: SignupData) {
+  return apiRequest<SignupResponse>({
+    path: API.auth.signup,
+    assertData: false,
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     },
-    body: JSON.stringify(data),
   });
 }
 
-function loginApi(data: LoginData) {
-  return apiRequest<LoginResponse>(API.auth.login, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+function login(data: LoginData) {
+  return apiRequest<LoginResponse>({
+    path: API.auth.login,
+    assertData: false,
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     },
-    body: JSON.stringify(data),
   });
 }
 
-function logoutApi() {
-  return apiRequest<LoginResponse>(API.auth.logout, {
-    method: "POST",
+function logout() {
+  return apiRequest<LoginResponse>({
+    path: API.auth.logout,
+    assertData: false,
+    options: {
+      method: "POST",
+    },
   });
 }
 
-export { signupApi, loginApi, logoutApi };
+export { signup, login, logout };

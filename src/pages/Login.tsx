@@ -1,17 +1,10 @@
 import styles from "./Login.module.css";
 import runners from "../assets/runners-wide-1.jpg";
 
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useForm } from "../hooks/useForm";
-import { useAuthContext } from "../context/AuthContext";
-
-import { loginApi } from "../api/auth.api";
-import * as usersApi from "../api/users.api";
-import { mapUserResponseToState } from "../utils/user.utils";
+import { useAuth } from "../hooks/useAuth";
 
 import { inputFields } from "../config/inputFields";
-import { parseServerError } from "../api/client";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
@@ -27,9 +20,6 @@ const loginFooter = (
 const loginFields = [inputFields.login, inputFields.password] as const;
 
 function Login() {
-  const navigate = useNavigate();
-  const { loginUser, logoutUser } = useAuthContext();
-
   type LoginForm = {
     [K in (typeof loginFields)[number]["id"]]: string;
   };
@@ -37,37 +27,18 @@ function Login() {
   const { formData, inputErrors, handleChange, handleInputBlur, handleSubmit } =
     useForm<LoginForm>(loginFields);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formError, setFormError] = useState<string | undefined>(undefined);
-
-  async function submitLogin(data: LoginForm) {
-    const loginData = {
-      password: data.password,
-      ...(data.login.includes("@")
-        ? { email: data.login }
-        : { username: data.login }),
-    };
-
-    setIsSubmitting(true);
-    setFormError(undefined);
-    logoutUser();
-    try {
-      await loginApi(loginData);
-
-      const userData = await usersApi.getMe();
-      loginUser(mapUserResponseToState(userData));
-
-      navigate("/user/dashboard");
-    } catch (err) {
-      const { generalError } = parseServerError(err);
-      if (generalError) setFormError(generalError);
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
+  const { login, isFetching, formError } = useAuth();
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, submitLogin);
+    handleSubmit(e, async (data) => {
+      const loginData = {
+        password: data.password,
+        ...(data.login.includes("@")
+          ? { email: data.login }
+          : { username: data.login }),
+      };
+      await login(loginData);
+    });
   }
 
   return (
@@ -81,7 +52,7 @@ function Login() {
         subtitle="Log in to continue tracking your runs"
         buttonText="Log In"
         footerContent={loginFooter}
-        isSubmitting={isSubmitting}
+        isSubmitting={isFetching}
         formError={formError}
       >
         {loginFields.map((field) => (

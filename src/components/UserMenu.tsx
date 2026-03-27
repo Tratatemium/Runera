@@ -1,18 +1,17 @@
 import styles from "./UserMenu.module.css";
 
-import { logoutApi } from "../api/auth.api";
 import { useEffect, useId, useRef, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 function UserMenu() {
-  const navigate = useNavigate();
   const menuId = useId();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const { user, logoutUser } = useAuthContext();
+  const { user } = useAuthContext();
   const username = user?.account?.username;
   const firstName = user?.profile?.firstName;
   const lastName = user?.profile?.lastName;
@@ -49,16 +48,7 @@ function UserMenu() {
     };
   }, [isOpen]);
 
-  function handleLogout() {
-    try {
-      logoutApi();
-    } catch (err) {
-      console.error("Failed to log out via API: ", err);
-    } finally {
-      logoutUser();
-      navigate("/", { replace: true });
-    }
-  }
+  const { logout } = useAuth();
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
@@ -98,7 +88,7 @@ function UserMenu() {
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <button type="button" onClick={handleLogout}>
+              <button type="button" onClick={logout}>
                 Log Out
               </button>
             </li>

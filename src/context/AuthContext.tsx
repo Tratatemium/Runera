@@ -1,7 +1,15 @@
 import type { AuthContextValue } from "../types/auth.types";
 import type { UserState } from "../types/users.types";
 
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import merge from "lodash/merge";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -13,17 +21,27 @@ type AuthProviderProps = {
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserState | null>(null);
 
-  const loginUser = (user: UserState) => setUser(user);
-  const logoutUser = () => setUser(null);
-  const updateUser = (updates: Partial<UserState>) => {
+  const loginUser = useCallback((user: UserState) => setUser(user), []);
+  const logoutUser = useCallback(() => setUser(null), []);
+  const updateUser = useCallback((updates: Partial<UserState>) => {
     setUser((prev) => merge({}, prev, updates));
-  };
+  }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser, updateUser }}>
-      {children}
-    </AuthContext.Provider>
+  useEffect(() => {
+    const handler = () => {
+      window.alert("Session expired. Please login again.");
+      logoutUser();
+    };
+    window.addEventListener("unauthorized", handler);
+    return () => window.removeEventListener("unauthorized", handler);
+  }, [logoutUser]);
+
+  const value = useMemo(
+    () => ({ user, loginUser, logoutUser, updateUser }),
+    [user, loginUser, logoutUser, updateUser],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 function useAuthContext() {
