@@ -58,7 +58,6 @@ function useAuth(): UseAuthReturn {
     try {
       await authApi.login(payload);
       const userData = await usersApi.getMe();
-      
       loginUser(mapUserResponseToState(userData));
       navigate("/user/dashboard");
     } catch (err) {

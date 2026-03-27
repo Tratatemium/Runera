@@ -6,17 +6,36 @@ import {
   getResponseData,
   handleServerErrors,
 } from "../utils/api.utils";
+import { ResponseError } from "../errors/errors";
+
+interface ApiRequestOptions {
+  path: string;
+  assertData: boolean;
+  options: RequestInit;
+}
 
 async function apiRequest<T>(
-  path: string,
-  options: RequestInit,
-): Promise<T | null> {
+  config: ApiRequestOptions & { assertData: true },
+): Promise<T>;
+
+async function apiRequest<T>(
+  config: ApiRequestOptions & { assertData: false },
+): Promise<T | null>;
+
+async function apiRequest<T>({
+  path,
+  assertData,
+  options,
+}: ApiRequestOptions & { assertData?: boolean }): Promise<T | null> {
   const response = await fetch(joinUrl(config.BASE_URL, path), {
     credentials: "include",
     ...options,
   });
   const data = await getResponseData(response);
   if (!response.ok) handleServerErrors(response, data as ApiResponse);
+
+  if (assertData && !data)
+    throw new ResponseError("Empty responce from server.");
 
   if (!data) return null;
 
