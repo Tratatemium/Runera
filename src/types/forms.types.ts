@@ -7,6 +7,7 @@ interface InputFieldConfig {
   step?: number;
   placeholder?: string;
   validator?: (value: string, formState: FormStateValue) => string | undefined;
+  normalizator: (valie: string, field: InputFieldConfig) => NormalizedFormValue;
 }
 
 /* ────────────────────────────── */
@@ -65,6 +66,7 @@ export type {
   FormStateValue,
   FormAction,
   UseFormStateReturn,
+  NormalizedFormValue,
   FormData,
   UseFormHandlersReturn,
 };

@@ -5,10 +5,10 @@ import type {
   UseFormStateReturn,
 } from "../../types/forms.types";
 
-import { useFormState } from "./useFormState";
 import { validateField, validateForm } from "../../validation/formValidation";
 import { useMemo } from "react";
-import { clampNumber, getFormData } from "../../utils/form.utils";
+import { getFormData } from "../../utils/form.utils";
+import { clampNumber } from "../../utils/normalize.utils";
 
 function useFormHandlers(
   fields: readonly InputFieldConfig[],
