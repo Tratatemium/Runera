@@ -1,4 +1,4 @@
-import type { InputFieldConfig } from "../types/forms.types";
+import type { FormStateValue } from "../types/forms.types";
 
 import { checkEmpty, checkLength, checkWhitespace } from "./validationUtils";
 
@@ -7,7 +7,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_REGEX =
   /^[A-Za-z\u00C0-\u024F\u0400-\u04FF]+([ '-][A-Za-z\u00C0-\u024F\u0400-\u04FF]+)*$/;
 
-function validateUsername(value: string, _formData: Record<string, string>) {
+function validateUsername(value: string, _formState: FormStateValue) {
   return (
     checkEmpty(value, "Username") ??
     (/^[0-9]/.test(value)
@@ -20,7 +20,7 @@ function validateUsername(value: string, _formData: Record<string, string>) {
   );
 }
 
-function validateEmail(value: string, _formData: Record<string, string>) {
+function validateEmail(value: string, _formState: FormStateValue) {
   return (
     checkEmpty(value, "Email") ??
     checkLength(value, "Email", null, 254) ??
@@ -31,7 +31,7 @@ function validateEmail(value: string, _formData: Record<string, string>) {
   );
 }
 
-function validatePassword(value: string, _formData: Record<string, string>) {
+function validatePassword(value: string, _formState: FormStateValue) {
   return (
     checkEmpty(value, "Password") ??
     checkLength(value, "Password", 8, 128) ??
@@ -39,16 +39,13 @@ function validatePassword(value: string, _formData: Record<string, string>) {
   );
 }
 
-function validateConfirmPassword(
-  value: string,
-  formData: Record<string, string>,
-) {
-  if (formData.password !== value) {
+function validateConfirmPassword(value: string, formState: FormStateValue) {
+  if (formState.password.value !== value) {
     return "Passwords do not match.";
   }
 }
 
-function validateLogin(value: string, _formData: Record<string, string>) {
+function validateLogin(value: string, _formState: FormStateValue) {
   return (
     checkEmpty(value, "Login") ??
     checkLength(value, "Login", 4, 254) ??
@@ -56,7 +53,7 @@ function validateLogin(value: string, _formData: Record<string, string>) {
   );
 }
 
-function validateName(value: string, _formData: Record<string, string>) {
+function validateName(value: string, _formState: FormStateValue) {
   if (!value) return undefined;
   return (
     checkLength(value, "Name", 2, 50) ??

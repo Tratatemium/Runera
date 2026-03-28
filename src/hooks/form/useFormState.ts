@@ -81,7 +81,7 @@ function formReducer(
 
 function useFormState<T extends FormStateValue>(
   fields: readonly InputFieldConfig[],
-  user: UserState,
+  user: UserState | null,
 ): UseFormStateReturn {
   const [state, dispatch] = useReducer(
     formReducer,

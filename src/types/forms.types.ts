@@ -6,10 +6,7 @@ interface InputFieldConfig {
   max?: number;
   step?: number;
   placeholder?: string;
-  validator?: (
-    value: string,
-    formData: Record<string, string>,
-  ) => string | undefined;
+  validator?: (value: string, formState: FormStateValue) => string | undefined;
 }
 
 /* ────────────────────────────── */

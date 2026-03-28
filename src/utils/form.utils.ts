@@ -1,4 +1,5 @@
-function clampNumber(input: HTMLInputElement, rawValue: string): string {
+function getClampedNumber(input: HTMLInputElement): string {
+  const rawValue = input.value;
   if (rawValue.trim() === "") return rawValue;
 
   const parsed = Number(rawValue);
@@ -16,4 +17,4 @@ function normalizeValue(value: string | number | undefined): string {
   return value == null ? "" : String(value);
 }
 
-export { normalizeValue, clampNumber };
+export { normalizeValue, getClampedNumber };
