@@ -54,9 +54,9 @@ interface UseFormHandlersReturn {
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
   };
-  handleSubmit: (
+  handleSubmit: <T>(
     e: React.SubmitEvent<HTMLFormElement>,
-    callback: (data: Record<string, NormalizedFormValue>) => void,
+    callback: (data: T) => void,
   ) => void;
 }
 

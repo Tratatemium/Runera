@@ -1,9 +1,6 @@
 import styles from "./Signup.module.css";
 import runners from "../assets/runners-wide-3.jpg";
 
-import type { FormData } from "../types/forms.types";
-import type { SignupData } from "../types/auth.types";
-
 import { inputFields } from "../config/inputFields";
 
 import { Link } from "react-router-dom";
@@ -43,7 +40,7 @@ function Signup() {
   const { signup, isFetching, fieldError, formError } = useAuth();
 
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit<SignupData>(e, async (data: FormData) => {
+    handleSubmit<SignupForm>(e, async (data) => {
       const payload = {
         username: data.username,
         email: data.email,

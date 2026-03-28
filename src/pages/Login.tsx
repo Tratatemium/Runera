@@ -28,7 +28,7 @@ function Login() {
 
   const { user } = useAuthContext();
   const formStateHook = useFormState(loginFields, user);
-  const { formState, mergeErrors } = formStateHook;
+  const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     loginFields,
     formStateHook,
@@ -37,7 +37,7 @@ function Login() {
   const { login, isFetching, formError } = useAuth();
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, async (data) => {
+    handleSubmit<LoginForm>(e, async (data) => {
       const loginData = {
         password: data.password,
         ...(data.login?.includes("@")
@@ -72,10 +72,9 @@ function Login() {
             max={field.max}
             step={field.step}
             placeholder={field.placeholder}
-            value={formData[field.id]}
-            onChange={handleChange}
-            onBlur={handleInputBlur}
-            inputError={inputErrors[field.id]}
+            value={formState[field.id].value}
+            inputError={formState[field.id].error}
+            {...inputHandlers}
           />
         ))}
       </AuthCard>
