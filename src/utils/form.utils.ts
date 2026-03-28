@@ -2,6 +2,7 @@ import type {
   FormStateValue,
   InputFieldConfig,
   NormalizedFormValue,
+  FormData,
 } from "../types/forms.types";
 import { clampNumber } from "./normalize.utils";
 
@@ -20,7 +21,7 @@ function normalizeEntry(
 function getFormData(
   formState: FormStateValue,
   fieldMap: Record<string, InputFieldConfig>,
-): Record<string, NormalizedFormValue> {
+): FormData {
   return Object.fromEntries(
     Object.entries(formState).map(([k, v]) =>
       normalizeEntry(k, v, fieldMap[k]),

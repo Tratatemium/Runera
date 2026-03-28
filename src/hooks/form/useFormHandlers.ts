@@ -52,9 +52,9 @@ function useFormHandlers(
     setError(name, error);
   }
 
-  function handleSubmit(
+  function handleSubmit<T>(
     e: React.SubmitEvent<HTMLFormElement>,
-    callback: (data: FormData) => void,
+    callback: (data: T) => void,
   ): void {
     e.preventDefault();
     const errors = validateForm(fields, formState);
@@ -63,7 +63,7 @@ function useFormHandlers(
       mergeErrors(errors);
       return;
     }
-    const data = getFormData(formState, fieldMap);
+    const data = getFormData(formState, fieldMap) as T;
     callback(data);
   }
 

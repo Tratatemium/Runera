@@ -7,7 +7,10 @@ interface InputFieldConfig {
   step?: number;
   placeholder?: string;
   validator?: (value: string, formState: FormStateValue) => string | undefined;
-  normalizator: (valie: string, field: InputFieldConfig) => NormalizedFormValue;
+  normalizator: (
+    valie: string,
+    field: InputFieldConfig,
+  ) => string | number | null;
 }
 
 /* ────────────────────────────── */

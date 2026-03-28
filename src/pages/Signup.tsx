@@ -1,6 +1,9 @@
 import styles from "./Signup.module.css";
 import runners from "../assets/runners-wide-3.jpg";
 
+import type { FormData } from "../types/forms.types";
+import type { SignupData } from "../types/auth.types";
+
 import { inputFields } from "../config/inputFields";
 
 import { Link } from "react-router-dom";
@@ -9,7 +12,6 @@ import { AuthCard } from "../components/AuthCard";
 import { useAuth } from "../hooks/useAuth";
 import { useFormState } from "../hooks/form/useFormState";
 import { useFormHandlers } from "../hooks/form/useFormHandlers";
-import { FormData } from "../types/forms.types";
 import { useAuthContext } from "../context/AuthContext";
 
 const signupFooter = (
@@ -41,11 +43,11 @@ function Signup() {
   const { signup, isFetching, fieldError, formError } = useAuth();
 
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, async (data: FormData) => {
+    handleSubmit<SignupData>(e, async (data: FormData) => {
       const payload = {
-        username: data.username as string,
-        email: data.email as string,
-        password: data.password as string,
+        username: data.username,
+        email: data.email,
+        password: data.password,
       };
       await signup(payload);
       if (fieldError) mergeErrors(fieldError);

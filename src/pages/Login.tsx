@@ -39,8 +39,8 @@ function Login() {
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     handleSubmit(e, async (data) => {
       const loginData = {
-        password: data.password as string,
-        ...(data.login.includes("@")
+        password: data.password,
+        ...(data.login?.includes("@")
           ? { email: data.login }
           : { username: data.login }),
       };
