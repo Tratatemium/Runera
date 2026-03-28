@@ -1,14 +1,16 @@
 import styles from "./Signup.module.css";
 import runners from "../assets/runners-wide-3.jpg";
 
-import { useForm } from "../hooks/useForm";
 import { inputFields } from "../config/inputFields";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
 import { useAuth } from "../hooks/useAuth";
-import { useEffect } from "react";
+import { useFormState } from "../hooks/form/useFormState";
+import { useFormHandlers } from "../hooks/form/useFormHandlers";
+import { FormData } from "../types/forms.types";
+import { useAuthContext } from "../context/AuthContext";
 
 const signupFooter = (
   <>
@@ -29,32 +31,26 @@ function Signup() {
     [K in (typeof signupFields)[number]["id"]]: string;
   };
 
-  const {
-    formData,
-    inputErrors,
-    setServerErrors,
-    handleChange,
-    handleInputBlur,
-    handleSubmit,
-  } = useForm<SignupForm>(signupFields);
-
+  const { user } = useAuthContext();
+  const formStateHook = useFormState(signupFields, user);
+  const { formState, mergeErrors } = formStateHook;
+  const { inputHandlers, handleSubmit } = useFormHandlers(
+    signupFields,
+    formStateHook,
+  );
   const { signup, isFetching, fieldError, formError } = useAuth();
 
-  function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, async (data) => {
+  async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    handleSubmit(e, async (data: FormData) => {
       const payload = {
-        username: data.username,
-        email: data.email,
-        password: data.password,
+        username: data.username as string,
+        email: data.email as string,
+        password: data.password as string,
       };
       await signup(payload);
-      if (fieldError) setServerErrors(fieldError);
+      if (fieldError) mergeErrors(fieldError);
     });
   }
-
-  // useEffect(() => {
-  //   if (fieldError) setServerErrors(fieldError);
-  // }, [fieldError, setServerErrors]);
 
   return (
     <main
@@ -80,10 +76,9 @@ function Signup() {
             max={field.max}
             step={field.step}
             placeholder={field.placeholder}
-            value={formData[field.id]}
-            onChange={handleChange}
-            onBlur={handleInputBlur}
-            inputError={inputErrors[field.id]}
+            value={formState[field.id].value}
+            inputError={formState[field.id].error}
+            {...inputHandlers}
           />
         ))}
       </AuthCard>

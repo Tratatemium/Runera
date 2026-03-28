@@ -10,7 +10,7 @@ function validateField(
 }
 
 function validateForm(
-  fields: InputFieldConfig[],
+  fields: readonly InputFieldConfig[],
   formState: FormStateValue,
 ): Record<string, string> {
   const entries = fields.map((field) => [

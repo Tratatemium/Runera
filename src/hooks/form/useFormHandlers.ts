@@ -1,24 +1,29 @@
 import type {
+  FormData,
   InputFieldConfig,
-  NormalizedFormValue,
   UseFormHandlersReturn,
+  UseFormStateReturn,
 } from "../../types/forms.types";
 
 import { useFormState } from "./useFormState";
-import { useAuthContext } from "../../context/AuthContext";
 import { validateField, validateForm } from "../../validation/formValidation";
 import { useMemo } from "react";
 import { clampNumber, getFormData } from "../../utils/form.utils";
 
-function useFormHandlers(fields: InputFieldConfig[]): UseFormHandlersReturn {
+function useFormHandlers(
+  fields: readonly InputFieldConfig[],
+  {
+    formState,
+    setValue,
+    setError,
+    mergeErrors,
+    clearErrors,
+  }: UseFormStateReturn,
+): UseFormHandlersReturn {
   const fieldMap = useMemo(
     () => Object.fromEntries(fields.map((field) => [field.id, field])),
     [fields],
   );
-
-  const { user } = useAuthContext();
-  const { formState, setValue, setError, mergeErrors, clearErrors } =
-    useFormState(fields, user);
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.currentTarget;
@@ -47,9 +52,9 @@ function useFormHandlers(fields: InputFieldConfig[]): UseFormHandlersReturn {
     setError(name, error);
   }
 
-  function onSubmit(
+  function handleSubmit(
     e: React.SubmitEvent<HTMLFormElement>,
-    callback: (data: Record<string, NormalizedFormValue>) => void,
+    callback: (data: FormData) => void,
   ): void {
     e.preventDefault();
     const errors = validateForm(fields, formState);
@@ -68,7 +73,7 @@ function useFormHandlers(fields: InputFieldConfig[]): UseFormHandlersReturn {
       onBlur,
       onFocus,
     },
-    onSubmit,
+    handleSubmit,
   };
 }
 

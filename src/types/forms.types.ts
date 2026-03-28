@@ -42,6 +42,7 @@ interface UseFormStateReturn {
 /* ────────────────────────────── */
 
 type NormalizedFormValue = string | number | null;
+type FormData = Record<string, NormalizedFormValue>;
 
 interface UseFormHandlersReturn {
   inputHandlers: {
@@ -49,7 +50,7 @@ interface UseFormHandlersReturn {
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
   };
-  onSubmit: (
+  handleSubmit: (
     e: React.SubmitEvent<HTMLFormElement>,
     callback: (data: Record<string, NormalizedFormValue>) => void,
   ) => void;
@@ -64,6 +65,6 @@ export type {
   FormStateValue,
   FormAction,
   UseFormStateReturn,
-  NormalizedFormValue,
+  FormData,
   UseFormHandlersReturn,
 };
