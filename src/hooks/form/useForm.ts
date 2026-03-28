@@ -33,10 +33,14 @@ function useForm(fields: InputFieldConfig[]) {
 
   function handleInputBlur(e: React.FocusEvent<HTMLInputElement>): void {
     const input = e.target;
+    const name = input.name;
     const value =
       input.type === "number" ? getClampedNumber(input) : input.value;
 
+    setValue(name, value);
+
     const field = fieldMap[input.name];
+    setError(name, validateField(field, formState));
   }
 
   function handleSubmit(
