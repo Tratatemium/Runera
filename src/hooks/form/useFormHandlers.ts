@@ -58,7 +58,8 @@ function useFormHandlers(
   ): void {
     e.preventDefault();
     const errors = validateForm(fields, formState);
-    if (Object.keys(errors).length > 0) {
+    const hasErrors = Object.values(errors).some((v) => v !== undefined);
+    if (hasErrors) {
       clearErrors();
       mergeErrors(errors);
       return;
