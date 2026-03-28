@@ -46,8 +46,8 @@ function Signup() {
         email: data.email,
         password: data.password,
       };
-      await signup(payload);
-      if (fieldError) mergeErrors(fieldError);
+      const serverErrors = await signup(payload);
+      if (serverErrors) mergeErrors(serverErrors);
     });
   }
 
