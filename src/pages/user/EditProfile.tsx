@@ -30,7 +30,7 @@ function EditProfile() {
 
   const { user, updateUser } = useAuthContext();
   const formStateHook = useFormState(userFields, user);
-  const { formState, mergeErrors } = formStateHook;
+  const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     userFields,
     formStateHook,
