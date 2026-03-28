@@ -1,7 +1,6 @@
 import styles from "./EditProfile.module.css";
 
 import { useEffect, useState } from "react";
-import { useForm } from "../../hooks/useForm";
 import { useAuthContext } from "../../context/AuthContext";
 import { updateProfile } from "../../api/users.api";
 
@@ -10,6 +9,8 @@ import { ButtonLink } from "../../components/ButtonLink";
 import { FormField } from "../../components/FormField";
 
 import { inputFields } from "../../config/inputFields";
+import { useFormState } from "../../hooks/form/useFormState";
+import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 
 const userFields = [
   inputFields.firstName,
@@ -27,18 +28,15 @@ function EditProfile() {
     [K in (typeof userFields)[number]["id"]]: string;
   };
 
-  const {
-    formData,
-    inputErrors,
-    setServerErrors,
-    handleChange,
-    handleInputFocus,
-    handleInputBlur,
-    handleSubmit,
-  } = useForm<UserEditForm>(userFields);
-
   const { user, updateUser } = useAuthContext();
-  useEffect(() => console.log(user), [])
+  const formStateHook = useFormState(userFields, user);
+  const { formState, mergeErrors } = formStateHook;
+  const { inputHandlers, handleSubmit } = useFormHandlers(
+    userFields,
+    formStateHook,
+  );
+
+  useEffect(() => console.log(user), []);
 
   function normalizeDate(dateString: string) {
     const date = new Date(dateString);
@@ -88,11 +86,9 @@ function EditProfile() {
             max={field.max}
             step={field.step}
             placeholder={field.placeholder}
-            value={formData[field.id]}
-            onChange={handleChange}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            inputError={inputErrors[field.id]}
+            value={formState[field.id].value}
+            inputError={formState[field.id].error}
+            {...inputHandlers}
           />
         ))}
 
