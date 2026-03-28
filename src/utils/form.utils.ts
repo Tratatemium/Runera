@@ -1,20 +1,55 @@
-function getClampedNumber(input: HTMLInputElement): string {
-  const rawValue = input.value;
-  if (rawValue.trim() === "") return rawValue;
+import {
+  FormStateValue,
+  InputFieldConfig,
+  NormalizedFormValue,
+} from "../types/forms.types";
 
-  const parsed = Number(rawValue);
-  if (!Number.isFinite(parsed)) return rawValue;
-
-  let normalized = parsed;
-
-  if (input.min !== "") normalized = Math.max(normalized, Number(input.min));
-  if (input.max !== "") normalized = Math.min(normalized, Number(input.max));
-
-  return String(normalized);
-}
-
-function normalizeValue(value: string | number | undefined): string {
+function normalizeUserValue(value: string | number | undefined): string {
   return value == null ? "" : String(value);
 }
 
-export { normalizeValue, getClampedNumber };
+function clampNumber(value: string, min?: string, max?: string): string {
+  if (value.trim() === "") return value;
+
+  const num = Number(value);
+  if (!Number.isFinite(num)) return value;
+
+  const minNum = min !== undefined && min !== "" ? Number(min) : -Infinity;
+  const maxNum = max !== undefined && max !== "" ? Number(max) : Infinity;
+
+  return String(Math.min(Math.max(num, minNum), maxNum));
+}
+
+function normalizeEntry(
+  key: string,
+  value: FormStateValue[string],
+  field: InputFieldConfig,
+): [string, NormalizedFormValue] {
+  const trimmed = value.value.trim();
+
+  if (field.type === "number") {
+    if (trimmed === "") return [key, null];
+
+    const num = Number(clampNumber(trimmed));
+    return [key, Number.isFinite(num) ? num : null];
+  }
+
+  if (field.type === "email") {
+    return [key, trimmed.toLowerCase()];
+  }
+
+  return [key, trimmed];
+}
+
+function getFormData(
+  formState: FormStateValue,
+  fieldMap: Record<string, InputFieldConfig>,
+): Record<string, NormalizedFormValue> {
+  return Object.fromEntries(
+    Object.entries(formState).map(([k, v]) =>
+      normalizeEntry(k, v, fieldMap[k]),
+    ),
+  );
+}
+
+export { normalizeUserValue, clampNumber, getFormData };

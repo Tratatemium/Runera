@@ -8,7 +8,7 @@ import type { UserState } from "../../types/users.types";
 import type { UserKey } from "../../utils/user.utils";
 
 import { getUserValue } from "../../utils/user.utils";
-import { normalizeValue } from "../../utils/form.utils";
+import { normalizeUserValue } from "../../utils/form.utils";
 import { useReducer } from "react";
 
 /* ────────────────────────────── */
@@ -17,7 +17,7 @@ import { useReducer } from "react";
 
 function createFieldState(field: InputFieldConfig, user: UserState | null) {
   const value = user ? getUserValue(user, field.id as UserKey) : undefined;
-  return [field.id, { value: normalizeValue(value), error: undefined }];
+  return [field.id, { value: normalizeUserValue(value), error: undefined }];
 }
 
 function createInitialState<T extends FormStateValue>(
@@ -51,7 +51,7 @@ function formReducer(
         [key]: { ...state[key], error: error },
       };
     }
-    case "mergeServerErrors": {
+    case "mergeErrors": {
       return {
         ...state,
         ...Object.keys(action.errors).reduce((acc, key) => {
@@ -92,8 +92,8 @@ function useFormState<T extends FormStateValue>(
     dispatch({ type: "setValue", key, value });
   const setError = (key: string, error?: string) =>
     dispatch({ type: "setError", key, error });
-  const mergeServerErrors = (errors: Record<string, string>) =>
-    dispatch({ type: "mergeServerErrors", errors });
+  const mergeErrors = (errors: Record<string, string>) =>
+    dispatch({ type: "mergeErrors", errors });
   const resetFormState = () =>
     dispatch({ type: "reset", state: createInitialState(fields, user) });
   const clearErrors = () => dispatch({ type: "clearErrors" });
@@ -102,7 +102,7 @@ function useFormState<T extends FormStateValue>(
     formState: state,
     setValue,
     setError,
-    mergeServerErrors,
+    mergeErrors,
     resetFormState,
     clearErrors,
   };
