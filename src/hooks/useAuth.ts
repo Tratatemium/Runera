@@ -9,7 +9,7 @@ import { useAuthContext } from "../context/AuthContext";
 import { mapUserResponseToState } from "../utils/user.utils";
 
 interface UseAuthReturn {
-  signup: (payload: SignupData) => Promise<void>;
+  signup: (payload: SignupData) => Promise<Record<string, string> | undefined>;
   login: (payload: LoginData) => Promise<void>;
   logout: () => Promise<void>;
   isFetching: boolean;
@@ -39,7 +39,7 @@ function useAuth(): UseAuthReturn {
       if (err instanceof ApiError) {
         console.error(err.code, err.message);
 
-        if (err.field) setFieldError({ [err.field]: err.message });
+        if (err.field) return { [err.field]: err.message };
         else setFormError(err.message);
       } else {
         console.error("Unexpected error", err);

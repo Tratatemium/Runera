@@ -1,12 +1,13 @@
 import styles from "./EditAccount.module.css";
 
-import { useState } from "react";
-import { useForm } from "../../hooks/useForm";
-
 import { Button } from "../../components/Button";
 import { FormField } from "../../components/FormField";
 
 import { inputFields } from "../../config/inputFields";
+import { useState } from "react";
+import { useAuthContext } from "../../context/AuthContext";
+import { useFormState } from "../../hooks/form/useFormState";
+import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 
 const userFields = [
   inputFields.username,
@@ -15,22 +16,20 @@ const userFields = [
 ] as const;
 
 function EditAccount() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formError, setFormError] = useState<string | undefined>(undefined);
+  const [isSubmitting] = useState(false);
+  const [formError] = useState<string | undefined>(undefined);
 
-  type UserEditForm = {
-    [K in (typeof userFields)[number]["id"]]: string;
-  };
+  // type UserEditForm = {
+  //   [K in (typeof userFields)[number]["id"]]: string;
+  // };
 
-  const {
-    formData,
-    inputErrors,
-    setServerErrors,
-    handleChange,
-    handleInputFocus,
-    handleInputBlur,
-    handleSubmit,
-  } = useForm<UserEditForm>(userFields);
+  const { user } = useAuthContext();
+  const formStateHook = useFormState(userFields, user);
+  const { formState } = formStateHook;
+  const { inputHandlers, handleSubmit } = useFormHandlers(
+    userFields,
+    formStateHook,
+  );
 
   function submitUserEdit() {}
 
@@ -52,11 +51,9 @@ function EditAccount() {
             max={field.max}
             step={field.step}
             placeholder={field.placeholder}
-            value={formData[field.id]}
-            onChange={handleChange}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            inputError={inputErrors[field.id]}
+            value={formState[field.id].value}
+            inputError={formState[field.id].error}
+            {...inputHandlers}
           />
         ))}
 
