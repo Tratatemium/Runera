@@ -37,7 +37,7 @@ function Signup() {
     signupFields,
     formStateHook,
   );
-  const { signup, isFetching, fieldError, formError } = useAuth();
+  const { signup, isFetching, formError } = useAuth();
 
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     handleSubmit<SignupForm>(e, async (data) => {

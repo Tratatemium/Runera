@@ -1,5 +1,4 @@
 import type {
-  FormData,
   InputFieldConfig,
   UseFormHandlersReturn,
   UseFormStateReturn,

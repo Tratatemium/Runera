@@ -79,7 +79,7 @@ function formReducer(
 /* useFormState                   */
 /* ────────────────────────────── */
 
-function useFormState<T extends FormStateValue>(
+function useFormState(
   fields: readonly InputFieldConfig[],
   user: UserState | null,
 ): UseFormStateReturn {

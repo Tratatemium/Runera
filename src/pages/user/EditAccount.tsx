@@ -1,74 +1,80 @@
-// import styles from "./EditAccount.module.css";
+import styles from "./EditAccount.module.css";
 
-// import { Button } from "../../components/Button";
-// import { FormField } from "../../components/FormField";
+import { Button } from "../../components/Button";
+import { FormField } from "../../components/FormField";
 
-// import { inputFields } from "../../config/inputFields";
-// import { useState } from "react";
-// import { useAuthContext } from "../../context/AuthContext";
-// import { useFormState } from "../../hooks/form/useFormState";
-// import { useFormHandlers } from "../../hooks/form/useFormHandlers";
+import { inputFields } from "../../config/inputFields";
+import { useState } from "react";
+import { useAuthContext } from "../../context/AuthContext";
+import { useFormState } from "../../hooks/form/useFormState";
+import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 
-// const userFields = [
-//   inputFields.username,
-//   inputFields.email,
-//   inputFields.password,
-// ] as const;
+const userFields = [
+  inputFields.username,
+  inputFields.email,
+  inputFields.password,
+] as const;
 
 function EditAccount() {
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [formError, setFormError] = useState<string | undefined>(undefined);
+  const [isSubmitting] = useState(false);
+  const [formError] = useState<string | undefined>(undefined);
+
   // type UserEditForm = {
   //   [K in (typeof userFields)[number]["id"]]: string;
   // };
-  // const { user, updateUser } = useAuthContext();
-  // const formStateHook = useFormState(userFields, user);
-  // const { formState, mergeErrors } = formStateHook;
-  // const { inputHandlers, handleSubmit } = useFormHandlers(
-  //   userFields,
-  //   formStateHook,
-  // );
-  // function submitUserEdit() {}
-  // function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-  //   handleSubmit(e, submitUserEdit);
-  // }
-  // return (
-  //   <main className={styles.main}>
-  //     <form className={styles.form} onSubmit={onSubmit} noValidate>
-  //       {userFields.map((field) => (
-  //         <FormField
-  //           key={field.id}
-  //           id={field.id}
-  //           label={field.label}
-  //           layout="row"
-  //           type={field.type}
-  //           min={field.min}
-  //           max={field.max}
-  //           step={field.step}
-  //           placeholder={field.placeholder}
-  //           value={formState[field.id].value}
-  //           inputError={formState[field.id].error}
-  //           {...inputHandlers}
-  //         />
-  //       ))}
-  //       <div className={styles.submitWrapper}>
-  //         {formError && (
-  //           <div role="alert" className={styles.errorWrapper}>
-  //             <p className={styles.errorText}>{formError}</p>
-  //           </div>
-  //         )}
-  //         <div className={`${styles.submit} ${formError ? styles.error : ""}`}>
-  //           <Button
-  //             buttonText="Save changes"
-  //             type="submit"
-  //             variant="primary"
-  //             isSubmitting={isSubmitting}
-  //           />
-  //         </div>
-  //       </div>
-  //     </form>
-  //   </main>
-  // );
+
+  const { user } = useAuthContext();
+  const formStateHook = useFormState(userFields, user);
+  const { formState } = formStateHook;
+  const { inputHandlers, handleSubmit } = useFormHandlers(
+    userFields,
+    formStateHook,
+  );
+
+  function submitUserEdit() {}
+
+  function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    handleSubmit(e, submitUserEdit);
+  }
+
+  return (
+    <main className={styles.main}>
+      <form className={styles.form} onSubmit={onSubmit} noValidate>
+        {userFields.map((field) => (
+          <FormField
+            key={field.id}
+            id={field.id}
+            label={field.label}
+            layout="row"
+            type={field.type}
+            min={field.min}
+            max={field.max}
+            step={field.step}
+            placeholder={field.placeholder}
+            value={formState[field.id].value}
+            inputError={formState[field.id].error}
+            {...inputHandlers}
+          />
+        ))}
+
+        <div className={styles.submitWrapper}>
+          {formError && (
+            <div role="alert" className={styles.errorWrapper}>
+              <p className={styles.errorText}>{formError}</p>
+            </div>
+          )}
+          <div className={`${styles.submit} ${formError ? styles.error : ""}`}>
+            <Button
+              buttonText="Save changes"
+              type="submit"
+              variant="primary"
+              isSubmitting={isSubmitting}
+            />
+          </div>
+        </div>
+      </form>
+    </main>
+  );
 }
 
 export { EditAccount };
