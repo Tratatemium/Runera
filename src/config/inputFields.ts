@@ -1,6 +1,12 @@
 import type { InputFieldConfig } from "../types/forms.types";
 
 import * as validators from "../validation/validators";
+import {
+  normalizeString,
+  normalizeNumber,
+  normalizeEmail,
+  normalizeLogin,
+} from "../utils/normalize.utils";
 
 const inputFields: Record<string, InputFieldConfig> = {
   username: {
@@ -9,6 +15,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     type: "text",
     placeholder: "Your username",
     validator: validators.validateUsername,
+    normalizator: normalizeString,
   },
   email: {
     id: "email",
@@ -16,6 +23,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     type: "email",
     placeholder: "your@email.com",
     validator: validators.validateEmail,
+    normalizator: normalizeEmail,
   },
   password: {
     id: "password",
@@ -23,6 +31,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     type: "password",
     placeholder: "Your password",
     validator: validators.validatePassword,
+    normalizator: normalizeString,
   },
   confirmPassword: {
     id: "confirmPassword",
@@ -30,6 +39,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     type: "password",
     placeholder: "Re-enter password",
     validator: validators.validateConfirmPassword,
+    normalizator: normalizeString,
   },
   login: {
     id: "login",
@@ -37,6 +47,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     type: "text",
     placeholder: "Your username or email",
     validator: validators.validateLogin,
+    normalizator: normalizeLogin,
   },
   firstName: {
     id: "firstName",
@@ -44,6 +55,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     type: "text",
     placeholder: "Your first name",
     validator: validators.validateName,
+    normalizator: normalizeString,
   },
   lastName: {
     id: "lastName",
@@ -51,11 +63,13 @@ const inputFields: Record<string, InputFieldConfig> = {
     type: "text",
     placeholder: "Your last name",
     validator: validators.validateName,
+    normalizator: normalizeString,
   },
   dateOfBirth: {
     id: "dateOfBirth",
     label: "Date of birth",
     type: "date",
+    normalizator: normalizeString,
   },
   heightCm: {
     id: "heightCm",
@@ -64,6 +78,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     min: 1,
     max: 300,
     step: 1,
+    normalizator: normalizeNumber,
   },
   weightKg: {
     id: "weightKg",
@@ -72,6 +87,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     min: 1,
     max: 300,
     step: 1,
+    normalizator: normalizeNumber,
   },
 };
 

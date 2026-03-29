@@ -1,7 +1,6 @@
 import styles from "./Login.module.css";
 import runners from "../assets/runners-wide-1.jpg";
 
-import { useForm } from "../hooks/useForm";
 import { useAuth } from "../hooks/useAuth";
 
 import { inputFields } from "../config/inputFields";
@@ -9,6 +8,9 @@ import { inputFields } from "../config/inputFields";
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
 import { AuthCard } from "../components/AuthCard";
+import { useAuthContext } from "../context/AuthContext";
+import { useFormState } from "../hooks/form/useFormState";
+import { useFormHandlers } from "../hooks/form/useFormHandlers";
 
 const loginFooter = (
   <>
@@ -24,16 +26,21 @@ function Login() {
     [K in (typeof loginFields)[number]["id"]]: string;
   };
 
-  const { formData, inputErrors, handleChange, handleInputBlur, handleSubmit } =
-    useForm<LoginForm>(loginFields);
+  const { user } = useAuthContext();
+  const formStateHook = useFormState(loginFields, user);
+  const { formState } = formStateHook;
+  const { inputHandlers, handleSubmit } = useFormHandlers(
+    loginFields,
+    formStateHook,
+  );
 
   const { login, isFetching, formError } = useAuth();
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, async (data) => {
+    handleSubmit<LoginForm>(e, async (data) => {
       const loginData = {
         password: data.password,
-        ...(data.login.includes("@")
+        ...(data.login?.includes("@")
           ? { email: data.login }
           : { username: data.login }),
       };
@@ -65,10 +72,9 @@ function Login() {
             max={field.max}
             step={field.step}
             placeholder={field.placeholder}
-            value={formData[field.id]}
-            onChange={handleChange}
-            onBlur={handleInputBlur}
-            inputError={inputErrors[field.id]}
+            value={formState[field.id].value}
+            inputError={formState[field.id].error}
+            {...inputHandlers}
           />
         ))}
       </AuthCard>
