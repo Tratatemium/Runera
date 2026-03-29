@@ -13,7 +13,6 @@ interface UseAuthReturn {
   login: (payload: LoginData) => Promise<void>;
   logout: () => Promise<void>;
   isFetching: boolean;
-  fieldError: Record<string, string> | undefined;
   formError: string | undefined;
 }
 
@@ -22,14 +21,10 @@ function useAuth(): UseAuthReturn {
   const { loginUser, logoutUser } = useAuthContext();
 
   const [isFetching, setIsFetching] = useState(false);
-  const [fieldError, setFieldError] = useState<
-    Record<string, string> | undefined
-  >(undefined);
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
   async function signup(payload: SignupData) {
     setIsFetching(true);
-    setFieldError(undefined);
     setFormError(undefined);
 
     try {
@@ -53,7 +48,6 @@ function useAuth(): UseAuthReturn {
   async function login(payload: LoginData) {
     logoutUser();
     setIsFetching(true);
-    setFieldError(undefined);
     setFormError(undefined);
 
     try {
@@ -85,7 +79,7 @@ function useAuth(): UseAuthReturn {
     }
   }
 
-  return { signup, login, logout, isFetching, fieldError, formError };
+  return { signup, login, logout, isFetching, formError };
 }
 
 export { useAuth };
