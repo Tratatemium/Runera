@@ -21,6 +21,11 @@ function normalizeDate(dateString: string) {
   return date.toISOString().slice(0, 10);
 }
 
+function normalizeTime(dateString: string) {
+  const date = new Date(dateString);
+  return date.toISOString().slice(0, 19);
+}
+
 /* ────────────────────────────── */
 /* normalizers                    */
 /* ────────────────────────────── */
@@ -52,6 +57,7 @@ function normalizeLogin(value: string, _field: InputFieldConfig): string {
 export {
   clampNumber,
   normalizeDate,
+  normalizeTime,
   normalizeString,
   normalizeNumber,
   normalizeEmail,

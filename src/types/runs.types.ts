@@ -42,6 +42,7 @@ export type {
   Run,
   RunsState,
   RunsContextValue,
+  RunApi,
   RunApiResponse,
   MyRunsApiResponse,
   RunData,
