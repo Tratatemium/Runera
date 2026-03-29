@@ -11,6 +11,7 @@ import {
   useMemo,
 } from "react";
 import merge from "lodash/merge";
+import { AppError } from "../errors/errors";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -48,7 +49,7 @@ function useAuthContext() {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuthContext must be used inside AuthProvider");
+    throw new AppError("useAuthContext must be used inside AuthProvider");
   }
 
   return context;
