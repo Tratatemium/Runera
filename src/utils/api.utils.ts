@@ -6,6 +6,16 @@ function joinUrl(urlPart1: string, urlPart2: string) {
   return `${urlPart1.replace(/\/+$/, "")}/${urlPart2.replace(/^\/+/, "")}`;
 }
 
+function jsonOptions<T>(method: RequestInit["method"], data?: T): RequestInit {
+  return {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    ...(data && { body: JSON.stringify(data) }),
+  };
+}
+
 async function getResponseData(response: Response): Promise<unknown> {
   const text = await response.text();
   if (!text) return null;
@@ -48,4 +58,10 @@ function handleApiFormError(
   }
 }
 
-export { joinUrl, getResponseData, handleServerErrors, handleApiFormError };
+export {
+  joinUrl,
+  jsonOptions,
+  getResponseData,
+  handleServerErrors,
+  handleApiFormError,
+};

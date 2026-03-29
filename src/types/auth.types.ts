@@ -16,8 +16,6 @@ interface LoginData {
   password: string;
 }
 
-type LoginResponse = void;
-
 interface AuthContextValue {
   user: UserState | null;
   loginUser: (user: UserState) => void;
@@ -29,6 +27,5 @@ export type {
   SignupData,
   SignupResponse,
   LoginData,
-  LoginResponse,
   AuthContextValue,
 };

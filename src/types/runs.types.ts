@@ -19,4 +19,30 @@ interface RunsContextValue {
   deleteRun: (id: string) => void;
 }
 
-export type { Run, RunsState, RunsContextValue };
+interface RunApi {
+  runId: string;
+  userId: string;
+  startTime: string;
+  durationSec: number;
+  distanceMeters: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+type RunApiResponse = { runData: RunApi };
+type MyRunsApiResponse = { myRuns: RunApi[] };
+
+interface RunData {
+  startTime: string;
+  durationSec: number;
+  distanceMeters: number;
+}
+
+export type {
+  Run,
+  RunsState,
+  RunsContextValue,
+  RunApiResponse,
+  MyRunsApiResponse,
+  RunData,
+};
