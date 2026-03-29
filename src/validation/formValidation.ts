@@ -12,7 +12,7 @@ function validateField(
 function validateForm(
   fields: readonly InputFieldConfig[],
   formState: FormStateValue,
-): Record<string, string> {
+): Record<string, string | undefined> {
   const entries = fields.map((field) => [
     field.id,
     validateField(field, formState),

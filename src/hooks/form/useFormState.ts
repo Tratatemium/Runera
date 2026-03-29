@@ -92,7 +92,7 @@ function useFormState(
     dispatch({ type: "setValue", key, value });
   const setError = (key: string, error?: string) =>
     dispatch({ type: "setError", key, error });
-  const mergeErrors = (errors: Record<string, string>) =>
+  const mergeErrors = (errors: Record<string, string | undefined>) =>
     dispatch({ type: "mergeErrors", errors });
   const resetFormState = () =>
     dispatch({ type: "reset", state: createInitialState(fields, user) });

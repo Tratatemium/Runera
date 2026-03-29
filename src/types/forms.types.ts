@@ -28,7 +28,7 @@ type FormStateValue = Record<
 type FormAction =
   | { type: "setValue"; key: string; value: string }
   | { type: "setError"; key: string; error?: string }
-  | { type: "mergeErrors"; errors: Record<string, string> }
+  | { type: "mergeErrors"; errors: Record<string, string | undefined> }
   | { type: "reset"; state: FormStateValue }
   | { type: "clearErrors" };
 
@@ -36,7 +36,7 @@ interface UseFormStateReturn {
   formState: FormStateValue;
   setValue: (key: string, value: string) => void;
   setError: (key: string, error?: string) => void;
-  mergeErrors: (errors: Record<string, string>) => void;
+  mergeErrors: (errors: Record<string, string | undefined>) => void;
   resetFormState: () => void;
   clearErrors: () => void;
 }
