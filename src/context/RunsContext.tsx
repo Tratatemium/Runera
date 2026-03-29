@@ -61,12 +61,11 @@ function RunsProvider({ children }: RunsProviderProps) {
       runs,
       hydrateRuns,
       clearRuns,
-      setRuns,
       addRun,
       updateRun,
       deleteRun,
     }),
-    [runs, hydrateRuns, clearRuns, setRuns, addRun, updateRun, deleteRun],
+    [runs, hydrateRuns, clearRuns, addRun, updateRun, deleteRun],
   );
   return <RunsContext.Provider value={value}>{children}</RunsContext.Provider>;
 }
