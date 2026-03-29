@@ -23,7 +23,7 @@ function normalizeNumber(
   const trimmed = value.trim();
   if (trimmed === "") return null;
   const num = Number(
-    clampNumber(trimmed, String(field.min), String(field.max)),
+    clampNumber(trimmed, field.min?.toString(), field.max?.toString()),
   );
   return Number.isFinite(num) ? num : null;
 }
