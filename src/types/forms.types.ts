@@ -8,7 +8,7 @@ interface InputFieldConfig {
   placeholder?: string;
   validator?: (value: string, formState: FormStateValue) => string | undefined;
   normalizator: (
-    valie: string,
+    value: string,
     field: InputFieldConfig,
   ) => string | number | null;
 }
