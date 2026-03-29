@@ -6,7 +6,7 @@ function joinUrl(urlPart1: string, urlPart2: string) {
   return `${urlPart1.replace(/\/+$/, "")}/${urlPart2.replace(/^\/+/, "")}`;
 }
 
-function jsonOptions(method: string, data?: {}): RequestInit {
+function jsonOptions<T>(method: RequestInit["method"], data?: T): RequestInit {
   return {
     method,
     headers: {
