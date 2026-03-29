@@ -29,7 +29,7 @@ interface RunApi {
   updatedAt: string;
 }
 
-type RunApiResponse = { RunData: RunApi };
+type RunApiResponse = { runData: RunApi };
 type MyRunsApiResponse = { myRuns: RunApi[] };
 
 interface RunData {
