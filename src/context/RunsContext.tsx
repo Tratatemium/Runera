@@ -3,6 +3,7 @@ import {
   ReactNode,
   useCallback,
   useContext,
+  useMemo,
   useState,
 } from "react";
 import type { Run, RunsState, RunsContextValue } from "../types/runs.types";
@@ -18,6 +19,10 @@ function RunsProvider({ children }: RunsProviderProps) {
   const [runs, setRuns] = useState<RunsState>({});
 
   const runExists = useCallback((id: string) => Boolean(runs[id]), [runs]);
+
+  const hydrateRuns = useCallback((runs: RunsState) => setRuns(runs), []);
+
+  const clearRuns = useCallback(() => setRuns({}), []);
 
   const addRun = useCallback((newRun: Run) => {
     setRuns((prev) => ({
@@ -51,7 +56,18 @@ function RunsProvider({ children }: RunsProviderProps) {
     [runExists],
   );
 
-  const value = { runs, setRuns, addRun, updateRun, deleteRun };
+  const value = useMemo(
+    () => ({
+      runs,
+      hydrateRuns,
+      clearRuns,
+      setRuns,
+      addRun,
+      updateRun,
+      deleteRun,
+    }),
+    [runs, hydrateRuns, clearRuns, setRuns, addRun, updateRun, deleteRun],
+  );
   return <RunsContext.Provider value={value}>{children}</RunsContext.Provider>;
 }
 

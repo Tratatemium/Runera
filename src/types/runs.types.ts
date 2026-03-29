@@ -13,6 +13,8 @@ type RunsState = Record<string, Run>;
 interface RunsContextValue {
   runs: RunsState;
   setRuns: Dispatch<SetStateAction<RunsState>>;
+  hydrateRuns: (runs: RunsState) => void;
+  clearRuns: () => void;
   addRun: (newRun: Run) => void;
   updateRun: (updatedRun: Run) => void;
   deleteRun: (id: string) => void;
