@@ -34,8 +34,8 @@ function useAuth(): UseAuthReturn {
       await authApi.signup(payload);
       navigate("/login");
     } catch (err) {
-      const fielderrors = handleApiFormError(err, setFormError);
-      if (fielderrors) return fielderrors;
+      const fieldErrors = handleApiFormError(err, setFormError);
+      if (fieldErrors) return fieldErrors;
     } finally {
       setIsFetching(false);
     }
