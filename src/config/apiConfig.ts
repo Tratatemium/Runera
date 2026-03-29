@@ -10,8 +10,8 @@ const API = {
     profile: "users/me/profile",
   },
   runs: {
-    myRuns: "/me/runs",
-    runs: "/runs",
+    myRuns: "me/runs",
+    runs: "runs",
   },
 };
 
