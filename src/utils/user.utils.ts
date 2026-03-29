@@ -1,4 +1,5 @@
 import type { UserState, UserApiResponse } from "../types/users.types";
+import { normalizeDate } from "./normalize.utils";
 
 const mapUserResponseToState = (data: UserApiResponse): UserState => ({
   account: {
@@ -45,5 +46,30 @@ function getUserValue(user: UserState, key: UserKey) {
   }
 }
 
+function normalizeProfile(profile: UserState["profile"]): UserState["profile"] {
+  const normalized = { ...profile };
+
+  if (normalized.dateOfBirth) {
+    normalized.dateOfBirth = normalizeDate(normalized.dateOfBirth);
+  }
+
+  return normalized;
+}
+
+function normalizeUserResponse(data: UserApiResponse): UserApiResponse {
+  const normalized = { ...data };
+
+  if (normalized.userData.profile) {
+    normalized.userData.profile = normalizeProfile(normalized.userData.profile);
+  }
+
+  return normalized;
+}
+
 export type { UserKey };
-export { mapUserResponseToState, getUserValue };
+export {
+  mapUserResponseToState,
+  getUserValue,
+  normalizeProfile,
+  normalizeUserResponse,
+};
