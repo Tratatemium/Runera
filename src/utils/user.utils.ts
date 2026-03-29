@@ -56,5 +56,20 @@ function normalizeProfile(profile: UserState["profile"]): UserState["profile"] {
   return normalized;
 }
 
+function normalizeUserResponse(data: UserApiResponse): UserApiResponse {
+  const normalized = { ...data };
+
+  if (normalized.userData.profile) {
+    normalized.userData.profile = normalizeProfile(normalized.userData.profile);
+  }
+
+  return normalized;
+}
+
 export type { UserKey };
-export { mapUserResponseToState, getUserValue, normalizeProfile };
+export {
+  mapUserResponseToState,
+  getUserValue,
+  normalizeProfile,
+  normalizeUserResponse,
+};
