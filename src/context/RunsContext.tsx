@@ -26,24 +26,30 @@ function RunsProvider({ children }: RunsProviderProps) {
     }));
   }, []);
 
-  const updateRun = useCallback((updatedRun: Run) => {
-    setRuns((prev) => {
-      if (!runExists(updatedRun.runId)) return prev;
-      return {
-        ...prev,
-        [updatedRun.runId]: updatedRun,
-      };
-    });
-  }, []);
+  const updateRun = useCallback(
+    (updatedRun: Run) => {
+      setRuns((prev) => {
+        if (!runExists(updatedRun.runId)) return prev;
+        return {
+          ...prev,
+          [updatedRun.runId]: updatedRun,
+        };
+      });
+    },
+    [runExists],
+  );
 
-  const deleteRun = useCallback((id: string) => {
-    setRuns((prev) => {
-      if (!runExists(id)) return prev;
+  const deleteRun = useCallback(
+    (id: string) => {
+      setRuns((prev) => {
+        if (!runExists(id)) return prev;
 
-      const { [id]: _, ...rest } = prev;
-      return rest;
-    });
-  }, []);
+        const { [id]: _, ...rest } = prev;
+        return rest;
+      });
+    },
+    [runExists],
+  );
 
   const value = { runs, setRuns, addRun, updateRun, deleteRun };
   return <RunsContext.Provider value={value}>{children}</RunsContext.Provider>;
