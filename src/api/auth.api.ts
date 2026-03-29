@@ -7,18 +7,13 @@ import type {
 
 import { apiRequest } from "./client";
 import { API } from "../config/apiConfig";
+import { jsonOptions } from "../utils/api.utils";
 
 function signup(data: SignupData) {
   return apiRequest<SignupResponse>({
     path: API.auth.signup,
     assertData: false,
-    options: {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    },
+    options: jsonOptions("POST", data),
   });
 }
 
@@ -26,13 +21,7 @@ function login(data: LoginData) {
   return apiRequest<LoginResponse>({
     path: API.auth.login,
     assertData: false,
-    options: {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    },
+    options: jsonOptions("POST", data),
   });
 }
 
@@ -40,9 +29,7 @@ function logout() {
   return apiRequest<LoginResponse>({
     path: API.auth.logout,
     assertData: false,
-    options: {
-      method: "POST",
-    },
+    options: { method: "POST" },
   });
 }
 
