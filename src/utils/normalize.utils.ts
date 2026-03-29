@@ -1,5 +1,9 @@
 import type { InputFieldConfig } from "../types/forms.types";
 
+/* ────────────────────────────── */
+/* helpers                        */
+/* ────────────────────────────── */
+
 function clampNumber(value: string, min?: string, max?: string): string {
   if (value.trim() === "") return value;
 
@@ -11,6 +15,15 @@ function clampNumber(value: string, min?: string, max?: string): string {
 
   return String(Math.min(Math.max(num, minNum), maxNum));
 }
+
+function normalizeDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toISOString().slice(0, 10);
+}
+
+/* ────────────────────────────── */
+/* normalizers                    */
+/* ────────────────────────────── */
 
 function normalizeString(value: string, _field: InputFieldConfig): string {
   return value.trim();
@@ -38,6 +51,7 @@ function normalizeLogin(value: string, _field: InputFieldConfig): string {
 
 export {
   clampNumber,
+  normalizeDate,
   normalizeString,
   normalizeNumber,
   normalizeEmail,

@@ -1,3 +1,4 @@
+import type { SetStateAction } from "react";
 import { ApiResponse } from "../types/api.types";
 import { ApiError, ResponseError } from "../errors/errors";
 
@@ -32,4 +33,19 @@ function handleServerErrors(response: Response, data: ApiResponse | undefined) {
   throw new ApiError(message, status, code, field);
 }
 
-export { joinUrl, getResponseData, handleServerErrors };
+function handleApiFormError(
+  err: unknown,
+  setFormError: (value: SetStateAction<string | undefined>) => void,
+) {
+  if (err instanceof ApiError) {
+    console.error(err.code, err.message);
+
+    if (err.field) return { [err.field]: err.message };
+    else setFormError(err.message);
+  } else {
+    console.error("Unexpected error", err);
+    setFormError("Something went wrong.");
+  }
+}
+
+export { joinUrl, getResponseData, handleServerErrors, handleApiFormError };

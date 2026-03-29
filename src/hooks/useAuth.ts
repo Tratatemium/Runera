@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { mapUserResponseToState } from "../utils/user.utils";
+import { handleApiFormError } from "../utils/api.utils";
 
 interface UseAuthReturn {
   signup: (payload: SignupData) => Promise<Record<string, string> | undefined>;
@@ -31,15 +32,8 @@ function useAuth(): UseAuthReturn {
       await authApi.signup(payload);
       navigate("/login");
     } catch (err) {
-      if (err instanceof ApiError) {
-        console.error(err.code, err.message);
-
-        if (err.field) return { [err.field]: err.message };
-        else setFormError(err.message);
-      } else {
-        console.error("Unexpected error", err);
-        setFormError("Something went wrong.");
-      }
+      const fielderrors = handleApiFormError(err, setFormError);
+      if (fielderrors) return fielderrors;
     } finally {
       setIsFetching(false);
     }
