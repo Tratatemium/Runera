@@ -1,16 +1,15 @@
 import styles from "./EditProfile.module.css";
 
-import { useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
-import { updateProfile } from "../../api/users.api";
+import { useFormState } from "../../hooks/form/useFormState";
+import { useFormHandlers } from "../../hooks/form/useFormHandlers";
+import { useUser } from "../../hooks/useUser";
 
 import { Button } from "../../components/Button";
 import { ButtonLink } from "../../components/ButtonLink";
 import { FormField } from "../../components/FormField";
 
 import { inputFields } from "../../config/inputFields";
-import { useFormState } from "../../hooks/form/useFormState";
-import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 
 const userFields = [
   inputFields.firstName,
@@ -21,14 +20,11 @@ const userFields = [
 ] as const;
 
 function EditProfile() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formError, setFormError] = useState<string | undefined>(undefined);
-
   type UserEditForm = {
     [K in (typeof userFields)[number]["id"]]: string;
   };
 
-  const { user, updateUser } = useAuthContext();
+  const { user } = useAuthContext();
   const formStateHook = useFormState(userFields, user);
   const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
@@ -36,34 +32,13 @@ function EditProfile() {
     formStateHook,
   );
 
-  function normalizeDate(dateString: string) {
-    const date = new Date(dateString);
-    return date.toISOString().slice(0, 10);
-  }
+  const { isFetching, formError, updateProfile } = useUser();
 
   async function submitUserEdit(data: UserEditForm) {
-    const profileData = {
+    const payload = {
       profile: data,
     };
-    console.log(profileData);
-
-    setIsSubmitting(true);
-    setFormError(undefined);
-
-    try {
-      const response = await updateProfile(profileData);
-      const updateFields = response.savedProfile;
-      if (updateFields.dateOfBirth) {
-        updateFields.dateOfBirth = normalizeDate(updateFields.dateOfBirth);
-      }
-
-      const update = { profile: updateFields };
-      updateUser(update);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsSubmitting(false);
-    }
+    await updateProfile(payload);
   }
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -101,7 +76,7 @@ function EditProfile() {
               buttonText="Save changes"
               type="submit"
               variant="primary"
-              isSubmitting={isSubmitting}
+              isSubmitting={isFetching}
             />
             <ButtonLink
               linkDirection="."

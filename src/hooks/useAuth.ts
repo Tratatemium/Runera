@@ -1,5 +1,4 @@
 import type { SignupData, LoginData } from "../types/auth.types";
-import { ApiError } from "../errors/errors";
 
 import * as authApi from "../api/auth.api";
 import * as usersApi from "../api/users.api";
@@ -50,13 +49,7 @@ function useAuth(): UseAuthReturn {
       loginUser(mapUserResponseToState(userData));
       navigate("/user/dashboard");
     } catch (err) {
-      if (err instanceof ApiError) {
-        console.error(err.code, err.message);
-        setFormError(err.message);
-      } else {
-        console.error("Unexpected error", err);
-        setFormError("Something went wrong.");
-      }
+      handleApiFormError(err, setFormError);
     } finally {
       setIsFetching(false);
     }
