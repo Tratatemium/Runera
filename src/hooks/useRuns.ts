@@ -3,6 +3,7 @@ import type {
   MyRunsApiResponse,
   RunsState,
   Run,
+  RunData,
 } from "../types/runs.types";
 
 import { useState } from "react";
@@ -15,6 +16,7 @@ interface UseRunsReturn {
   isFetching: boolean;
   formError: string | undefined;
   getMyRuns: () => Promise<void>;
+  postNewRun: (payload: RunData) => Promise<void>;
 }
 
 function useRuns(): UseRunsReturn {
@@ -34,7 +36,19 @@ function useRuns(): UseRunsReturn {
     }
   }
 
-  return { isFetching, formError, getMyRuns };
+  async function postNewRun(payload: RunData) {
+    setIsFetching(true);
+    try {
+      const response = await runsApi.postNewRun(payload);
+      addRun(normalizeRunData(response));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsFetching(false);
+    }
+  }
+
+  return { isFetching, formError, getMyRuns, postNewRun };
 }
 
 export { useRuns };
