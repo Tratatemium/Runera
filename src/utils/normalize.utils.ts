@@ -1,4 +1,4 @@
-import { InputFieldConfig } from "../types/forms.types";
+import type { InputFieldConfig } from "../types/forms.types";
 
 function clampNumber(value: string, min?: string, max?: string): string {
   if (value.trim() === "") return value;
