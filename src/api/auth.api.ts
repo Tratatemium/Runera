@@ -2,7 +2,6 @@ import type {
   SignupData,
   SignupResponse,
   LoginData,
-  LoginResponse,
 } from "../types/auth.types";
 
 import { apiRequest } from "./client";
@@ -18,7 +17,7 @@ function signup(data: SignupData) {
 }
 
 function login(data: LoginData) {
-  return apiRequest<LoginResponse>({
+  return apiRequest<void>({
     path: API.auth.login,
     assertData: false,
     options: jsonOptions("POST", data),
@@ -26,7 +25,7 @@ function login(data: LoginData) {
 }
 
 function logout() {
-  return apiRequest<LoginResponse>({
+  return apiRequest<void>({
     path: API.auth.logout,
     assertData: false,
     options: { method: "POST" },

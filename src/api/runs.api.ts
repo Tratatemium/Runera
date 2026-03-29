@@ -32,7 +32,7 @@ function updateRun(runId: string, data: RunData) {
 }
 
 function deleteRun(runId: string) {
-  return apiRequest({
+  return apiRequest<void>({
     path: joinUrl(API.runs.runs, runId),
     assertData: false,
     options: { method: "DELETE" },
