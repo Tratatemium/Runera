@@ -57,11 +57,15 @@ function normalizeProfile(profile: UserState["profile"]): UserState["profile"] {
 }
 
 function normalizeUserResponse(data: UserApiResponse): UserApiResponse {
-  const normalized = { ...data };
-
-  if (normalized.userData.profile) {
-    normalized.userData.profile = normalizeProfile(normalized.userData.profile);
-  }
+  const normalized: UserApiResponse = {
+    ...data,
+    userData: {
+      ...data.userData,
+      profile: data.userData.profile
+        ? normalizeProfile(data.userData.profile)
+        : data.userData.profile,
+    },
+  };
 
   return normalized;
 }
