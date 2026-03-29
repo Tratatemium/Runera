@@ -1,13 +1,16 @@
+import type { Run, RunsState, RunsContextValue } from "../types/runs.types";
+
 import {
   createContext,
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
-import type { Run, RunsState, RunsContextValue } from "../types/runs.types";
 import { AppError } from "../errors/errors";
+import { useAuthContext } from "./AuthContext";
 
 const RunsContext = createContext<RunsContextValue | undefined>(undefined);
 
@@ -55,6 +58,11 @@ function RunsProvider({ children }: RunsProviderProps) {
     },
     [runExists],
   );
+
+  const { user } = useAuthContext();
+  useEffect(() => {
+    if (!user) clearRuns();
+  }, [user, clearRuns]);
 
   const value = useMemo(
     () => ({
