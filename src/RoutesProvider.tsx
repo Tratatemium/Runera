@@ -12,6 +12,7 @@ import { Dashboard } from "./pages/user/Dashboard";
 import { UserInfo } from "./pages/user/UserInfo";
 import { EditAccount } from "./pages/user/EditAccount";
 import { EditProfile } from "./pages/user/EditProfile";
+import { MyRuns } from "./pages/user/MyRuns";
 
 function RoutesProvider() {
   return (
@@ -25,6 +26,7 @@ function RoutesProvider() {
           <Route path="info" element={<UserInfo />} />
           <Route path="edit-account" element={<EditAccount />} />
           <Route path="edit-profile" element={<EditProfile />} />
+          <Route path="runs" element={<MyRuns />} />
         </Route>
       </Route>
 
