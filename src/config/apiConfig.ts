@@ -9,6 +9,10 @@ const API = {
     account: "users/me/account",
     profile: "users/me/profile",
   },
+  runs: {
+    myRuns: "/me/runs",
+    runs: "/runs",
+  },
 };
 
 export { API };
