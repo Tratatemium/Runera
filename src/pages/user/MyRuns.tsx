@@ -5,6 +5,7 @@ import { useRunsContext } from "../../context/RunsContext";
 import { useEffect, useMemo } from "react";
 
 import { Button } from "../../components/Button";
+import { Loading } from "../../components/Loading";
 
 function MyRuns() {
   const { runs } = useRunsContext();
@@ -43,20 +44,22 @@ function MyRuns() {
   return (
     <main className={styles.main}>
       <div className={styles.runsWrapper}>
-        {runsArray.map((run) => {
-          return (
-            <div key={run.runId} className={styles.runWrapper}>
-              {Object.entries(run).map(([key, value]) => {
-                return (
-                  <p key={key} className={styles.runField}>
-                    <span className={styles.key}>{key}:</span>
-                    <span className={styles.value}>{value}</span>
-                  </p>
-                );
-              })}
-            </div>
-          );
-        })}
+        {!isFetching &&
+          runsArray.map((run) => {
+            return (
+              <div key={run.runId} className={styles.runWrapper}>
+                {Object.entries(run).map(([key, value]) => {
+                  return (
+                    <p key={key} className={styles.runField}>
+                      <span className={styles.key}>{key}:</span>
+                      <span className={styles.value}>{value}</span>
+                    </p>
+                  );
+                })}
+              </div>
+            );
+          })}
+        {isFetching && <Loading />}
       </div>
       <Button
         buttonText="+ Log a Run"
