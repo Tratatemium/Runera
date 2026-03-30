@@ -41,25 +41,23 @@ function MyRuns() {
   //     deleteRun(runId);
   //   }
 
-  return (
+  return Object.keys(runs).length !== 0 ? (
     <main className={styles.main}>
       <div className={styles.runsWrapper}>
-        {!isFetching &&
-          runsArray.map((run) => {
-            return (
-              <div key={run.runId} className={styles.runWrapper}>
-                {Object.entries(run).map(([key, value]) => {
-                  return (
-                    <p key={key} className={styles.runField}>
-                      <span className={styles.key}>{key}:</span>
-                      <span className={styles.value}>{value}</span>
-                    </p>
-                  );
-                })}
-              </div>
-            );
-          })}
-        {isFetching && <Loading />}
+        {runsArray.map((run) => {
+          return (
+            <div key={run.runId} className={styles.runWrapper}>
+              {Object.entries(run).map(([key, value]) => {
+                return (
+                  <p key={key} className={styles.runField}>
+                    <span className={styles.key}>{key}:</span>
+                    <span className={styles.value}>{value}</span>
+                  </p>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
       <Button
         buttonText="+ Log a Run"
@@ -69,6 +67,8 @@ function MyRuns() {
         isSubmitting={isFetching}
       />
     </main>
+  ) : (
+    <Loading />
   );
 }
 
