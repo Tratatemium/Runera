@@ -8,7 +8,7 @@ import { apiRequest } from "./client";
 import { API } from "../config/apiConfig";
 import { jsonOptions } from "../utils/api.utils";
 
-function getMe() {
+function apiGetMe() {
   return apiRequest<UserApiResponse>({
     path: API.users.me,
     assertData: true,
@@ -16,7 +16,7 @@ function getMe() {
   });
 }
 
-function updateProfile(data: { profile: UserState["profile"] }) {
+function apiUpdateProfile(data: { profile: UserState["profile"] }) {
   return apiRequest<UserUpdateResponse>({
     path: API.users.profile,
     assertData: true,
@@ -24,4 +24,4 @@ function updateProfile(data: { profile: UserState["profile"] }) {
   });
 }
 
-export { getMe, updateProfile };
+export { apiGetMe, apiUpdateProfile };

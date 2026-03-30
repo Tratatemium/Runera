@@ -1,6 +1,6 @@
 import type { UpdateUserPayload, UserApiResponse } from "../types/users.types";
 
-import * as usersApi from "../api/users.api";
+import { apiGetMe, apiUpdateProfile } from "../api/users.api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
@@ -24,7 +24,7 @@ function useUser(): UseUserReturn {
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
   async function getMe() {
-    const userData = await usersApi.getMe();
+    const userData = await apiGetMe();
     return normalizeUserResponse(userData);
   }
 
@@ -35,7 +35,7 @@ function useUser(): UseUserReturn {
     setFormError(undefined);
 
     try {
-      const response = await usersApi.updateProfile(payload);
+      const response = await apiUpdateProfile(payload);
       const updateFields = normalizeProfile(response.savedProfile);
       updateUser({ profile: updateFields });
       navigate("/user/info");
