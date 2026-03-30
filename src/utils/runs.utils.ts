@@ -1,3 +1,4 @@
+import { entries } from "lodash";
 import type {
   Run,
   RunApi,
@@ -16,13 +17,11 @@ function normalizeRun({ createdAt, updatedAt, ...run }: RunApi): Run {
 }
 
 function normalizeMyRuns(rawResponse: MyRunsApiResponse): RunsState {
-  const result: RunsState = {};
-
-  for (const key in rawResponse.myRuns) {
-    result[key] = normalizeRun(rawResponse.myRuns[key]);
-  }
-
-  return result;
+  const entries = rawResponse.myRuns.map((run) => [
+    run.runId,
+    normalizeRun(run),
+  ]);
+  return Object.fromEntries(entries);
 }
 
 function normalizeRunData(runData: RunApiResponse): Run {

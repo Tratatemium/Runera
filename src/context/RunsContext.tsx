@@ -60,6 +60,7 @@ function RunsProvider({ children }: RunsProviderProps) {
   );
 
   const { user } = useAuthContext();
+
   useEffect(() => {
     if (!user) clearRuns();
   }, [user, clearRuns]);

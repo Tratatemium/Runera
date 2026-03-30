@@ -1,10 +1,4 @@
-import type {
-  RunApiResponse,
-  MyRunsApiResponse,
-  RunsState,
-  Run,
-  RunData,
-} from "../types/runs.types";
+import type { RunData } from "../types/runs.types";
 
 import { useState } from "react";
 
@@ -17,18 +11,20 @@ interface UseRunsReturn {
   formError: string | undefined;
   getMyRuns: () => Promise<void>;
   postNewRun: (payload: RunData) => Promise<void>;
+  updateRun: (runId: string, payload: RunData) => Promise<void>;
+  deleteRun: (runId: string) => Promise<void>;
 }
 
 function useRuns(): UseRunsReturn {
   const [isFetching, setIsFetching] = useState(false);
   const [formError, setFormError] = useState<string | undefined>(undefined);
-  const { hydrateRuns, addRun, updateRun, deleteRun } = useRunsContext();
+  const context = useRunsContext();
 
   async function getMyRuns() {
     setIsFetching(true);
     try {
       const response = await runsApi.getMyRuns();
-      hydrateRuns(normalizeMyRuns(response));
+      context.hydrateRuns(normalizeMyRuns(response));
     } catch (err) {
       console.error(err);
     } finally {
@@ -40,7 +36,7 @@ function useRuns(): UseRunsReturn {
     setIsFetching(true);
     try {
       const response = await runsApi.postNewRun(payload);
-      addRun(normalizeRunData(response));
+      context.addRun(normalizeRunData(response));
     } catch (err) {
       console.error(err);
     } finally {
@@ -48,7 +44,31 @@ function useRuns(): UseRunsReturn {
     }
   }
 
-  return { isFetching, formError, getMyRuns, postNewRun };
+  async function updateRun(runId: string, payload: RunData) {
+    setIsFetching(true);
+    try {
+      const response = await runsApi.updateRun(runId, payload);
+      context.updateRun(normalizeRunData(response));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsFetching(false);
+    }
+  }
+
+  async function deleteRun(runId: string) {
+    setIsFetching(true);
+    try {
+      await runsApi.deleteRun(runId);
+      context.deleteRun(runId);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsFetching(false);
+    }
+  }
+
+  return { isFetching, formError, getMyRuns, postNewRun, updateRun, deleteRun };
 }
 
 export { useRuns };
