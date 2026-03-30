@@ -26,6 +26,19 @@ function normalizeTime(dateString: string) {
   return date.toISOString().slice(0, 19);
 }
 
+function formatSeconds(totalSeconds: number): string {
+  totalSeconds = Math.round(totalSeconds);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const hStr = hours > 0 ? `${hours}:` : "";
+  const mStr = hours > 0 ? String(minutes).padStart(2, "0") : String(minutes);
+  const sStr = String(seconds).padStart(2, "0");
+
+  return `${hStr}${mStr}:${sStr}`;
+}
+
 /* ────────────────────────────── */
 /* normalizers                    */
 /* ────────────────────────────── */
@@ -58,6 +71,7 @@ export {
   clampNumber,
   normalizeDate,
   normalizeTime,
+  formatSeconds,
   normalizeString,
   normalizeNumber,
   normalizeEmail,

@@ -4,8 +4,17 @@ interface Run {
   runId: string;
   userId: string;
   startTime: string;
+  date: string;
   durationSec: number;
+  formattedDuration: string;
   distanceMeters: number;
+  distanceKm: number;
+  paceSecPerKm: number;
+  formattedPace: string;
+  title?: string;
+  notes?: string;
+  perceivedEffort?: number;
+  weather?: "sunny" | "cloudy" | "rain" | "snow" | "windy" | "hot" | "cold";
 }
 
 type RunsState = Record<string, Run>;
@@ -23,8 +32,10 @@ interface RunApi {
   runId: string;
   userId: string;
   startTime: string;
+  date: string;
   durationSec: number;
   distanceMeters: number;
+  paceSecPerKm: number;
   createdAt: string;
   updatedAt: string;
 }

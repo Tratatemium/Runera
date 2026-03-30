@@ -6,13 +6,20 @@ import type {
   RunsState,
 } from "../types/runs.types";
 
-import { normalizeTime } from "./normalize.utils";
+import { formatSeconds, normalizeDate, normalizeTime } from "./normalize.utils";
 
 function normalizeRun(run: RunApi): Run {
   const { createdAt: _, updatedAt: __, ...rest } = run;
   return {
     ...rest,
     startTime: normalizeTime(run.startTime),
+    date: normalizeDate(run.date),
+
+    formattedDuration: formatSeconds(run.durationSec),
+    distanceKm: Math.round(run.distanceMeters / 10) / 100,
+
+    paceSecPerKm: Math.round(run.paceSecPerKm),
+    formattedPace: `${formatSeconds(run.paceSecPerKm)} /km`,
   };
 }
 
