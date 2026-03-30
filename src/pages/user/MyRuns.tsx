@@ -41,7 +41,7 @@ function MyRuns() {
   //     deleteRun(runId);
   //   }
 
-  return Object.keys(runs).length !== 0 ? (
+  return Object.keys(runs).length !== 0 && !isFetching ? (
     <main className={styles.main}>
       <div className={styles.runsWrapper}>
         {runsArray.map((run) => {
