@@ -38,44 +38,53 @@ function useRuns(): UseRunsReturn {
     }
   }, [stateHydrateRuns]);
 
-  async function postNewRun(payload: RunData) {
-    setIsFetching(true);
-    setFormError(undefined);
-    try {
-      const response = await apiPostNewRun(payload);
-      statePostNewRun(normalizeRunData(response));
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsFetching(false);
-    }
-  }
+  const postNewRun = useCallback(
+    async (payload: RunData) => {
+      setIsFetching(true);
+      setFormError(undefined);
+      try {
+        const response = await apiPostNewRun(payload);
+        statePostNewRun(normalizeRunData(response));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsFetching(false);
+      }
+    },
+    [statePostNewRun],
+  );
 
-  async function updateRun(runId: string, payload: RunData) {
-    setIsFetching(true);
-    setFormError(undefined);
-    try {
-      const response = await apiUpdateRun(runId, payload);
-      stateUpdateRun(normalizeRunData(response));
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsFetching(false);
-    }
-  }
+  const updateRun = useCallback(
+    async (runId: string, payload: RunData) => {
+      setIsFetching(true);
+      setFormError(undefined);
+      try {
+        const response = await apiUpdateRun(runId, payload);
+        stateUpdateRun(normalizeRunData(response));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsFetching(false);
+      }
+    },
+    [stateUpdateRun],
+  );
 
-  async function deleteRun(runId: string) {
-    setIsFetching(true);
-    setFormError(undefined);
-    try {
-      await apiDeleteRun(runId);
-      stateDeleteRun(runId);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsFetching(false);
-    }
-  }
+  const deleteRun = useCallback(
+    async (runId: string) => {
+      setIsFetching(true);
+      setFormError(undefined);
+      try {
+        await apiDeleteRun(runId);
+        stateDeleteRun(runId);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsFetching(false);
+      }
+    },
+    [stateDeleteRun],
+  );
 
   return { isFetching, formError, getMyRuns, postNewRun, updateRun, deleteRun };
 }
