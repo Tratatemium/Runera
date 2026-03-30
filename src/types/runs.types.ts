@@ -12,11 +12,11 @@ type RunsState = Record<string, Run>;
 
 interface RunsContextValue {
   runs: RunsState;
-  hydrateRuns: (runs: RunsState) => void;
-  clearRuns: () => void;
-  addRun: (newRun: Run) => void;
-  updateRun: (updatedRun: Run) => void;
-  deleteRun: (id: string) => void;
+  hydrateRunsState: (runs: RunsState) => void;
+  clearRunsState: () => void;
+  postNewRunState: (newRun: Run) => void;
+  updateRunState: (updatedRun: Run) => void;
+  deleteRunState: (id: string) => void;
 }
 
 interface RunApi {
@@ -42,6 +42,7 @@ export type {
   Run,
   RunsState,
   RunsContextValue,
+  RunApi,
   RunApiResponse,
   MyRunsApiResponse,
   RunData,

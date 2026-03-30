@@ -1,7 +1,7 @@
 import type { UpdateUserPayload, UserApiResponse } from "../types/users.types";
 
-import * as usersApi from "../api/users.api";
-import { useState } from "react";
+import { apiGetMe, apiUpdateProfile } from "../api/users.api";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { handleApiFormError } from "../utils/api.utils";
@@ -13,7 +13,9 @@ interface UseUserReturn {
   updateProfile: (
     payload: UpdateUserPayload,
   ) => Promise<Record<string, string> | undefined>;
-  getMe: () => Promise<UserApiResponse>;
+  getMe: (opts?: {
+    suppressUnauthorized?: boolean;
+  }) => Promise<UserApiResponse>;
 }
 
 function useUser(): UseUserReturn {
@@ -23,29 +25,32 @@ function useUser(): UseUserReturn {
   const [isFetching, setIsFetching] = useState(false);
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
-  async function getMe() {
-    const userData = await usersApi.getMe();
+  const getMe = useCallback(async ({ suppressUnauthorized = false } = {}) => {
+    const userData = await apiGetMe(suppressUnauthorized);
     return normalizeUserResponse(userData);
-  }
+  }, []);
 
-  async function updateProfile(
-    payload: UpdateUserPayload,
-  ): Promise<Record<string, string> | undefined> {
-    setIsFetching(true);
-    setFormError(undefined);
+  const updateProfile = useCallback(
+    async (
+      payload: UpdateUserPayload,
+    ): Promise<Record<string, string> | undefined> => {
+      setIsFetching(true);
+      setFormError(undefined);
 
-    try {
-      const response = await usersApi.updateProfile(payload);
-      const updateFields = normalizeProfile(response.savedProfile);
-      updateUser({ profile: updateFields });
-      navigate("/user/info");
-    } catch (err) {
-      const fieldErrors = handleApiFormError(err, setFormError);
-      if (fieldErrors) return fieldErrors;
-    } finally {
-      setIsFetching(false);
-    }
-  }
+      try {
+        const response = await apiUpdateProfile(payload);
+        const updateFields = normalizeProfile(response.savedProfile);
+        updateUser({ profile: updateFields });
+        navigate("/user/info");
+      } catch (err) {
+        const fieldErrors = handleApiFormError(err, setFormError);
+        if (fieldErrors) return fieldErrors;
+      } finally {
+        setIsFetching(false);
+      }
+    },
+    [navigate, updateUser],
+  );
 
   return { isFetching, formError, getMe, updateProfile };
 }

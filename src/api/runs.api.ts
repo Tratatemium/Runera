@@ -7,7 +7,7 @@ import { apiRequest } from "./client";
 import { API } from "../config/apiConfig";
 import { joinUrl, jsonOptions } from "../utils/api.utils";
 
-function getMyRuns() {
+function apiGetMyRuns() {
   return apiRequest<MyRunsApiResponse>({
     path: API.runs.myRuns,
     assertData: true,
@@ -15,7 +15,7 @@ function getMyRuns() {
   });
 }
 
-function postNewRun(data: RunData) {
+function apiPostNewRun(data: RunData) {
   return apiRequest<RunApiResponse>({
     path: API.runs.myRuns,
     assertData: true,
@@ -23,7 +23,7 @@ function postNewRun(data: RunData) {
   });
 }
 
-function updateRun(runId: string, data: RunData) {
+function apiUpdateRun(runId: string, data: RunData) {
   return apiRequest<RunApiResponse>({
     path: joinUrl(API.runs.runs, runId),
     assertData: true,
@@ -31,7 +31,7 @@ function updateRun(runId: string, data: RunData) {
   });
 }
 
-function deleteRun(runId: string) {
+function apiDeleteRun(runId: string) {
   return apiRequest<void>({
     path: joinUrl(API.runs.runs, runId),
     assertData: false,
@@ -39,4 +39,4 @@ function deleteRun(runId: string) {
   });
 }
 
-export { getMyRuns, postNewRun, updateRun, deleteRun };
+export { apiGetMyRuns, apiPostNewRun, apiUpdateRun, apiDeleteRun };

@@ -1,13 +1,16 @@
+import type { Run, RunsState, RunsContextValue } from "../types/runs.types";
+
 import {
   createContext,
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
-import type { Run, RunsState, RunsContextValue } from "../types/runs.types";
 import { AppError } from "../errors/errors";
+import { useAuthContext } from "./AuthContext";
 
 const RunsContext = createContext<RunsContextValue | undefined>(undefined);
 
@@ -20,18 +23,18 @@ function RunsProvider({ children }: RunsProviderProps) {
 
   const runExists = useCallback((id: string) => Boolean(runs[id]), [runs]);
 
-  const hydrateRuns = useCallback((runs: RunsState) => setRuns(runs), []);
+  const hydrateRunsState = useCallback((runs: RunsState) => setRuns(runs), []);
 
-  const clearRuns = useCallback(() => setRuns({}), []);
+  const clearRunsState = useCallback(() => setRuns({}), []);
 
-  const addRun = useCallback((newRun: Run) => {
+  const postNewRunState = useCallback((newRun: Run) => {
     setRuns((prev) => ({
       ...prev,
       [newRun.runId]: newRun,
     }));
   }, []);
 
-  const updateRun = useCallback(
+  const updateRunState = useCallback(
     (updatedRun: Run) => {
       setRuns((prev) => {
         if (!runExists(updatedRun.runId)) return prev;
@@ -44,7 +47,7 @@ function RunsProvider({ children }: RunsProviderProps) {
     [runExists],
   );
 
-  const deleteRun = useCallback(
+  const deleteRunState = useCallback(
     (id: string) => {
       setRuns((prev) => {
         if (!runExists(id)) return prev;
@@ -56,16 +59,29 @@ function RunsProvider({ children }: RunsProviderProps) {
     [runExists],
   );
 
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (!user) clearRunsState();
+  }, [user, clearRunsState]);
+
   const value = useMemo(
     () => ({
       runs,
-      hydrateRuns,
-      clearRuns,
-      addRun,
-      updateRun,
-      deleteRun,
+      hydrateRunsState,
+      clearRunsState,
+      postNewRunState,
+      updateRunState,
+      deleteRunState,
     }),
-    [runs, hydrateRuns, clearRuns, addRun, updateRun, deleteRun],
+    [
+      runs,
+      hydrateRunsState,
+      clearRunsState,
+      postNewRunState,
+      updateRunState,
+      deleteRunState,
+    ],
   );
   return <RunsContext.Provider value={value}>{children}</RunsContext.Provider>;
 }
