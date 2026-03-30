@@ -30,20 +30,20 @@ type LoadingState =
 function useRuns(): UseRunsReturn {
   const [loading, setLoading] = useState<LoadingState>("idle");
   const [formError, setFormError] = useState<string | undefined>(undefined);
-  const { stateHydrateRuns, statePostNewRun, stateUpdateRun, stateDeleteRun } =
+  const { hydrateRunsState, postNewRunState, updateRunState, deleteRunState } =
     useRunsContext();
 
   const getMyRuns = useCallback(async () => {
     setLoading("fetchingRuns");
     try {
       const response = await apiGetMyRuns();
-      stateHydrateRuns(normalizeMyRuns(response));
+      hydrateRunsState(normalizeMyRuns(response));
     } catch (err) {
       console.error(err);
     } finally {
       setLoading("idle");
     }
-  }, [stateHydrateRuns]);
+  }, [hydrateRunsState]);
 
   const postNewRun = useCallback(
     async (payload: RunData) => {
@@ -51,14 +51,14 @@ function useRuns(): UseRunsReturn {
       setFormError(undefined);
       try {
         const response = await apiPostNewRun(payload);
-        statePostNewRun(normalizeRunData(response));
+        postNewRunState(normalizeRunData(response));
       } catch (err) {
         console.error(err);
       } finally {
         setLoading("idle");
       }
     },
-    [statePostNewRun],
+    [postNewRunState],
   );
 
   const updateRun = useCallback(
@@ -67,14 +67,14 @@ function useRuns(): UseRunsReturn {
       setFormError(undefined);
       try {
         const response = await apiUpdateRun(runId, payload);
-        stateUpdateRun(normalizeRunData(response));
+        updateRunState(normalizeRunData(response));
       } catch (err) {
         console.error(err);
       } finally {
         setLoading("idle");
       }
     },
-    [stateUpdateRun],
+    [updateRunState],
   );
 
   const deleteRun = useCallback(
@@ -83,14 +83,14 @@ function useRuns(): UseRunsReturn {
       setFormError(undefined);
       try {
         await apiDeleteRun(runId);
-        stateDeleteRun(runId);
+        deleteRunState(runId);
       } catch (err) {
         console.error(err);
       } finally {
         setLoading("idle");
       }
     },
-    [stateDeleteRun],
+    [deleteRunState],
   );
 
   return { loading, formError, getMyRuns, postNewRun, updateRun, deleteRun };
