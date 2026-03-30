@@ -23,18 +23,18 @@ function RunsProvider({ children }: RunsProviderProps) {
 
   const runExists = useCallback((id: string) => Boolean(runs[id]), [runs]);
 
-  const hydrateRuns = useCallback((runs: RunsState) => setRuns(runs), []);
+  const stateHydrateRuns = useCallback((runs: RunsState) => setRuns(runs), []);
 
-  const clearRuns = useCallback(() => setRuns({}), []);
+  const stateClearRuns = useCallback(() => setRuns({}), []);
 
-  const addRun = useCallback((newRun: Run) => {
+  const statePostNewRun = useCallback((newRun: Run) => {
     setRuns((prev) => ({
       ...prev,
       [newRun.runId]: newRun,
     }));
   }, []);
 
-  const updateRun = useCallback(
+  const stateUpdateRun = useCallback(
     (updatedRun: Run) => {
       setRuns((prev) => {
         if (!runExists(updatedRun.runId)) return prev;
@@ -47,7 +47,7 @@ function RunsProvider({ children }: RunsProviderProps) {
     [runExists],
   );
 
-  const deleteRun = useCallback(
+  const stateDeleteRun = useCallback(
     (id: string) => {
       setRuns((prev) => {
         if (!runExists(id)) return prev;
@@ -62,19 +62,26 @@ function RunsProvider({ children }: RunsProviderProps) {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    if (!user) clearRuns();
-  }, [user, clearRuns]);
+    if (!user) stateClearRuns();
+  }, [user, stateClearRuns]);
 
   const value = useMemo(
     () => ({
       runs,
-      hydrateRuns,
-      clearRuns,
-      addRun,
-      updateRun,
-      deleteRun,
+      stateHydrateRuns,
+      stateClearRuns,
+      statePostNewRun,
+      stateUpdateRun,
+      stateDeleteRun,
     }),
-    [runs, hydrateRuns, clearRuns, addRun, updateRun, deleteRun],
+    [
+      runs,
+      stateHydrateRuns,
+      stateClearRuns,
+      statePostNewRun,
+      stateUpdateRun,
+      stateDeleteRun,
+    ],
   );
   return <RunsContext.Provider value={value}>{children}</RunsContext.Provider>;
 }

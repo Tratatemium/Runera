@@ -1,8 +1,13 @@
 import type { RunData } from "../types/runs.types";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-import * as runsApi from "../api/runs.api";
+import {
+  apiGetMyRuns,
+  apiPostNewRun,
+  apiUpdateRun,
+  apiDeleteRun,
+} from "../api/runs.api";
 import { useRunsContext } from "../context/RunsContext";
 import { normalizeRunData, normalizeMyRuns } from "../utils/runs.utils";
 
@@ -18,26 +23,27 @@ interface UseRunsReturn {
 function useRuns(): UseRunsReturn {
   const [isFetching, setIsFetching] = useState(false);
   const [formError, setFormError] = useState<string | undefined>(undefined);
-  const context = useRunsContext();
+  const { stateHydrateRuns, statePostNewRun, stateUpdateRun, stateDeleteRun } =
+    useRunsContext();
 
-  async function getMyRuns() {
+  const getMyRuns = useCallback(async () => {
     setIsFetching(true);
     try {
-      const response = await runsApi.getMyRuns();
-      context.hydrateRuns(normalizeMyRuns(response));
+      const response = await apiGetMyRuns();
+      stateHydrateRuns(normalizeMyRuns(response));
     } catch (err) {
       console.error(err);
     } finally {
       setIsFetching(false);
     }
-  }
+  }, [stateHydrateRuns]);
 
   async function postNewRun(payload: RunData) {
     setIsFetching(true);
     setFormError(undefined);
     try {
-      const response = await runsApi.postNewRun(payload);
-      context.addRun(normalizeRunData(response));
+      const response = await apiPostNewRun(payload);
+      statePostNewRun(normalizeRunData(response));
     } catch (err) {
       console.error(err);
     } finally {
@@ -49,8 +55,8 @@ function useRuns(): UseRunsReturn {
     setIsFetching(true);
     setFormError(undefined);
     try {
-      const response = await runsApi.updateRun(runId, payload);
-      context.updateRun(normalizeRunData(response));
+      const response = await apiUpdateRun(runId, payload);
+      stateUpdateRun(normalizeRunData(response));
     } catch (err) {
       console.error(err);
     } finally {
@@ -62,8 +68,8 @@ function useRuns(): UseRunsReturn {
     setIsFetching(true);
     setFormError(undefined);
     try {
-      await runsApi.deleteRun(runId);
-      context.deleteRun(runId);
+      await apiDeleteRun(runId);
+      stateDeleteRun(runId);
     } catch (err) {
       console.error(err);
     } finally {
