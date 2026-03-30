@@ -12,7 +12,7 @@ import { useRunsContext } from "../context/RunsContext";
 import { normalizeRunData, normalizeMyRuns } from "../utils/runs.utils";
 
 interface UseRunsReturn {
-  isFetching: boolean;
+  loading: LoadingState;
   formError: string | undefined;
   getMyRuns: () => Promise<void>;
   postNewRun: (payload: RunData) => Promise<void>;
@@ -20,27 +20,34 @@ interface UseRunsReturn {
   deleteRun: (runId: string) => Promise<void>;
 }
 
+type LoadingState =
+  | "idle"
+  | "fetchingRuns"
+  | "creatingRun"
+  | "updatingRun"
+  | "deletingRun";
+
 function useRuns(): UseRunsReturn {
-  const [isFetching, setIsFetching] = useState(false);
+  const [loading, setLoading] = useState<LoadingState>("idle");
   const [formError, setFormError] = useState<string | undefined>(undefined);
   const { stateHydrateRuns, statePostNewRun, stateUpdateRun, stateDeleteRun } =
     useRunsContext();
 
   const getMyRuns = useCallback(async () => {
-    setIsFetching(true);
+    setLoading("fetchingRuns");
     try {
       const response = await apiGetMyRuns();
       stateHydrateRuns(normalizeMyRuns(response));
     } catch (err) {
       console.error(err);
     } finally {
-      setIsFetching(false);
+      setLoading("idle");
     }
   }, [stateHydrateRuns]);
 
   const postNewRun = useCallback(
     async (payload: RunData) => {
-      setIsFetching(true);
+      setLoading("creatingRun");
       setFormError(undefined);
       try {
         const response = await apiPostNewRun(payload);
@@ -48,7 +55,7 @@ function useRuns(): UseRunsReturn {
       } catch (err) {
         console.error(err);
       } finally {
-        setIsFetching(false);
+        setLoading("idle");
       }
     },
     [statePostNewRun],
@@ -56,7 +63,7 @@ function useRuns(): UseRunsReturn {
 
   const updateRun = useCallback(
     async (runId: string, payload: RunData) => {
-      setIsFetching(true);
+      setLoading("updatingRun");
       setFormError(undefined);
       try {
         const response = await apiUpdateRun(runId, payload);
@@ -64,7 +71,7 @@ function useRuns(): UseRunsReturn {
       } catch (err) {
         console.error(err);
       } finally {
-        setIsFetching(false);
+        setLoading("idle");
       }
     },
     [stateUpdateRun],
@@ -72,7 +79,7 @@ function useRuns(): UseRunsReturn {
 
   const deleteRun = useCallback(
     async (runId: string) => {
-      setIsFetching(true);
+      setLoading("deletingRun");
       setFormError(undefined);
       try {
         await apiDeleteRun(runId);
@@ -80,13 +87,13 @@ function useRuns(): UseRunsReturn {
       } catch (err) {
         console.error(err);
       } finally {
-        setIsFetching(false);
+        setLoading("idle");
       }
     },
     [stateDeleteRun],
   );
 
-  return { isFetching, formError, getMyRuns, postNewRun, updateRun, deleteRun };
+  return { loading, formError, getMyRuns, postNewRun, updateRun, deleteRun };
 }
 
 export { useRuns };

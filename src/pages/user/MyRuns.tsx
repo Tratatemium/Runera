@@ -9,7 +9,7 @@ import { Loading } from "../../components/Loading";
 
 function MyRuns() {
   const { runs } = useRunsContext();
-  const { isFetching, getMyRuns, postNewRun } = useRuns();
+  const { loading, getMyRuns, postNewRun } = useRuns();
 
   useEffect(() => {
     getMyRuns();
@@ -41,7 +41,7 @@ function MyRuns() {
   //     deleteRun(runId);
   //   }
 
-  return Object.keys(runs).length !== 0 && !isFetching ? (
+  return loading !== "fetchingRuns" ? (
     <main className={styles.main}>
       <div className={styles.runsWrapper}>
         {runsArray.map((run) => {
@@ -64,7 +64,7 @@ function MyRuns() {
         type="button"
         variant="primary"
         onClick={handleNewRun}
-        isSubmitting={isFetching}
+        isSubmitting={loading === "creatingRun"}
       />
     </main>
   ) : (
