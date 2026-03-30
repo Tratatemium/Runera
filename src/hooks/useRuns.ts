@@ -34,6 +34,7 @@ function useRuns(): UseRunsReturn {
 
   async function postNewRun(payload: RunData) {
     setIsFetching(true);
+    setFormError(undefined);
     try {
       const response = await runsApi.postNewRun(payload);
       context.addRun(normalizeRunData(response));
@@ -46,6 +47,7 @@ function useRuns(): UseRunsReturn {
 
   async function updateRun(runId: string, payload: RunData) {
     setIsFetching(true);
+    setFormError(undefined);
     try {
       const response = await runsApi.updateRun(runId, payload);
       context.updateRun(normalizeRunData(response));
@@ -58,6 +60,7 @@ function useRuns(): UseRunsReturn {
 
   async function deleteRun(runId: string) {
     setIsFetching(true);
+    setFormError(undefined);
     try {
       await runsApi.deleteRun(runId);
       context.deleteRun(runId);

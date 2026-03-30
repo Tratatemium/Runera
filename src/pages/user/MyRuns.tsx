@@ -8,11 +8,11 @@ import { Button } from "../../components/Button";
 
 function MyRuns() {
   const { runs } = useRunsContext();
-  const { isFetching, getMyRuns, postNewRun, updateRun, deleteRun } = useRuns();
+  const { isFetching, getMyRuns, postNewRun } = useRuns();
 
   useEffect(() => {
     getMyRuns();
-  }, []);
+  }, [getMyRuns]);
 
   const runsArray = useMemo(() => Object.values(runs), [runs]);
 
@@ -25,20 +25,20 @@ function MyRuns() {
     postNewRun(payload);
   }
 
-  function handleUpdate() {
-    const payload = {
-      startTime: "2026-03-29T19:42:31.123Z",
-      durationSec: 3,
-      distanceMeters: 3,
-    };
-    const runId = "eaab0c97-1317-4fc8-8123-4b6f63552f72";
-    updateRun(runId, payload);
-  }
+  //   function handleUpdate() {
+  //     const payload = {
+  //       startTime: "2026-03-29T19:42:31.123Z",
+  //       durationSec: 3,
+  //       distanceMeters: 3,
+  //     };
+  //     const runId = "eaab0c97-1317-4fc8-8123-4b6f63552f72";
+  //     updateRun(runId, payload);
+  //   }
 
-  function handleDelete() {
-    const runId = "eaab0c97-1317-4fc8-8123-4b6f63552f72";
-    deleteRun(runId);
-  }
+  //   function handleDelete() {
+  //     const runId = "eaab0c97-1317-4fc8-8123-4b6f63552f72";
+  //     deleteRun(runId);
+  //   }
 
   return (
     <main className={styles.main}>
@@ -62,7 +62,7 @@ function MyRuns() {
         buttonText="+ Log a Run"
         type="button"
         variant="primary"
-        onClick={handleDelete}
+        onClick={handleNewRun}
         isSubmitting={isFetching}
       />
     </main>
