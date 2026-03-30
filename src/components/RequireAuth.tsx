@@ -3,6 +3,7 @@ import { useAuthContext } from "../context/AuthContext";
 import { useUser } from "../hooks/useUser";
 import { mapUserResponseToState } from "../utils/user.utils";
 import { useEffect, useState } from "react";
+import { Loading } from "./Loading";
 
 function RequireAuth() {
   const { user, loginUser } = useAuthContext();
@@ -13,21 +14,21 @@ function RequireAuth() {
 
   useEffect(() => {
     if (user) return;
-
     let mounted = true;
 
-    (async () => {
+    async function fetchUser() {
       try {
-        const userData = await getMe();
-        if (mounted) {
-          loginUser(mapUserResponseToState(userData));
-        }
+        const userData = await getMe({ suppressUnauthorized: true });
+        if (!mounted) return;
+        loginUser(mapUserResponseToState(userData));
       } catch (err) {
-        console.error(err);
+        // Expected: user not authenticated, nothing to do
       } finally {
         if (mounted) setChecking(false);
       }
-    })();
+    }
+
+    fetchUser();
 
     return () => {
       mounted = false;
@@ -35,7 +36,7 @@ function RequireAuth() {
   }, [user, getMe, loginUser]);
 
   if (checking) {
-    return null; // or spinner
+    return <Loading />;
   }
 
   if (!user) {

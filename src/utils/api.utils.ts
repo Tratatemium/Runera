@@ -26,7 +26,11 @@ async function getResponseData(response: Response): Promise<unknown> {
   }
 }
 
-function handleServerErrors(response: Response, data: ApiResponse | undefined) {
+function handleServerErrors(
+  response: Response,
+  data: ApiResponse | undefined,
+  suppressUnauthorized: boolean = false,
+) {
   if (!data) throw new ResponseError("Empty Error from server.");
   if (!data.error) throw new ResponseError("Malformed Error from server.");
 
@@ -36,7 +40,7 @@ function handleServerErrors(response: Response, data: ApiResponse | undefined) {
   const field = data.error.field;
 
   const isLoginError = code === "LoginError";
-  if (status === 401 && !isLoginError) {
+  if (status === 401 && !isLoginError && !suppressUnauthorized) {
     window.dispatchEvent(new Event("unauthorized"));
   }
 

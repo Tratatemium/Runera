@@ -13,7 +13,9 @@ interface UseUserReturn {
   updateProfile: (
     payload: UpdateUserPayload,
   ) => Promise<Record<string, string> | undefined>;
-  getMe: () => Promise<UserApiResponse>;
+  getMe: (opts?: {
+    suppressUnauthorized?: boolean;
+  }) => Promise<UserApiResponse>;
 }
 
 function useUser(): UseUserReturn {
@@ -23,8 +25,8 @@ function useUser(): UseUserReturn {
   const [isFetching, setIsFetching] = useState(false);
   const [formError, setFormError] = useState<string | undefined>(undefined);
 
-  async function getMe() {
-    const userData = await apiGetMe();
+  async function getMe({ suppressUnauthorized = false } = {}) {
+    const userData = await apiGetMe(suppressUnauthorized);
     return normalizeUserResponse(userData);
   }
 
