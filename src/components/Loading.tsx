@@ -2,14 +2,21 @@ import styles from "./Loading.module.css";
 
 function Loading() {
   return (
-    <main className={styles.wrapper}>
+    <div 
+      className={styles.wrapper}
+      role="status"
+      aria-busy="true"
+      aria-live="polite"
+      aria-label="Loading content"
+    >
       <svg
         className={styles.svg}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
         role="img"
-        aria-label="Loading"
+        aria-label="Loading animation"
+        aria-hidden="false"
       >
         <g data-idx="1">
           <g transform="matrix(1,0,0,1,50,50)" data-idx="2">
@@ -106,7 +113,7 @@ function Loading() {
           />
         </text>
       </svg>
-    </main>
+    </div>
   );
 }
 
