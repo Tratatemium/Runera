@@ -8,9 +8,10 @@ import type {
 
 import { normalizeTime } from "./normalize.utils";
 
-function normalizeRun({ createdAt, updatedAt, ...run }: RunApi): Run {
+function normalizeRun(run: RunApi): Run {
+  const { createdAt: _, updatedAt: __, ...rest } = run;
   return {
-    ...run,
+    ...rest,
     startTime: normalizeTime(run.startTime),
   };
 }
