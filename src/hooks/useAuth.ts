@@ -1,6 +1,6 @@
 import type { SignupData, LoginData } from "../types/auth.types";
 
-import * as authApi from "../api/auth.api";
+import { apiSignup, apiLogin, apiLogout } from "../api/auth.api";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ function useAuth(): UseAuthReturn {
     setFormError(undefined);
 
     try {
-      await authApi.signup(payload);
+      await apiSignup(payload);
       navigate("/login");
     } catch (err) {
       const fieldErrors = handleApiFormError(err, setFormError);
@@ -47,7 +47,7 @@ function useAuth(): UseAuthReturn {
     setFormError(undefined);
 
     try {
-      await authApi.login(payload);
+      await apiLogin(payload);
       const userData = await getMe();
       loginUser(mapUserResponseToState(userData));
       navigate("/user/dashboard");
@@ -60,7 +60,7 @@ function useAuth(): UseAuthReturn {
 
   async function logout() {
     try {
-      await authApi.logout();
+      await apiLogout();
     } catch (err) {
       console.error("Failed to log out via API: ", err);
     } finally {
