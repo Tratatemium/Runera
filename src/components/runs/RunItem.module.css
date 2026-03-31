@@ -1,25 +1,62 @@
 .runWrapper {
-  min-width: 40em;
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 1.5em;
-  background: color-mix(in srgb, var(--accent-color-3) 30%, transparent);
-  border: 1px solid var(--accent-color-3);
+  gap: 1em;
+  background:
+    linear-gradient(
+      130deg,
+      color-mix(in srgb, var(--accent-color-3) 22%, transparent) 0%,
+      color-mix(in srgb, var(--secondary-color) 88%, transparent) 100%
+    );
+  border: 1px solid color-mix(in srgb, var(--accent-color-3) 70%, transparent);
   border-radius: 1em;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--primary-color) 88%, transparent);
+  transition:
+    transform 160ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease;
 }
 
-h1,
-p {
+.runWrapper h2,
+.runWrapper p {
   margin: 0;
+}
+
+.runWrapper:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent-color-2) 45%, var(--accent-color-3));
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--primary-color) 82%, transparent);
 }
 
 .runInfo {
   display: flex;
   flex-direction: column;
-  gap: 0.8em;
+  gap: 0.9em;
   text-align: left;
+  min-width: 0;
+}
+
+.runHeading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.6em;
+}
+
+.distanceKm {
+  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+  color: var(--accent-mix-1);
+}
+
+.runTitle {
+  font-size: 0.95rem;
+  color: var(--accent-mix-2);
+  font-style: italic;
 }
 
 .timing {
@@ -34,14 +71,14 @@ p {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.3em;
+  gap: 0.4em;
 }
 
 .pace {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.3em;
+  gap: 0.4em;
 }
 
 .circumstances {
@@ -56,22 +93,27 @@ p {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.3em;
+  gap: 0.4em;
 }
 
 .weather {
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 1.8em;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  font-size: 1.7em;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-color-2) 25%, transparent);
 }
 
 .runActions {
-  align-self: flex-start;
+  align-self: center;
   display: flex;
   flex-direction: row;
-  align-items: start;
-  justify-content: right;
+  align-items: center;
+  justify-content: flex-end;
   gap: 0.7em;
 }
 
@@ -79,11 +121,55 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.3em;
+  width: 2.1em;
+  height: 2.1em;
+  padding: 0;
   font-size: 1.1em;
   color: var(--accent-mix-2);
-  border-radius: 0.5em;
-  background: none;
-  border: none;
+  border-radius: 0.6em;
+  background: color-mix(in srgb, var(--secondary-color) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-color-3) 75%, transparent);
   cursor: pointer;
+  transition:
+    transform 140ms ease,
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease;
+}
+
+.actionButton:hover {
+  transform: translateY(-1px);
+  color: var(--accent-mix-1);
+  background: color-mix(in srgb, var(--accent-color-2) 22%, var(--secondary-color));
+  border-color: color-mix(in srgb, var(--accent-color-2) 50%, transparent);
+}
+
+.actionButton:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent-color-2) 70%, transparent);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1024px) {
+  .runWrapper {
+    min-width: min(56rem, 60vw);
+  }
+}
+
+@media (max-width: 768px) {
+  .runWrapper {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1.1em;
+  }
+
+  .runActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .timing,
+  .circumstances {
+    flex-wrap: wrap;
+    gap: 0.65em;
+  }
 }
