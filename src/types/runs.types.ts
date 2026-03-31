@@ -14,7 +14,15 @@ interface Run {
   title?: string;
   notes?: string;
   perceivedEffort?: number;
-  weather?: "sunny" | "cloudy" | "rain" | "snow" | "windy" | "hot" | "cold";
+  weather?:
+    | "sunny"
+    | "partly_cloudy"
+    | "cloudy"
+    | "rain"
+    | "snow"
+    | "windy"
+    | "hot"
+    | "cold";
 }
 
 type RunsState = Record<string, Run>;
