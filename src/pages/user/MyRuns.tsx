@@ -97,6 +97,7 @@ function MyRuns() {
         type="button"
         onClick={handleNewRun}
         disabled={loading === "creatingRun"}
+        aria-label="Add new run"
       >
         {loading === "creatingRun" ? <SpinnerIcon /> : <PlusIcon />}
       </button>
