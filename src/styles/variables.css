@@ -28,10 +28,21 @@
   --accent-color-1: var(--pine-teal);
   --accent-color-2: var(--metallic-gold);
   --accent-color-3: var(--peach-glow);
-  --secondary-color: var(--cornsilk);
-  --accent-mix-1: color-mix(in srgb, var(--accent-color-1), var(--primary-color) 20%);
-  --accent-mix-2: color-mix(in srgb, var(--accent-color-2), var(--primary-color) 70%);
-  --accent-mix-3: color-mix(in srgb, var(--accent-color-3), var(--primary-color) 60%);
+  --accent-mix-1: color-mix(
+    in srgb,
+    var(--accent-color-1),
+    var(--primary-color) 20%
+  );
+  --accent-mix-2: color-mix(
+    in srgb,
+    var(--accent-color-2),
+    var(--primary-color) 70%
+  );
+  --accent-mix-3: color-mix(
+    in srgb,
+    var(--accent-color-3),
+    var(--primary-color) 60%
+  );
   --color-chart: var(--burnt-orange);
   --color-medal: var(--dark-gold);
   --success-color: #2e7d32;
