@@ -1,6 +1,6 @@
 import styles from "./Dialog.module.css";
 
-import { Button } from "./";
+import { Button } from "./Button";
 
 export interface DialogProps {
   title: string;
