@@ -2,7 +2,7 @@ import styles from "./Footer.module.css";
 
 import { Link } from "react-router-dom";
 
-import { Logo } from "./Logo";
+import { Logo } from "../Logo";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -42,5 +42,4 @@ function Footer() {
     </footer>
   );
 }
-
 export { Footer };

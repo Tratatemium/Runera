@@ -2,13 +2,13 @@ import styles from "./Header.module.css";
 
 import { Link, useLocation } from "react-router-dom";
 
-import { icons } from "./icons/icons";
+import { icons } from "../icons/icons";
 
-import { UserMenu } from "./UserMenu";
-import { Logo } from "../components/Logo";
-import { ButtonLink } from "./ButtonLink";
+import { UserMenu } from "../UserMenu";
+import { Logo } from "../Logo";
+import { ButtonLink } from "../ButtonLink";
 
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 function Header() {
   const location = useLocation();
