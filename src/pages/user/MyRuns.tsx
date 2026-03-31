@@ -7,12 +7,10 @@ import { useEffect, useMemo } from "react";
 import { Button } from "../../components/Button";
 import { Loading } from "../../components/Loading";
 import { RunItem } from "../../components/runs/RunItem";
-import { getWeatherIcon } from "../../utils/icons.utils";
-import { Run } from "../../types/runs.types";
 
 function MyRuns() {
   const { runs } = useRunsContext();
-  const { loading, getMyRuns, postNewRun } = useRuns();
+  const { loading, loadingRunId, getMyRuns, postNewRun, deleteRun } = useRuns();
 
   useEffect(() => {
     getMyRuns();
@@ -52,7 +50,13 @@ function MyRuns() {
     <main className={styles.main}>
       <div className={styles.runsWrapper}>
         {runsArray.map((run) => (
-          <RunItem run={run} key={run.runId} />
+          <RunItem
+            run={run}
+            loading={loading}
+            loadingRunId={loadingRunId}
+            onDelete={deleteRun}
+            key={run.runId}
+          />
         ))}
       </div>
       <Button

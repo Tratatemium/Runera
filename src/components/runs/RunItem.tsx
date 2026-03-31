@@ -1,4 +1,5 @@
 import type { Run } from "../../types/runs.types";
+import type { LoadingState } from "../../hooks/useRuns";
 
 import styles from "./RunItem.module.css";
 import { icons } from "../icons/icons";
@@ -6,6 +7,7 @@ import { icons } from "../icons/icons";
 import { getWeatherIcon } from "../../utils/icons.utils";
 
 const {
+  spinner: SpinnerIcon,
   delete: DeleteIcon,
   edit: EditIcon,
   clock: ClockIcon,
@@ -15,6 +17,9 @@ const {
 
 interface RunItemProps {
   run: Run;
+  loading: LoadingState;
+  loadingRunId: string | null;
+  onDelete: (runId: string) => Promise<void>;
 }
 
 const weatherLabelMap: Record<NonNullable<Run["weather"]>, string> = {
@@ -28,11 +33,14 @@ const weatherLabelMap: Record<NonNullable<Run["weather"]>, string> = {
   cold: "Cold",
 };
 
-function RunItem({ run }: RunItemProps) {
+function RunItem({ run, loading, loadingRunId, onDelete }: RunItemProps) {
   const weatherLabel = run.weather ? weatherLabelMap[run.weather] : null;
 
   return (
-    <article className={styles.runWrapper} aria-label={`${run.distanceKm} kilometer run`}>
+    <article
+      className={styles.runWrapper}
+      aria-label={`${run.distanceKm} kilometer run`}
+    >
       <div className={styles.runInfo}>
         <div className={styles.runHeading}>
           <h2 className={styles.distanceKm}>{`${run.distanceKm} km`}</h2>
@@ -55,7 +63,10 @@ function RunItem({ run }: RunItemProps) {
             {run.date}
           </time>
           {run.weather && (
-            <span className={styles.weather} aria-label={weatherLabel ?? undefined}>
+            <span
+              className={styles.weather}
+              aria-label={weatherLabel ?? undefined}
+            >
               {getWeatherIcon(run.weather)}
             </span>
           )}
@@ -65,11 +76,15 @@ function RunItem({ run }: RunItemProps) {
         <button
           className={styles.actionButton}
           type="button"
-          onClick={() => {}}
+          onClick={() => onDelete(run.runId)}
           aria-label={`Delete ${run.distanceKm} kilometer run from ${run.date}`}
           title="Delete run"
         >
-          <DeleteIcon aria-hidden="true" focusable="false" />
+          {loading === "deletingRun" && loadingRunId === run.runId ? (
+            <SpinnerIcon aria-hidden="true" focusable="false" />
+          ) : (
+            <DeleteIcon aria-hidden="true" focusable="false" />
+          )}
         </button>
         <button
           className={styles.actionButton}
@@ -78,7 +93,11 @@ function RunItem({ run }: RunItemProps) {
           aria-label={`Edit ${run.distanceKm} kilometer run from ${run.date}`}
           title="Edit run"
         >
-          <EditIcon aria-hidden="true" focusable="false" />
+          {loading === "updatingRun" && loadingRunId === run.runId ? (
+            <SpinnerIcon aria-hidden="true" focusable="false" />
+          ) : (
+            <EditIcon aria-hidden="true" focusable="false" />
+          )}
         </button>
       </div>
     </article>
