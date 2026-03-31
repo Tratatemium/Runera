@@ -25,7 +25,7 @@ interface RunItemProps {
   isEntering: boolean;
 }
 
-const EXIT_ANIMATION_MS = 260;
+const EXIT_ANIMATION_MS = 360;
 
 const weatherLabelMap: Record<NonNullable<Run["weather"]>, string> = {
   sunny: "Sunny",
