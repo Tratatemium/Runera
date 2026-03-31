@@ -7,16 +7,16 @@
   justify-content: space-between;
   padding: 1.5em;
   gap: 1em;
-  background:
-    linear-gradient(
-      130deg,
-      color-mix(in srgb, var(--accent-color-3) 38%, var(--secondary-color)) 0%,
-      color-mix(in srgb, var(--secondary-color) 82%, var(--accent-color-2)) 55%,
-      color-mix(in srgb, var(--secondary-color) 70%, var(--primary-color)) 100%
-    );
+  background: linear-gradient(
+    130deg,
+    color-mix(in srgb, var(--accent-color-3) 38%, var(--secondary-color)) 0%,
+    color-mix(in srgb, var(--secondary-color) 82%, var(--accent-color-2)) 55%,
+    color-mix(in srgb, var(--secondary-color) 70%, var(--primary-color)) 100%
+  );
   border: 1px solid color-mix(in srgb, var(--accent-color-3) 70%, transparent);
   border-radius: 1em;
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--primary-color) 88%, transparent);
+  box-shadow: 0 10px 24px
+    color-mix(in srgb, var(--primary-color) 88%, transparent);
   transition:
     transform 160ms ease,
     box-shadow 200ms ease,
@@ -69,8 +69,13 @@
 
 .runWrapper:hover {
   transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--accent-color-2) 45%, var(--accent-color-3));
-  box-shadow: 0 14px 28px color-mix(in srgb, var(--primary-color) 82%, transparent);
+  border-color: color-mix(
+    in srgb,
+    var(--accent-color-2) 45%,
+    var(--accent-color-3)
+  );
+  box-shadow: 0 14px 28px
+    color-mix(in srgb, var(--primary-color) 82%, transparent);
 }
 
 .runInfo {
@@ -180,8 +185,11 @@
 .actionButton:hover {
   transform: translateY(-1px);
   color: var(--accent-mix-1);
-  background: color-mix(in srgb, var(--accent-color-2) 18%, var(--secondary-color));
-  border-color: color-mix(in srgb, var(--accent-color-2) 45%, var(--accent-color-3));
+  background: color-mix(
+    in srgb,
+    var(--accent-color-2) 18%,
+    var(--secondary-color)
+  );
   border-color: var(--accent-mix-1);
 }
 
