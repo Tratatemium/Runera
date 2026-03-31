@@ -1,3 +1,5 @@
+import type { RunData } from "../../types/runs.types";
+
 import styles from "./MyRuns.module.css";
 import { icons } from "../../components/icons/icons";
 import bg from "../../assets/bg1.png";
@@ -56,7 +58,7 @@ function MyRuns() {
   }, [runsArray]);
 
   function handleNewRun() {
-    const payload = {
+    const payload: RunData = {
       startTime: "2026-03-29T19:42:31.123Z",
       durationSec: 61,
       distanceMeters: 378,
