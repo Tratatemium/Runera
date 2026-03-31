@@ -14,7 +14,7 @@ const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 
 function MyRuns() {
   const { runs } = useRunsContext();
-  const { loading, loadingRunId, getMyRuns, postNewRun, deleteRun } = useRuns();
+  const { loading, loadingRunId, postNewRun, deleteRun } = useRuns();
   const [enteringRunIds, setEnteringRunIds] = useState<Record<string, true>>(
     {},
   );
