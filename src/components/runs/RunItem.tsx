@@ -114,7 +114,10 @@ function RunItem({
               className={styles.weather}
               aria-label={weatherLabel ?? undefined}
             >
-              {getWeatherIcon(run.weather)}
+              {getWeatherIcon(run.weather, {
+                "aria-hidden": true,
+                focusable: "false",
+              })}
             </span>
           )}
         </p>
