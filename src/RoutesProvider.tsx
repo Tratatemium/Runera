@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import { PageLayout } from "./components/layout/";
-import { RequireAuth } from "./components/RequireAuth";
+import { RequireAuth } from "./components/auth/";
 
 import { NotFound } from "./pages/NotFound";
 import { Home } from "./pages/Home";

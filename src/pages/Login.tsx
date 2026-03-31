@@ -7,7 +7,7 @@ import { inputFields } from "../config/inputFields";
 
 import { Link } from "react-router-dom";
 import { FormField } from "../components/FormField";
-import { AuthCard } from "../components/AuthCard";
+import { AuthCard } from "../components/auth/";
 import { useAuthContext } from "../context/AuthContext";
 import { useFormState } from "../hooks/form/useFormState";
 import { useFormHandlers } from "../hooks/form/useFormHandlers";

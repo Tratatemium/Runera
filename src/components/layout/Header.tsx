@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { icons } from "../icons/icons";
 
-import { UserMenu } from "../UserMenu";
+import { UserMenu } from "../auth/";
 import { Logo } from "../Logo";
 import { ButtonLink } from "../ButtonLink";
 
