@@ -8,6 +8,13 @@
   gap: 0.5rem;
 }
 
+.weather{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  font-size: 2em;
+}
+
 .runsWrapper {
   display: flex;
   flex-direction: column;

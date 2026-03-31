@@ -368,6 +368,7 @@ const icons: Record<string, Icon> = {
         width="1em"
         height="1em"
         viewBox="0 0 30 30"
+        color="#b26a00"
         {...props}
       >
         {/* Icon from Weather Icons by Erik Flowers - https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL */}
@@ -386,6 +387,7 @@ const icons: Record<string, Icon> = {
         width="1em"
         height="1em"
         viewBox="0 0 30 30"
+        color="#5b6670"
         {...props}
       >
         {/* Icon from Weather Icons by Erik Flowers - https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL */}
@@ -404,6 +406,7 @@ const icons: Record<string, Icon> = {
         width="1em"
         height="1em"
         viewBox="0 0 30 30"
+        color="#55616b"
         {...props}
       >
         {/* Icon from Weather Icons by Erik Flowers - https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL */}
@@ -422,6 +425,7 @@ const icons: Record<string, Icon> = {
         width="1em"
         height="1em"
         viewBox="0 0 30 30"
+        color="#2f5c8a"
         {...props}
       >
         {/* Icon from Weather Icons by Erik Flowers - https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL */}
@@ -440,6 +444,7 @@ const icons: Record<string, Icon> = {
         width="1em"
         height="1em"
         viewBox="0 0 30 30"
+        color="#3f6c8d"
         {...props}
       >
         {/* Icon from Weather Icons by Erik Flowers - https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL */}
@@ -458,6 +463,7 @@ const icons: Record<string, Icon> = {
         width="1em"
         height="1em"
         viewBox="0 0 30 30"
+        color="#3d6b70"
         {...props}
       >
         {/* Icon from Weather Icons by Erik Flowers - https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL */}
@@ -476,6 +482,7 @@ const icons: Record<string, Icon> = {
         width="1em"
         height="1em"
         viewBox="0 0 24 24"
+        color="#b54400"
         {...props}
       >
         {/* Icon from Huge Icons by Hugeicons - undefined */}
@@ -502,6 +509,7 @@ const icons: Record<string, Icon> = {
         width="1em"
         height="1em"
         viewBox="0 0 24 24"
+        color="#1f5f8b"
         {...props}
       >
         {/* Icon from Huge Icons by Hugeicons - undefined */}

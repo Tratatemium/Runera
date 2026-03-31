@@ -21,15 +21,15 @@ function RunItem({ run }: RunItemProps) {
   return (
     <div className={styles.runWrapper}>
       <div className={styles.runInfo}>
-        <h1 className={styles.runHeading}>
-          <span className={styles.distanceKm}>{run.distanceKm}</span>
-          {run.title && <span className={styles.title}>{run.title}</span>}
-        </h1>
+        <div className={styles.runHeading}>
+          <h1 className={styles.distanceKm}>{`${run.distanceKm} km`}</h1>
+        </div>
         <p className={styles.timing}>
           <span className={styles.duration}>
             <ClockIcon />
             {run.formattedDuration}
           </span>
+          <span>•</span>
           <span className={styles.pace}>
             <SpeedIcon />
             {run.formattedPace}
@@ -49,14 +49,14 @@ function RunItem({ run }: RunItemProps) {
       </div>
       <div className={styles.runActions}>
         <button
-          className={styles.acyionButton}
+          className={styles.actionButton}
           type="button"
           onClick={() => {}}
         >
           <DeleteIcon />
         </button>
         <button
-          className={styles.acyionButton}
+          className={styles.actionButton}
           type="button"
           onClick={() => {}}
         >

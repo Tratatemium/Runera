@@ -7,6 +7,8 @@ import { useEffect, useMemo } from "react";
 import { Button } from "../../components/Button";
 import { Loading } from "../../components/Loading";
 import { RunItem } from "../../components/runs/RunItem";
+import { getWeatherIcon } from "../../utils/icons.utils";
+import { Run } from "../../types/runs.types";
 
 function MyRuns() {
   const { runs } = useRunsContext();
@@ -45,9 +47,22 @@ function MyRuns() {
   //     const runId = "eaab0c97-1317-4fc8-8123-4b6f63552f72";
   //     deleteRun(runId);
   //   }
+  const weather: NonNullable<Run["weather"]>[] = [
+    "sunny",
+    "partly_cloudy",
+    "cloudy",
+    "rain",
+    "snow",
+    "windy",
+    "hot",
+    "cold",
+  ];
 
   return loading !== "fetchingRuns" ? (
     <main className={styles.main}>
+      <div className={styles.weather}>
+        {weather.map((el) => getWeatherIcon(el))}
+      </div>
       <div className={styles.runsWrapper}>
         {runsArray.map((run) => (
           <RunItem run={run} key={run.runId} />
