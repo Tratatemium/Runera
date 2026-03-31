@@ -2,7 +2,6 @@ import type { RunData } from "../../types/runs.types";
 
 import styles from "./MyRuns.module.css";
 import { icons } from "../../components/icons/icons";
-import bg from "../../assets/bg1.png";
 
 import { useRuns } from "../../hooks/useRuns";
 import { useRunsContext } from "../../context/RunsContext";
@@ -80,7 +79,7 @@ function MyRuns() {
   //   }
 
   return loading !== "fetchingRuns" ? (
-    <main className={styles.main} style={{ backgroundImage: `url(${bg})` }}>
+    <main className={styles.main}>
       <div className={styles.runsWrapper}>
         {runsArray.map((run) => (
           <RunItem
