@@ -6,7 +6,7 @@ import { useRuns } from "../../hooks/useRuns";
 import { useRunsContext } from "../../context/RunsContext";
 import { useEffect, useMemo } from "react";
 
-import { Button, Loading } from "../../components/ui/";
+import { Loading } from "../../components/ui/";
 import { RunItem } from "../../components/runs/RunItem";
 
 const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
