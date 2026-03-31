@@ -22,15 +22,6 @@ p {
   text-align: left;
 }
 
-.runHeading {
-}
-
-.distanceKm {
-}
-
-.title {
-}
-
 .timing {
   color: var(--accent-mix-2);
   display: flex;
@@ -76,7 +67,23 @@ p {
 }
 
 .runActions {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: right;
+  gap: 0.7em;
 }
 
 .actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3em;
+  font-size: 1.1em;
+  color: var(--accent-mix-2);
+  border-radius: 0.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
