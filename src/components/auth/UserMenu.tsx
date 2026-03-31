@@ -78,16 +78,6 @@ function UserMenu() {
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link to="/user/edit-account" onClick={() => setIsOpen(false)}>
-                Edit Account
-              </Link>
-            </li>
-            <li className={styles.menuItem}>
-              <Link to="/user/edit-profile" onClick={() => setIsOpen(false)}>
-                Edit Profile
-              </Link>
-            </li>
-            <li className={styles.menuItem}>
               <button type="button" onClick={logout}>
                 Log Out
               </button>

@@ -1,7 +1,7 @@
 import styles from "./UserInfo.module.css";
 
 import { useAuthContext } from "../../context/AuthContext";
-import { ButtonLink } from "../../components/ui";
+import { ButtonLink, Panel } from "../../components/ui";
 
 function UserInfo() {
   const { user } = useAuthContext();
@@ -16,7 +16,7 @@ function UserInfo() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.profileWrapper}>
+      <Panel variant="frosted">
         <div className={styles.avatar}>
           {(profile.firstName?.[0] ?? account.username[0]).toUpperCase()}
         </div>
@@ -64,7 +64,7 @@ function UserInfo() {
             <span className={styles.infoValue}>{user.role}</span>
           </div>
         </div>
-      </div>
+      </Panel>
     </main>
   );
 }
