@@ -59,7 +59,7 @@ function useDialogContext() {
   const context = useContext(DialogContext);
 
   if (!context) {
-    throw new AppError("useAuthContext must be used inside AuthProvider");
+    throw new AppError("useDialogContext must be used inside DialogProvider");
   }
 
   return context;
