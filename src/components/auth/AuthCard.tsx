@@ -1,7 +1,6 @@
 import styles from "./AuthCard.module.css";
 
-import { Logo } from "../Logo";
-import { Button } from "../Button";
+import { Button, Logo } from "../ui/";
 
 interface AuthCardProps {
   children?: React.ReactNode;

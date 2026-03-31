@@ -1,20 +1,15 @@
 import styles from "./Home.module.css";
-
-import { Logo } from "../components/Logo";
-import { ButtonLink } from "../components/ButtonLink";
+import { icons } from "../components/icons/icons";
+import runners1 from "../assets/runners-1.jpg";
+import runners3 from "../assets/runners-3.jpg";
 
 import { useAuthContext } from "../context/AuthContext";
 
-import runners1 from "../assets/runners-1.jpg";
-import runners3 from "../assets/runners-3.jpg";
-import { icons } from "../components/icons/icons";
+import { Logo, ButtonLink } from "../components/ui/";
 
 function Home() {
   const { user } = useAuthContext();
-
-  const GraphIcon = icons.graph;
-  const ChartIcon = icons.chart;
-  const MedalIcon = icons.medal;
+  const { graph: GraphIcon, chart: ChartIcon, medal: MedalIcon } = icons;
 
   return (
     <main>

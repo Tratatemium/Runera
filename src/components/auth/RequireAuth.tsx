@@ -1,9 +1,12 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { useUser } from "../../hooks/useUser";
+
 import { mapUserResponseToState } from "../../utils/user.utils";
-import { useEffect, useState } from "react";
-import { Loading } from "../Loading";
+
+import { Loading } from "../ui/";
 
 function RequireAuth() {
   const { user, loginUser } = useAuthContext();

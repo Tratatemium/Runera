@@ -5,11 +5,9 @@ import { useFormState } from "../../hooks/form/useFormState";
 import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 import { useUser } from "../../hooks/useUser";
 
-import { Button } from "../../components/Button";
-import { ButtonLink } from "../../components/ButtonLink";
-import { FormField } from "../../components/FormField";
-
 import { inputFields } from "../../config/inputFields";
+
+import { Button, ButtonLink, FormField } from "../../components/ui/";
 
 const userFields = [
   inputFields.firstName,

@@ -2,9 +2,9 @@ import styles from "./UserMenu.module.css";
 
 import { useEffect, useId, useRef, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 
 function UserMenu() {
   const menuId = useId();

@@ -1,13 +1,13 @@
 import styles from "./EditAccount.module.css";
 
-import { Button } from "../../components/Button";
-import { FormField } from "../../components/FormField";
-
-import { inputFields } from "../../config/inputFields";
 import { useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { useFormState } from "../../hooks/form/useFormState";
 import { useFormHandlers } from "../../hooks/form/useFormHandlers";
+
+import { inputFields } from "../../config/inputFields";
+
+import { Button, FormField } from "../../components/ui/";
 
 const userFields = [
   inputFields.username,

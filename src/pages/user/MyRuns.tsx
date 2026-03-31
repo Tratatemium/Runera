@@ -4,8 +4,7 @@ import { useRuns } from "../../hooks/useRuns";
 import { useRunsContext } from "../../context/RunsContext";
 import { useEffect, useMemo } from "react";
 
-import { Button } from "../../components/Button";
-import { Loading } from "../../components/Loading";
+import { Button, Loading } from "../../components/ui/";
 import { RunItem } from "../../components/runs/RunItem";
 
 function MyRuns() {
