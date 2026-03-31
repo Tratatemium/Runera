@@ -1,15 +1,26 @@
+import type { RunData } from "../../types/runs.types";
+
 import styles from "./MyRuns.module.css";
+import { icons } from "../../components/icons/icons";
+import bg from "../../assets/bg1.png";
 
 import { useRuns } from "../../hooks/useRuns";
 import { useRunsContext } from "../../context/RunsContext";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import { Button } from "../../components/Button";
-import { Loading } from "../../components/Loading";
+import { Loading } from "../../components/ui/";
+import { RunItem } from "../../components/runs/RunItem";
+
+const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 
 function MyRuns() {
   const { runs } = useRunsContext();
-  const { loading, getMyRuns, postNewRun } = useRuns();
+  const { loading, loadingRunId, getMyRuns, postNewRun, deleteRun } = useRuns();
+  const [enteringRunIds, setEnteringRunIds] = useState<Record<string, true>>(
+    {},
+  );
+  const prevRunIdsRef = useRef<Set<string>>(new Set());
+  const hasInitializedRef = useRef(false);
 
   useEffect(() => {
     getMyRuns();
@@ -17,11 +28,44 @@ function MyRuns() {
 
   const runsArray = useMemo(() => Object.values(runs), [runs]);
 
+  useEffect(() => {
+    const currentRunIds = new Set(runsArray.map((run) => run.runId));
+
+    if (!hasInitializedRef.current) {
+      prevRunIdsRef.current = currentRunIds;
+      hasInitializedRef.current = true;
+      return;
+    }
+
+    const addedRunIds: string[] = [];
+    currentRunIds.forEach((runId) => {
+      if (!prevRunIdsRef.current.has(runId)) {
+        addedRunIds.push(runId);
+      }
+    });
+
+    if (addedRunIds.length > 0) {
+      setEnteringRunIds((prev) => {
+        const next = { ...prev };
+        addedRunIds.forEach((runId) => {
+          next[runId] = true;
+        });
+        return next;
+      });
+    }
+
+    prevRunIdsRef.current = currentRunIds;
+  }, [runsArray]);
+
   function handleNewRun() {
-    const payload = {
+    const payload: RunData = {
       startTime: "2026-03-29T19:42:31.123Z",
       durationSec: 61,
       distanceMeters: 378,
+      title: "Morning run",
+      notes: "Nice run overall.",
+      perceivedEffort: 5,
+      weather: "sunny",
     };
     postNewRun(payload);
   }
@@ -36,36 +80,29 @@ function MyRuns() {
   //     updateRun(runId, payload);
   //   }
 
-  //   function handleDelete() {
-  //     const runId = "eaab0c97-1317-4fc8-8123-4b6f63552f72";
-  //     deleteRun(runId);
-  //   }
-
   return loading !== "fetchingRuns" ? (
-    <main className={styles.main}>
+    <main className={styles.main} style={{ backgroundImage: `url(${bg})` }}>
       <div className={styles.runsWrapper}>
-        {runsArray.map((run) => {
-          return (
-            <div key={run.runId} className={styles.runWrapper}>
-              {Object.entries(run).map(([key, value]) => {
-                return (
-                  <p key={key} className={styles.runField}>
-                    <span className={styles.key}>{key}:</span>
-                    <span className={styles.value}>{value}</span>
-                  </p>
-                );
-              })}
-            </div>
-          );
-        })}
+        {runsArray.map((run) => (
+          <RunItem
+            run={run}
+            loading={loading}
+            loadingRunId={loadingRunId}
+            onDelete={deleteRun}
+            isEntering={Boolean(enteringRunIds[run.runId])}
+            key={run.runId}
+          />
+        ))}
       </div>
-      <Button
-        buttonText="+ Log a Run"
+      <button
+        className={styles.addRunButton}
         type="button"
-        variant="primary"
         onClick={handleNewRun}
-        isSubmitting={loading === "creatingRun"}
-      />
+        disabled={loading === "creatingRun"}
+        aria-label="Add new run"
+      >
+        {loading === "creatingRun" ? <SpinnerIcon /> : <PlusIcon />}
+      </button>
     </main>
   ) : (
     <Loading />

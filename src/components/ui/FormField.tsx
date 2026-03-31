@@ -1,6 +1,6 @@
 import styles from "./FormField.module.css";
 import { useState, useRef } from "react";
-import { icons } from "./icons/icons";
+import { icons } from "../icons/icons";
 
 interface FormFieldProps {
   id: string;

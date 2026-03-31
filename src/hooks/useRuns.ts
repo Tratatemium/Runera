@@ -13,6 +13,7 @@ import { normalizeRunData, normalizeMyRuns } from "../utils/runs.utils";
 
 interface UseRunsReturn {
   loading: LoadingState;
+  loadingRunId: string | null;
   formError: string | undefined;
   getMyRuns: () => Promise<void>;
   postNewRun: (payload: RunData) => Promise<void>;
@@ -20,7 +21,7 @@ interface UseRunsReturn {
   deleteRun: (runId: string) => Promise<void>;
 }
 
-type LoadingState =
+export type LoadingState =
   | "idle"
   | "fetchingRuns"
   | "creatingRun"
@@ -29,6 +30,7 @@ type LoadingState =
 
 function useRuns(): UseRunsReturn {
   const [loading, setLoading] = useState<LoadingState>("idle");
+  const [loadingRunId, setLoadingRunId] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | undefined>(undefined);
   const { hydrateRunsState, postNewRunState, updateRunState, deleteRunState } =
     useRunsContext();
@@ -64,6 +66,7 @@ function useRuns(): UseRunsReturn {
   const updateRun = useCallback(
     async (runId: string, payload: RunData) => {
       setLoading("updatingRun");
+      setLoadingRunId(runId);
       setFormError(undefined);
       try {
         const response = await apiUpdateRun(runId, payload);
@@ -72,6 +75,7 @@ function useRuns(): UseRunsReturn {
         console.error(err);
       } finally {
         setLoading("idle");
+        setLoadingRunId(null);
       }
     },
     [updateRunState],
@@ -80,6 +84,7 @@ function useRuns(): UseRunsReturn {
   const deleteRun = useCallback(
     async (runId: string) => {
       setLoading("deletingRun");
+      setLoadingRunId(runId);
       setFormError(undefined);
       try {
         await apiDeleteRun(runId);
@@ -88,12 +93,13 @@ function useRuns(): UseRunsReturn {
         console.error(err);
       } finally {
         setLoading("idle");
+        setLoadingRunId(null);
       }
     },
     [deleteRunState],
   );
 
-  return { loading, formError, getMyRuns, postNewRun, updateRun, deleteRun };
+  return { loading, loadingRunId, formError, getMyRuns, postNewRun, updateRun, deleteRun };
 }
 
 export { useRuns };

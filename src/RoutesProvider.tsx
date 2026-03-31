@@ -1,18 +1,17 @@
 import { Routes, Route } from "react-router-dom";
 
-import { PageLayout } from "./components/PageLayout";
-import { RequireAuth } from "./components/RequireAuth";
+import { PageLayout } from "./components/layout/";
+import { RequireAuth } from "./components/auth";
 
-import { NotFound } from "./pages/NotFound";
-import { Home } from "./pages/Home";
-import { Signup } from "./pages/Signup";
-import { Login } from "./pages/Login";
+import { NotFound, Home, Login, Signup } from "./pages/";
 
-import { Dashboard } from "./pages/user/Dashboard";
-import { UserInfo } from "./pages/user/UserInfo";
-import { EditAccount } from "./pages/user/EditAccount";
-import { EditProfile } from "./pages/user/EditProfile";
-import { MyRuns } from "./pages/user/MyRuns";
+import {
+  Dashboard,
+  UserInfo,
+  EditAccount,
+  EditProfile,
+  MyRuns,
+} from "./pages/user/";
 
 function RoutesProvider() {
   return (
