@@ -1,5 +1,6 @@
 import type { Run } from "../../types/runs.types";
 import type { LoadingState } from "../../hooks/useRuns";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "./RunItem.module.css";
 import { icons } from "../icons/icons";
@@ -21,7 +22,10 @@ interface RunItemProps {
   loading: LoadingState;
   loadingRunId: string | null;
   onDelete: (runId: string) => Promise<void>;
+  isEntering: boolean;
 }
+
+const EXIT_ANIMATION_MS = 260;
 
 const weatherLabelMap: Record<NonNullable<Run["weather"]>, string> = {
   sunny: "Sunny",
@@ -34,24 +38,54 @@ const weatherLabelMap: Record<NonNullable<Run["weather"]>, string> = {
   cold: "Cold",
 };
 
-function RunItem({ run, loading, loadingRunId, onDelete }: RunItemProps) {
+function RunItem({
+  run,
+  loading,
+  loadingRunId,
+  onDelete,
+  isEntering,
+}: RunItemProps) {
   const { openDialog, closeDialog } = useDialogContext();
+  const [isRemoving, setIsRemoving] = useState(false);
+  const deleteTimeoutRef = useRef<number | null>(null);
   const weatherLabel = run.weather ? weatherLabelMap[run.weather] : null;
 
+  useEffect(
+    () => () => {
+      if (deleteTimeoutRef.current) {
+        window.clearTimeout(deleteTimeoutRef.current);
+      }
+    },
+    [],
+  );
+
   function handleDelete() {
+    if (isRemoving) {
+      return;
+    }
+
     openDialog({
       title: "Delete Run",
       text: "Are you sure you want to delete this run?",
       action1Text: "No",
       onAction1: closeDialog,
       action2Text: "Yes",
-      onAction2: () => onDelete(run.runId),
+      onAction2: () => {
+        setIsRemoving(true);
+        deleteTimeoutRef.current = window.setTimeout(() => {
+          void onDelete(run.runId);
+        }, EXIT_ANIMATION_MS);
+      },
     });
   }
 
+  const isDeletingCurrentRun =
+    loading === "deletingRun" && loadingRunId === run.runId;
+  const disableActions = isRemoving || isDeletingCurrentRun;
+
   return (
     <article
-      className={styles.runWrapper}
+      className={`${styles.runWrapper} ${isEntering ? styles.runWrapperEntering : ""} ${isRemoving ? styles.runWrapperRemoving : ""}`}
       aria-label={`${run.distanceKm} kilometer run`}
     >
       <div className={styles.runInfo}>
@@ -90,10 +124,11 @@ function RunItem({ run, loading, loadingRunId, onDelete }: RunItemProps) {
           className={styles.actionButton}
           type="button"
           onClick={handleDelete}
+          disabled={disableActions}
           aria-label={`Delete ${run.distanceKm} kilometer run from ${run.date}`}
           title="Delete run"
         >
-          {loading === "deletingRun" && loadingRunId === run.runId ? (
+          {isDeletingCurrentRun ? (
             <SpinnerIcon aria-hidden="true" focusable="false" />
           ) : (
             <DeleteIcon aria-hidden="true" focusable="false" />
@@ -103,6 +138,7 @@ function RunItem({ run, loading, loadingRunId, onDelete }: RunItemProps) {
           className={styles.actionButton}
           type="button"
           onClick={() => {}}
+          disabled={disableActions}
           aria-label={`Edit ${run.distanceKm} kilometer run from ${run.date}`}
           title="Edit run"
         >

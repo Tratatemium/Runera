@@ -4,7 +4,7 @@ import bg from "../../assets/bg1.png";
 
 import { useRuns } from "../../hooks/useRuns";
 import { useRunsContext } from "../../context/RunsContext";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Loading } from "../../components/ui/";
 import { RunItem } from "../../components/runs/RunItem";
@@ -14,12 +14,46 @@ const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 function MyRuns() {
   const { runs } = useRunsContext();
   const { loading, loadingRunId, getMyRuns, postNewRun, deleteRun } = useRuns();
+  const [enteringRunIds, setEnteringRunIds] = useState<Record<string, true>>(
+    {},
+  );
+  const prevRunIdsRef = useRef<Set<string>>(new Set());
+  const hasInitializedRef = useRef(false);
 
   useEffect(() => {
     getMyRuns();
   }, [getMyRuns]);
 
   const runsArray = useMemo(() => Object.values(runs), [runs]);
+
+  useEffect(() => {
+    const currentRunIds = new Set(runsArray.map((run) => run.runId));
+
+    if (!hasInitializedRef.current) {
+      prevRunIdsRef.current = currentRunIds;
+      hasInitializedRef.current = true;
+      return;
+    }
+
+    const addedRunIds: string[] = [];
+    currentRunIds.forEach((runId) => {
+      if (!prevRunIdsRef.current.has(runId)) {
+        addedRunIds.push(runId);
+      }
+    });
+
+    if (addedRunIds.length > 0) {
+      setEnteringRunIds((prev) => {
+        const next = { ...prev };
+        addedRunIds.forEach((runId) => {
+          next[runId] = true;
+        });
+        return next;
+      });
+    }
+
+    prevRunIdsRef.current = currentRunIds;
+  }, [runsArray]);
 
   function handleNewRun() {
     const payload = {
@@ -53,6 +87,7 @@ function MyRuns() {
             loading={loading}
             loadingRunId={loadingRunId}
             onDelete={deleteRun}
+            isEntering={Boolean(enteringRunIds[run.runId])}
             key={run.runId}
           />
         ))}
