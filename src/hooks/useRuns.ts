@@ -32,14 +32,19 @@ function useRuns(): UseRunsReturn {
   const [loading, setLoading] = useState<LoadingState>("idle");
   const [loadingRunId, setLoadingRunId] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | undefined>(undefined);
-  const { hydrateRunsState, postNewRunState, updateRunState, deleteRunState } =
-    useRunsContext();
+  const {
+    hydrateRunsState,
+    postNewRunState,
+    updateRunState,
+    deleteRunState,
+  } = useRunsContext();
 
   const getMyRuns = useCallback(async () => {
     setLoading("fetchingRuns");
     try {
       const response = await apiGetMyRuns();
       hydrateRunsState(normalizeMyRuns(response));
+      console.log("got runs");
     } catch (err) {
       console.error(err);
     } finally {
@@ -99,7 +104,15 @@ function useRuns(): UseRunsReturn {
     [deleteRunState],
   );
 
-  return { loading, loadingRunId, formError, getMyRuns, postNewRun, updateRun, deleteRun };
+  return {
+    loading,
+    loadingRunId,
+    formError,
+    getMyRuns,
+    postNewRun,
+    updateRun,
+    deleteRun,
+  };
 }
 
 export { useRuns };

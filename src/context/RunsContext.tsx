@@ -19,13 +19,19 @@ type RunsProviderProps = {
 };
 
 function RunsProvider({ children }: RunsProviderProps) {
-  const [runs, setRuns] = useState<RunsState>({});
+  const [runs, setRuns] = useState<RunsState | undefined>(undefined);
 
-  const runExists = useCallback((id: string) => Boolean(runs[id]), [runs]);
+  const runExists = useCallback(
+    (id: string) => {
+      if (!runs) return false;
+      return Boolean(runs[id]);
+    },
+    [runs],
+  );
 
   const hydrateRunsState = useCallback((runs: RunsState) => setRuns(runs), []);
 
-  const clearRunsState = useCallback(() => setRuns({}), []);
+  const clearRunsState = useCallback(() => setRuns(undefined), []);
 
   const postNewRunState = useCallback((newRun: Run) => {
     setRuns((prev) => ({
@@ -50,6 +56,7 @@ function RunsProvider({ children }: RunsProviderProps) {
   const deleteRunState = useCallback(
     (id: string) => {
       setRuns((prev) => {
+        if (!prev) return prev;
         if (!runExists(id)) return prev;
 
         const { [id]: _, ...rest } = prev;

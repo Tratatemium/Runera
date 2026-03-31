@@ -5,6 +5,7 @@ import { apiSignup, apiLogin, apiLogout } from "../api/auth.api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
+import { useRuns } from "./useRuns";
 import { useUser } from "./useUser";
 
 import { mapUserResponseToState } from "../utils/user.utils";
@@ -22,6 +23,7 @@ function useAuth(): UseAuthReturn {
   const navigate = useNavigate();
   const { loginUser, logoutUser } = useAuthContext();
   const { getMe } = useUser();
+  const { getMyRuns } = useRuns();
 
   const [isFetching, setIsFetching] = useState(false);
   const [formError, setFormError] = useState<string | undefined>(undefined);
@@ -50,6 +52,7 @@ function useAuth(): UseAuthReturn {
       await apiLogin(payload);
       const userData = await getMe();
       loginUser(mapUserResponseToState(userData));
+      void getMyRuns();
       navigate("/user/dashboard");
     } catch (err) {
       handleApiFormError(err, setFormError);

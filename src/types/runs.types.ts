@@ -28,7 +28,7 @@ interface Run {
 type RunsState = Record<string, Run>;
 
 interface RunsContextValue {
-  runs: RunsState;
+  runs: RunsState | undefined;
   hydrateRunsState: (runs: RunsState) => void;
   clearRunsState: () => void;
   postNewRunState: (newRun: Run) => void;

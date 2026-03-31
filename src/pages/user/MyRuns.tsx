@@ -22,11 +22,10 @@ function MyRuns() {
   const prevRunIdsRef = useRef<Set<string>>(new Set());
   const hasInitializedRef = useRef(false);
 
-  useEffect(() => {
-    getMyRuns();
-  }, [getMyRuns]);
-
-  const runsArray = useMemo(() => Object.values(runs), [runs]);
+  const runsArray = useMemo(() => {
+    if (!runs) return [];
+    return Object.values(runs);
+  }, [runs]);
 
   useEffect(() => {
     const currentRunIds = new Set(runsArray.map((run) => run.runId));
