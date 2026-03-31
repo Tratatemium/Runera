@@ -1,4 +1,6 @@
 import styles from "./MyRuns.module.css";
+import { icons } from "../../components/icons/icons";
+import bg from "../../assets/bg1.png";
 
 import { useRuns } from "../../hooks/useRuns";
 import { useRunsContext } from "../../context/RunsContext";
@@ -6,6 +8,8 @@ import { useEffect, useMemo } from "react";
 
 import { Button, Loading } from "../../components/ui/";
 import { RunItem } from "../../components/runs/RunItem";
+
+const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 
 function MyRuns() {
   const { runs } = useRunsContext();
@@ -40,13 +44,8 @@ function MyRuns() {
   //     updateRun(runId, payload);
   //   }
 
-  //   function handleDelete() {
-  //     const runId = "eaab0c97-1317-4fc8-8123-4b6f63552f72";
-  //     deleteRun(runId);
-  //   }
-
   return loading !== "fetchingRuns" ? (
-    <main className={styles.main}>
+    <main className={styles.main} style={{ backgroundImage: `url(${bg})` }}>
       <div className={styles.runsWrapper}>
         {runsArray.map((run) => (
           <RunItem
@@ -58,13 +57,14 @@ function MyRuns() {
           />
         ))}
       </div>
-      <Button
-        buttonText="+ Log a Run"
+      <button
+        className={styles.addRunButton}
         type="button"
-        variant="primary"
         onClick={handleNewRun}
-        isSubmitting={loading === "creatingRun"}
-      />
+        disabled={loading === "creatingRun"}
+      >
+        {loading === "creatingRun" ? <SpinnerIcon /> : <PlusIcon />}
+      </button>
     </main>
   ) : (
     <Loading />

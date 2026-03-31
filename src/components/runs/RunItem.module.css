@@ -10,8 +10,9 @@
   background:
     linear-gradient(
       130deg,
-      color-mix(in srgb, var(--accent-color-3) 22%, transparent) 0%,
-      color-mix(in srgb, var(--secondary-color) 88%, transparent) 100%
+      color-mix(in srgb, var(--accent-color-3) 38%, var(--secondary-color)) 0%,
+      color-mix(in srgb, var(--secondary-color) 82%, var(--accent-color-2)) 55%,
+      color-mix(in srgb, var(--secondary-color) 70%, var(--primary-color)) 100%
     );
   border: 1px solid color-mix(in srgb, var(--accent-color-3) 70%, transparent);
   border-radius: 1em;
@@ -128,7 +129,7 @@
   color: var(--accent-mix-2);
   border-radius: 0.6em;
   background: color-mix(in srgb, var(--secondary-color) 92%, transparent);
-  border: 1px solid color-mix(in srgb, var(--accent-color-3) 75%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-color-3) 70%, transparent);
   cursor: pointer;
   transition:
     transform 140ms ease,
@@ -140,8 +141,9 @@
 .actionButton:hover {
   transform: translateY(-1px);
   color: var(--accent-mix-1);
-  background: color-mix(in srgb, var(--accent-color-2) 22%, var(--secondary-color));
-  border-color: color-mix(in srgb, var(--accent-color-2) 50%, transparent);
+  background: color-mix(in srgb, var(--accent-color-2) 18%, var(--secondary-color));
+  border-color: color-mix(in srgb, var(--accent-color-2) 45%, var(--accent-color-3));
+  border-color: var(--accent-mix-1);
 }
 
 .actionButton:focus-visible {
