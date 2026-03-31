@@ -5,6 +5,7 @@ import styles from "./RunItem.module.css";
 import { icons } from "../icons/icons";
 
 import { getWeatherIcon } from "../../utils/icons.utils";
+import { useDialogContext } from "../../context/DialogContext";
 
 const {
   spinner: SpinnerIcon,
@@ -34,7 +35,19 @@ const weatherLabelMap: Record<NonNullable<Run["weather"]>, string> = {
 };
 
 function RunItem({ run, loading, loadingRunId, onDelete }: RunItemProps) {
+  const { openDialog, closeDialog } = useDialogContext();
   const weatherLabel = run.weather ? weatherLabelMap[run.weather] : null;
+
+  function handleDelete() {
+    openDialog({
+      title: "Delete Run",
+      text: "Are you sure you want to delete this run?",
+      action1Text: "No",
+      onAction1: closeDialog,
+      action2Text: "Yes",
+      onAction2: () => onDelete(run.runId),
+    });
+  }
 
   return (
     <article
@@ -76,7 +89,7 @@ function RunItem({ run, loading, loadingRunId, onDelete }: RunItemProps) {
         <button
           className={styles.actionButton}
           type="button"
-          onClick={() => onDelete(run.runId)}
+          onClick={handleDelete}
           aria-label={`Delete ${run.distanceKm} kilometer run from ${run.date}`}
           title="Delete run"
         >

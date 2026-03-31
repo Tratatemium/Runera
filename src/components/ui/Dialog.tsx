@@ -22,8 +22,8 @@ function Dialog({
   return (
     <div className={styles.wrapper}>
       <div className={styles.card}>
-        <h3>{title}</h3>
-        <p>{text}</p>
+        <h3 className={styles.title}>{title}</h3>
+        <p className={styles.text}>{text}</p>
         <div className={styles.actionsWrapper}>
           <Button
             buttonText={action1Text}
