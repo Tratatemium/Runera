@@ -1,9 +1,11 @@
+import { FormData } from "../types/forms.types";
 import type {
   Run,
   RunApi,
   RunApiResponse,
   MyRunsApiResponse,
   RunsState,
+  RunData,
 } from "../types/runs.types";
 
 import { formatSeconds, normalizeDate, normalizeTime } from "./normalize.utils";
@@ -35,4 +37,15 @@ function normalizeRunData(runData: RunApiResponse): Run {
   return normalizeRun(runData.runData);
 }
 
-export { normalizeMyRuns, normalizeRunData };
+function getRunData(data: FormData): RunData {
+  const { distanceKm, durationH, durationM, durationS, ...rest } = data;
+
+  return {
+    ...rest,
+    distanceMeters: Number(distanceKm) * 1000,
+    durationSec:
+      Number(durationH) * 3600 + Number(durationM) * 60 + Number(durationS),
+  } as RunData;
+}
+
+export { normalizeMyRuns, normalizeRunData, getRunData };

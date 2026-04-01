@@ -6,7 +6,7 @@ interface ButtonLinkProps {
   children?: React.ReactNode;
   linkDirection: string;
   linkText: string;
-  variant: "primary" | "secondary" | "transparent";
+  variant: "primary" | "secondary" | "transparent" | "transparentAccent";
   size?: "small";
   disabled?: boolean;
   active?: boolean;

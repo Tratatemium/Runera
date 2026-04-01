@@ -1,4 +1,5 @@
 import styles from "./RunFormPage.module.css";
+import { icons } from "../../components/icons/icons";
 
 import { inputFields } from "../../config/inputFields";
 
@@ -6,8 +7,13 @@ import { Button, ButtonLink, FormField, Panel } from "../../components/ui/";
 import { useFormState } from "../../hooks/form/useFormState";
 import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 import { useRuns } from "../../hooks/useRuns";
-import { RunData } from "../../types/runs.types";
-import { FormData, FormStateValue } from "../../types/forms.types";
+import { Run, RunData } from "../../types/runs.types";
+import { FormData } from "../../types/forms.types";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useRunsContext } from "../../context/RunsContext";
+import { getRunData } from "../../utils/runs.utils";
+import { normalizeFormValue } from "../../utils/normalize.utils";
 
 const durationFields = [
   inputFields.durationH,
@@ -43,12 +49,40 @@ const fieldOptionsMap = Object.fromEntries(
   }),
 );
 
+const ArrowBack = icons.arrowBack;
+
 function RunFormPage() {
+  /* ────────────────────────────── */
+  /*  new or edit                   */
+  /* ────────────────────────────── */
+
+  const { runId } = useParams();
+  const { runs } = useRunsContext();
+
+  const isEdit = !!runId;
+
+  const [run, setRun] = useState<Run | undefined>(undefined);
+
+  useEffect(() => {
+    if (!runId || !runs) return;
+    setRun(runs[runId]);
+  }, [runId, runs]);
+
+  const initialValues = run
+    ? Object.fromEntries(
+        Object.entries(run).map(([k, v]) => [k, normalizeFormValue(v)]),
+      )
+    : undefined;
+
+  /* ────────────────────────────── */
+  /*  state and hooks               */
+  /* ────────────────────────────── */
+
   type RunForm = {
     [K in (typeof runFields)[number]["id"]]: string;
   };
 
-  const formStateHook = useFormState(runFields);
+  const formStateHook = useFormState(runFields, initialValues);
   const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     runFields,
@@ -57,34 +91,30 @@ function RunFormPage() {
 
   const { loading, formError, postNewRun, updateRun } = useRuns();
 
-  function getRunData(data: FormData): RunData {
-    const { distanceKm, durationH, durationM, durationS, ...rest } = data;
-
-    return {
-      ...rest,
-      distanceMeters: Number(distanceKm) * 1000,
-      durationSec:
-        Number(durationH) * 3600 + Number(durationM) * 60 + Number(durationS),
-    } as RunData;
-  }
-
-  // function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  //   console.log(getRunData(formState));
-  // }
-
-  async function submitNewRun(data: RunForm) {
+  async function submitRun(data: RunForm) {
     const payload = getRunData(data);
-    postNewRun(payload);
+    isEdit ? updateRun(runId, payload) : postNewRun(payload);
   }
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    handleSubmit(e, submitNewRun);
+    handleSubmit(e, submitRun);
   }
 
   return (
     <main className={styles.main}>
       <Panel variant="frosted">
+        
+        <ButtonLink
+          linkDirection="."
+          linkText="Go Back"
+          variant="transparentAccent"
+          goBack={true}
+        >
+          <ArrowBack />
+        </ButtonLink>
+
+        <h1 className={styles.title}>{isEdit ? "Edit Run" : "Add New Run"}</h1>
+        Update your run details Log your running activity
         <form className={styles.form} onSubmit={onSubmit} noValidate>
           <FormField
             {...fieldOptionsMap.title}
