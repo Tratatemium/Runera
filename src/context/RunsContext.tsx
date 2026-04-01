@@ -22,13 +22,10 @@ function RunsProvider({ children }: RunsProviderProps) {
   const [runs, setRuns] = useState<RunsState | undefined>(undefined);
   const [isHydaratingRuns, setIsHydratingRuns] = useState(false);
 
-  const runExists = useCallback(
-    (id: string) => {
-      if (!runs) return false;
-      return Boolean(runs[id]);
-    },
-    [runs],
-  );
+  const runExists = useCallback((prev: RunsState | undefined, id: string) => {
+    if (!prev) return false;
+    return Boolean(prev[id]);
+  }, []);
 
   const hydrateRunsState = useCallback((runs: RunsState) => setRuns(runs), []);
 
@@ -44,7 +41,7 @@ function RunsProvider({ children }: RunsProviderProps) {
   const updateRunState = useCallback(
     (updatedRun: Run) => {
       setRuns((prev) => {
-        if (!runExists(updatedRun.runId)) return prev;
+        if (!runExists(prev, updatedRun.runId)) return prev;
         return {
           ...prev,
           [updatedRun.runId]: updatedRun,
@@ -58,7 +55,7 @@ function RunsProvider({ children }: RunsProviderProps) {
     (id: string) => {
       setRuns((prev) => {
         if (!prev) return prev;
-        if (!runExists(id)) return prev;
+        if (!runExists(prev, id)) return prev;
 
         const { [id]: _, ...rest } = prev;
         return rest;
