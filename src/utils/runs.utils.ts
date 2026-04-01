@@ -1,4 +1,4 @@
-import { FormData } from "../types/forms.types";
+import { FormData, FormStateValue } from "../types/forms.types";
 import type {
   Run,
   RunApi,
@@ -70,5 +70,19 @@ function prepareRunStateValues(run: Run) {
     Object.entries(updated).map(([k, v]) => [k, normalizeFormValue(v)]),
   );
 }
+function calculatePace(formState: FormStateValue) {
+  const durationSec =
+    Number(formState.durationH.value) * 3600 +
+    Number(formState.durationM.value) * 60 +
+    Number(formState.durationS.value);
+  const pace = durationSec / Number(formState.distanceKm.value);
+  return formatSeconds(pace);
+}
 
-export { normalizeMyRuns, normalizeRunData, getRunData, prepareRunStateValues };
+export {
+  normalizeMyRuns,
+  normalizeRunData,
+  getRunData,
+  prepareRunStateValues,
+  calculatePace,
+};

@@ -10,7 +10,7 @@ import { useRuns } from "../../hooks/useRuns";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useRunsContext } from "../../context/RunsContext";
-import { getRunData, prepareRunStateValues } from "../../utils/runs.utils";
+import { calculatePace, getRunData, prepareRunStateValues } from "../../utils/runs.utils";
 
 const durationFields = [
   inputFields.durationH,
@@ -145,7 +145,7 @@ function RunFormPage() {
             ))}
           </div>
 
-          <div className={styles.averagePace}>Pace</div>
+          <p className={styles.averagePace}>{`Pace: ${calculatePace(formState) || "-"} /km`}</p>
 
           <FormField
             {...fieldOptionsMap.startTime}

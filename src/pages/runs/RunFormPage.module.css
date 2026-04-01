@@ -9,7 +9,7 @@
 }
 
 .back {
-  align-self:flex-start;
+  align-self: flex-start;
   padding: 1em;
 }
 
@@ -37,7 +37,8 @@
 .weatherLabel {
   display: block;
   font-weight: var(--font-weight-bold);
-  margin: 0.25rem 0 0.55rem;
+  align-self: flex-start;
+  margin-left: 1em;
 }
 
 .submit {
@@ -95,8 +96,8 @@
 }
 
 .averagePace {
-  margin-top: 0.2rem;
-  color: color-mix(in srgb, var(--primary-color) 72%, white);
+  color: color-mix(in srgb, var(--accent-mix-2) 90%, white);
+  font-size: 1.4em;
 }
 
 @media (max-width: 760px) {
