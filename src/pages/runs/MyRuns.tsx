@@ -9,7 +9,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Loading } from "../../components/ui/";
 import { RunItem } from "../../components/runs/RunItem";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 
@@ -55,9 +55,9 @@ function MyRuns() {
 
     prevRunIdsRef.current = currentRunIds;
   }, [runsArray]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function handleNewRun() {
-    navigate("/user/new-run")
+    navigate("/user/new-run");
   }
 
   //   function handleUpdate() {
@@ -84,15 +84,13 @@ function MyRuns() {
           />
         ))}
       </div>
-      <button
+      <Link
+        to={"/user/runs/new"}
         className={styles.addRunButton}
-        type="button"
-        onClick={handleNewRun}
-        disabled={loading === "creatingRun"}
         aria-label="Add new run"
       >
         {loading === "creatingRun" ? <SpinnerIcon /> : <PlusIcon />}
-      </button>
+      </Link>
     </main>
   ) : (
     <Loading />

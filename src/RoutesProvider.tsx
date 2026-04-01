@@ -21,9 +21,11 @@ function RoutesProvider() {
             <Route path="info" element={<UserInfo />} />
             <Route path="edit-account" element={<EditAccount />} />
             <Route path="edit-profile" element={<EditProfile />} />
-            <Route path="runs" element={<MyRuns />} />
-            <Route path="new-run" element={<RunFormPage />} />
-            <Route path="edit-run" element={<RunFormPage />} />
+            <Route path="runs">
+              <Route index element={<MyRuns />}></Route>
+              <Route path="new" element={<RunFormPage />} />
+              <Route path=":runId/edit" element={<RunFormPage />} />
+            </Route>
           </Route>
         </Route>
       </Route>
