@@ -1,6 +1,11 @@
 import type { FormStateValue } from "../types/forms.types";
 
-import { checkEmpty, checkLength, checkWhitespace } from "./validationUtils";
+import {
+  checkEmpty,
+  checkLength,
+  checkWhitespace,
+  checkNumberGreaterThanZero,
+} from "./validationUtils";
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,6 +66,17 @@ function validateName(value: string, _formState: FormStateValue) {
   );
 }
 
+function validateDistance(value: string, _formState: FormStateValue) {
+  return (
+    checkEmpty(value, "Distance") ??
+    checkNumberGreaterThanZero(value, "Distance")
+  );
+}
+
+function validateStartTime(value: string, _formState: FormStateValue) {
+  return checkEmpty(value, "Start time");
+}
+
 export {
   validateUsername,
   validateEmail,
@@ -68,4 +84,6 @@ export {
   validateConfirmPassword,
   validateLogin,
   validateName,
+  validateDistance,
+  validateStartTime,
 };

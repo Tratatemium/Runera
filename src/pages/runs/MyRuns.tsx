@@ -1,5 +1,3 @@
-import type { RunData } from "../../types/runs.types";
-
 import styles from "./MyRuns.module.css";
 import { icons } from "../../components/icons/icons";
 
@@ -9,12 +7,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Loading } from "../../components/ui/";
 import { RunItem } from "../../components/runs/RunItem";
+import { Link } from "react-router-dom";
 
 const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 
 function MyRuns() {
   const { runs, isHydaratingRuns } = useRunsContext();
-  const { loading, loadingRunId, postNewRun, deleteRun } = useRuns();
+  const { loading, loadingRunId, deleteRun } = useRuns();
   const [enteringRunIds, setEnteringRunIds] = useState<Record<string, true>>(
     {},
   );
@@ -55,29 +54,6 @@ function MyRuns() {
     prevRunIdsRef.current = currentRunIds;
   }, [runsArray]);
 
-  function handleNewRun() {
-    const payload: RunData = {
-      startTime: "2026-03-29T19:42:31.123Z",
-      durationSec: 61,
-      distanceMeters: 378,
-      title: "Morning run",
-      notes: "Nice run overall.",
-      perceivedEffort: 5,
-      weather: "sunny",
-    };
-    postNewRun(payload);
-  }
-
-  //   function handleUpdate() {
-  //     const payload = {
-  //       startTime: "2026-03-29T19:42:31.123Z",
-  //       durationSec: 3,
-  //       distanceMeters: 3,
-  //     };
-  //     const runId = "eaab0c97-1317-4fc8-8123-4b6f63552f72";
-  //     updateRun(runId, payload);
-  //   }
-
   return !isHydaratingRuns ? (
     <main className={styles.main}>
       <div className={styles.runsWrapper}>
@@ -92,15 +68,13 @@ function MyRuns() {
           />
         ))}
       </div>
-      <button
+      <Link
+        to={"/user/runs/new"}
         className={styles.addRunButton}
-        type="button"
-        onClick={handleNewRun}
-        disabled={loading === "creatingRun"}
         aria-label="Add new run"
       >
         {loading === "creatingRun" ? <SpinnerIcon /> : <PlusIcon />}
-      </button>
+      </Link>
     </main>
   ) : (
     <Loading />

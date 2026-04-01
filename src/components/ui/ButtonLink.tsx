@@ -1,12 +1,13 @@
+import { ComponentPropsWithoutRef } from "react";
 import styles from "./Button.module.css";
-
 import { Link, useNavigate } from "react-router-dom";
 
-interface ButtonLinkProps {
+interface ButtonLinkProps
+  extends Omit<ComponentPropsWithoutRef<typeof Link>, "to" | "children"> {
   children?: React.ReactNode;
   linkDirection: string;
   linkText: string;
-  variant: "primary" | "secondary" | "transparent";
+  variant: "primary" | "secondary" | "transparent" | "transparentAccent";
   size?: "small";
   disabled?: boolean;
   active?: boolean;
@@ -22,6 +23,9 @@ function ButtonLink({
   disabled,
   active,
   goBack = false,
+  className,
+  onClick,
+  ...linkProps
 }: ButtonLinkProps) {
   const navigate = useNavigate();
 
@@ -39,14 +43,20 @@ function ButtonLink({
           e.preventDefault();
           navigate(-1);
         }
+
+        onClick?.(e);
       }}
-      className={`
-        ${styles.button}
-        ${styles[variant]}
-        ${size ? ` ${styles[size]}` : ""}
-        ${disabled ? styles.disabled : ""}
-        ${active ? styles.active : ""}
-      `}
+      className={[
+        styles.button,
+        styles[variant],
+        size ? styles[size] : undefined,
+        disabled ? styles.disabled : undefined,
+        active ? styles.active : undefined,
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      {...linkProps}
     >
       {children && <span className={styles.icon}>{children}</span>}
       <span>{linkText}</span>

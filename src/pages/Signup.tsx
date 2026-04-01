@@ -4,7 +4,6 @@ import runners from "../assets/runners-wide-3.jpg";
 import { useAuth } from "../hooks/useAuth";
 import { useFormState } from "../hooks/form/useFormState";
 import { useFormHandlers } from "../hooks/form/useFormHandlers";
-import { useAuthContext } from "../context/AuthContext";
 
 import { inputFields } from "../config/inputFields";
 
@@ -31,8 +30,7 @@ function Signup() {
     [K in (typeof signupFields)[number]["id"]]: string;
   };
 
-  const { user } = useAuthContext();
-  const formStateHook = useFormState(signupFields, user);
+  const formStateHook = useFormState(signupFields);
   const { formState, mergeErrors } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     signupFields,
@@ -69,13 +67,7 @@ function Signup() {
         {signupFields.map((field) => (
           <FormField
             key={field.id}
-            id={field.id}
-            label={field.label}
-            type={field.type}
-            min={field.min}
-            max={field.max}
-            step={field.step}
-            placeholder={field.placeholder}
+            {...field}
             value={formState[field.id].value}
             inputError={formState[field.id].error}
             {...inputHandlers}

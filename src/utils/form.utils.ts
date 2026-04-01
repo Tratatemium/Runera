@@ -6,10 +6,6 @@ import type {
 } from "../types/forms.types";
 import { clampNumber } from "./normalize.utils";
 
-function normalizeUserValue(value: string | number | undefined): string {
-  return value == null ? "" : String(value);
-}
-
 function normalizeEntry(
   key: string,
   value: FormStateValue[string],
@@ -29,4 +25,4 @@ function getFormData(
   );
 }
 
-export { normalizeUserValue, clampNumber, getFormData };
+export { clampNumber, getFormData };

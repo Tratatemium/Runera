@@ -1,7 +1,18 @@
 interface InputFieldConfig {
   id: string;
   label: string;
-  type?: "text" | "email" | "password" | "date" | "number";
+  name: string;
+  value?: string | number;
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "date"
+    | "number"
+    | "datetime-local"
+    | "range"
+    | "textarea"
+    | "radio";
   min?: number;
   max?: number;
   step?: number;
@@ -10,7 +21,7 @@ interface InputFieldConfig {
   normalizator: (
     value: string,
     field: InputFieldConfig,
-  ) => string | number | null;
+  ) => string | number | null | undefined;
 }
 
 /* ────────────────────────────── */
@@ -38,6 +49,7 @@ interface UseFormStateReturn {
   setError: (key: string, error?: string) => void;
   mergeErrors: (errors: Record<string, string | undefined>) => void;
   resetFormState: () => void;
+  resetWithValues: (values?: Record<string, unknown>) => void;
   clearErrors: () => void;
 }
 
@@ -45,14 +57,20 @@ interface UseFormStateReturn {
 /* useFormHandlers types          */
 /* ────────────────────────────── */
 
-type NormalizedFormValue = string | number | null;
+type NormalizedFormValue = string | number | null | undefined;
 type FormData = Record<string, NormalizedFormValue>;
 
 interface UseFormHandlersReturn {
   inputHandlers: {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-    onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onChange: (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
+    onBlur: (
+      e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
+    onFocus: (
+      e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
   };
   handleSubmit: <T>(
     e: React.SubmitEvent<HTMLFormElement>,

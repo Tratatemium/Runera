@@ -4,6 +4,10 @@ import type { InputFieldConfig } from "../types/forms.types";
 /* helpers                        */
 /* ────────────────────────────── */
 
+function normalizeFormValue(value: string | number | undefined): string {
+  return value == null ? "" : String(value);
+}
+
 function clampNumber(value: string, min?: string, max?: string): string {
   if (value.trim() === "") return value;
 
@@ -67,7 +71,25 @@ function normalizeLogin(value: string, _field: InputFieldConfig): string {
   return value.includes("@") ? value.trim().toLowerCase() : value.trim();
 }
 
+function normalizeLocalTime(value: string, _field: InputFieldConfig): string {
+  const trimmed = value.trim();
+  if (trimmed === "") return "";
+  const date = new Date(trimmed);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+  return date.toISOString();
+}
+
+function normalizeWeather(
+  value: string,
+  _field: InputFieldConfig,
+): string | undefined {
+  return value === "" ? undefined : value;
+}
+
 export {
+  normalizeFormValue,
   clampNumber,
   normalizeDate,
   normalizeTime,
@@ -76,4 +98,6 @@ export {
   normalizeNumber,
   normalizeEmail,
   normalizeLogin,
+  normalizeLocalTime,
+  normalizeWeather,
 };

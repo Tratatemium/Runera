@@ -1,5 +1,5 @@
 import type { UserState, UserApiResponse } from "../types/users.types";
-import { normalizeDate } from "./normalize.utils";
+import { normalizeDate, normalizeFormValue } from "./normalize.utils";
 
 const mapUserResponseToState = (data: UserApiResponse): UserState => ({
   account: {
@@ -29,21 +29,20 @@ type UserAccountKey = (typeof accountKeys)[number];
 type UserProfileKey = (typeof profileKeys)[number];
 type UserKey = UserAccountKey | UserProfileKey;
 
-function isAccountKey(key: UserKey): key is UserAccountKey {
-  return accountKeys.includes(key as UserAccountKey);
-}
+function getUserData(user: UserState | null) {
+  if (!user) return undefined;
 
-function isProfileKey(key: UserKey): key is UserProfileKey {
-  return profileKeys.includes(key as UserProfileKey);
-}
+  const merged = {
+    ...user.account,
+    ...user.profile,
+  };
 
-function getUserValue(user: UserState, key: UserKey) {
-  if (isAccountKey(key)) {
-    return user.account[key];
-  }
-  if (isProfileKey(key)) {
-    return user.profile[key];
-  }
+  return Object.fromEntries(
+    Object.entries(merged).map(([key, value]) => [
+      key,
+      normalizeFormValue(value as string | number | undefined),
+    ]),
+  );
 }
 
 function normalizeProfile(profile: UserState["profile"]): UserState["profile"] {
@@ -73,7 +72,7 @@ function normalizeUserResponse(data: UserApiResponse): UserApiResponse {
 export type { UserKey };
 export {
   mapUserResponseToState,
-  getUserValue,
+  getUserData,
   normalizeProfile,
   normalizeUserResponse,
 };

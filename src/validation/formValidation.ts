@@ -5,7 +5,8 @@ function validateField(
   field: InputFieldConfig,
   formState: FormStateValue,
 ): string | undefined {
-  const value = formState[field.id].value;
+  if (!field) return undefined;
+  const value = formState[field.name].value;
   return field.validator?.(value, formState);
 }
 

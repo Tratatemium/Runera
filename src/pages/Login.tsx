@@ -2,7 +2,6 @@ import styles from "./Login.module.css";
 import runners from "../assets/runners-wide-1.jpg";
 
 import { useAuth } from "../hooks/useAuth";
-import { useAuthContext } from "../context/AuthContext";
 import { useFormState } from "../hooks/form/useFormState";
 import { useFormHandlers } from "../hooks/form/useFormHandlers";
 
@@ -26,8 +25,7 @@ function Login() {
     [K in (typeof loginFields)[number]["id"]]: string;
   };
 
-  const { user } = useAuthContext();
-  const formStateHook = useFormState(loginFields, user);
+  const formStateHook = useFormState(loginFields);
   const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     loginFields,
@@ -65,13 +63,7 @@ function Login() {
         {loginFields.map((field) => (
           <FormField
             key={field.id}
-            id={field.id}
-            label={field.label}
-            type={field.type}
-            min={field.min}
-            max={field.max}
-            step={field.step}
-            placeholder={field.placeholder}
+            {...field}
             value={formState[field.id].value}
             inputError={formState[field.id].error}
             {...inputHandlers}

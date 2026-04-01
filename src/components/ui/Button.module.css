@@ -99,6 +99,24 @@
   --border-active: color-mix(in srgb, var(--secondary-color) 20%, transparent);
 }
 
+.transparentAccent {
+  --bg: transparent;
+  --color: var(--accent-color-1);
+  --border: transparent;
+
+  --bg-hover: color-mix(in srgb, var(--secondary-color) 10%, transparent);
+  --color-hover: var(--accent-color-1);
+  --border-hover: color-mix(in srgb, var(--secondary-color) 10%, transparent);
+
+  --bg-active: color-mix(in srgb, var(--secondary-color) 20%, transparent);
+  --color-active: var(--accent-color-1);
+  --border-active: color-mix(in srgb, var(--secondary-color) 20%, transparent);
+}
+
+.transparentAccent svg {
+  font-size: 1.5em;
+}
+
 .small {
   padding: 0.55em 1.2em;
   font-size: var(--font-size-small);

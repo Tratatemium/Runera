@@ -25,4 +25,16 @@ function checkWhitespace(value: string, name: string) {
   }
 }
 
-export { checkEmpty, checkLength, checkWhitespace };
+function checkNumberGreaterThanZero(value: string, name: string) {
+  const numberValue = Number(value);
+
+  if (!Number.isFinite(numberValue)) {
+    return `${name} must be a number.`;
+  }
+
+  if (numberValue <= 0) {
+    return `${name} must be greater than 0.`;
+  }
+}
+
+export { checkEmpty, checkLength, checkWhitespace, checkNumberGreaterThanZero };

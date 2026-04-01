@@ -4,27 +4,32 @@ import type {
   FormAction,
   UseFormStateReturn,
 } from "../../types/forms.types";
-import type { UserState } from "../../types/users.types";
-import type { UserKey } from "../../utils/user.utils";
 
-import { getUserValue } from "../../utils/user.utils";
-import { normalizeUserValue } from "../../utils/form.utils";
-import { useReducer } from "react";
+import { useCallback, useReducer } from "react";
 
 /* ────────────────────────────── */
 /* initial state creator          */
 /* ────────────────────────────── */
 
-function createFieldState(field: InputFieldConfig, user: UserState | null) {
-  const value = user ? getUserValue(user, field.id as UserKey) : undefined;
-  return [field.id, { value: normalizeUserValue(value), error: undefined }];
+function createFieldState(
+  field: InputFieldConfig,
+  initialValues?: Record<string, unknown>,
+) {
+  const value = initialValues?.[field.name];
+  return [
+    field.name,
+    {
+      value: value ?? "",
+      error: undefined,
+    },
+  ];
 }
 
 function createInitialState<T extends FormStateValue>(
   fields: readonly InputFieldConfig[],
-  user: UserState | null,
+  initialValues?: Record<string, unknown>,
 ): T {
-  const entries = fields.map((field) => createFieldState(field, user));
+  const entries = fields.map((field) => createFieldState(field, initialValues));
   return Object.fromEntries(entries) as T;
 }
 
@@ -81,22 +86,43 @@ function formReducer(
 
 function useFormState(
   fields: readonly InputFieldConfig[],
-  user: UserState | null,
+  initialValues?: Record<string, unknown>,
 ): UseFormStateReturn {
   const [state, dispatch] = useReducer(
     formReducer,
-    createInitialState(fields, user),
+    createInitialState(fields, initialValues),
   );
 
-  const setValue = (key: string, value: string) =>
-    dispatch({ type: "setValue", key, value });
-  const setError = (key: string, error?: string) =>
-    dispatch({ type: "setError", key, error });
-  const mergeErrors = (errors: Record<string, string | undefined>) =>
-    dispatch({ type: "mergeErrors", errors });
-  const resetFormState = () =>
-    dispatch({ type: "reset", state: createInitialState(fields, user) });
-  const clearErrors = () => dispatch({ type: "clearErrors" });
+  const setValue = useCallback(
+    (key: string, value: string) => dispatch({ type: "setValue", key, value }),
+    [],
+  );
+  const setError = useCallback(
+    (key: string, error?: string) => dispatch({ type: "setError", key, error }),
+    [],
+  );
+  const mergeErrors = useCallback(
+    (errors: Record<string, string | undefined>) =>
+      dispatch({ type: "mergeErrors", errors }),
+    [],
+  );
+  const resetFormState = useCallback(
+    () =>
+    dispatch({
+      type: "reset",
+      state: createInitialState(fields, initialValues),
+    }),
+    [fields, initialValues],
+  );
+  const resetWithValues = useCallback(
+    (values?: Record<string, unknown>) =>
+    dispatch({
+      type: "reset",
+      state: createInitialState(fields, values),
+    }),
+    [fields],
+  );
+  const clearErrors = useCallback(() => dispatch({ type: "clearErrors" }), []);
 
   return {
     formState: state,
@@ -104,6 +130,7 @@ function useFormState(
     setError,
     mergeErrors,
     resetFormState,
+    resetWithValues,
     clearErrors,
   };
 }

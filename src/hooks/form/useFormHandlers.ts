@@ -20,28 +20,48 @@ function useFormHandlers(
   }: UseFormStateReturn,
 ): UseFormHandlersReturn {
   const fieldMap = useMemo(
-    () => Object.fromEntries(fields.map((field) => [field.id, field])),
+    () => Object.fromEntries(fields.map((field) => [field.name, field])),
     [fields],
   );
 
-  function onChange(e: React.ChangeEvent<HTMLInputElement>): void {
+  function onChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
     const { name, value } = e.currentTarget;
     setValue(name, value);
   }
 
-  function onFocus(e: React.FocusEvent<HTMLInputElement>): void {
+  function onFocus(
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
     setError(e.currentTarget.name, undefined);
   }
 
-  function onBlur(e: React.FocusEvent<HTMLInputElement>): void {
+  function onBlur(
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
     const input = e.currentTarget;
     const name = input.name;
+    const field = fieldMap[name];
+
+    if (
+      input instanceof HTMLInputElement &&
+      input.type === "number" &&
+      input.validity.badInput
+    ) {
+      const fieldName =
+        typeof field?.label === "string"
+          ? field.label.replace(/\s*\*+\s*$/, "")
+          : name;
+      setError(name, `${fieldName} must be a number.`);
+      return;
+    }
+
     const value =
-      input.type === "number"
+      input instanceof HTMLInputElement && input.type === "number"
         ? clampNumber(input.value, input.min, input.max)
         : input.value;
 
-    const field = fieldMap[name];
     const error = validateField(field, {
       ...formState,
       [name]: { ...formState[name], value },
