@@ -8,6 +8,11 @@
   gap: 1rem;
 }
 
+.back {
+  align-self:flex-start;
+  padding: 1em;
+}
+
 .title {
   margin: 0;
   text-align: left;
