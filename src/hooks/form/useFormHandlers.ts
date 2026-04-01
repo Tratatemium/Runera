@@ -42,12 +42,26 @@ function useFormHandlers(
   ): void {
     const input = e.currentTarget;
     const name = input.name;
+    const field = fieldMap[name];
+
+    if (
+      input instanceof HTMLInputElement &&
+      input.type === "number" &&
+      input.validity.badInput
+    ) {
+      const fieldName =
+        typeof field?.label === "string"
+          ? field.label.replace(/\s*\*+\s*$/, "")
+          : name;
+      setError(name, `${fieldName} must be a number.`);
+      return;
+    }
+
     const value =
       input instanceof HTMLInputElement && input.type === "number"
         ? clampNumber(input.value, input.min, input.max)
         : input.value;
 
-    const field = fieldMap[name];
     const error = validateField(field, {
       ...formState,
       [name]: { ...formState[name], value },
