@@ -51,6 +51,10 @@
   margin-left: 1em;
 }
 
+.formWrapper.column .choiceLabel {
+  margin-left: 0;
+}
+
 .formWrapper.row .formLabel {
   margin-left: 0;
 }
@@ -64,7 +68,7 @@
   gap: 0.5rem;
   font-weight: var(--font-weight-regular);
   padding: 0.35rem 0.75rem;
-  border-radius: 999px;
+  border-radius: 1em;
   background: color-mix(in srgb, var(--secondary-color) 86%, white);
   border: 1px solid color-mix(in srgb, var(--accent-color-1) 22%, white);
   cursor: pointer;
@@ -119,9 +123,10 @@
 }
 
 .choiceChecked {
-  background: color-mix(in srgb, var(--accent-color-1) 15%, white);
-  border-color: color-mix(in srgb, var(--accent-color-1) 66%, white);
-  box-shadow: 0 5px 14px color-mix(in srgb, var(--accent-color-1) 16%, transparent);
+  background: color-mix(in srgb, var(--accent-color-1) 10%, white);
+  border: 2px solid color-mix(in srgb, var(--accent-color-1) 90%, white);
+  box-shadow: 0 5px 14px
+    color-mix(in srgb, var(--accent-color-3) 16%, transparent);
   transform: translateY(-1px);
 }
 

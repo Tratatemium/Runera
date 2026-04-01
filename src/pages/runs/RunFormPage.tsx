@@ -104,7 +104,7 @@ function RunFormPage() {
 
   return (
     <main className={styles.main}>
-      <Panel variant="frosted">
+      <Panel variant="frostedWarm">
         <ButtonLink
           linkDirection="."
           linkText="Go Back"
