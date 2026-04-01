@@ -28,7 +28,7 @@ function Footer() {
           <Link to="/login" className={styles.navLink}>
             Log In
           </Link>
-          <Link to="/dashboard" className={styles.navLink}>
+          <Link to="/user/dashboard" className={styles.navLink}>
             Dashboard
           </Link>
         </nav>
