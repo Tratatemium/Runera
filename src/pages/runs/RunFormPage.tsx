@@ -94,7 +94,7 @@ function RunFormPage() {
     }
     const values = prepareRunStateValues(runs[runId]);
     resetWithValues(values);
-  }, [runId, runs, resetWithValues]);
+  }, [runId, runs, resetWithValues, navigate]);
 
   const { inputHandlers, handleSubmit } = useFormHandlers(
     runFields,
