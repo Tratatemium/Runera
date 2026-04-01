@@ -81,6 +81,7 @@ function useRuns(): UseRunsReturn {
       try {
         const response = await apiUpdateRun(runId, payload);
         updateRunState(normalizeRunData(response));
+        navigate("/user/runs");
       } catch (err) {
         console.error(err);
       } finally {
