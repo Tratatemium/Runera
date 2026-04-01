@@ -77,6 +77,16 @@ function validateStartTime(value: string, _formState: FormStateValue) {
   return checkEmpty(value, "Start time");
 }
 
+function validateDuration(_value: string, formState: FormStateValue) {
+  const isDurationEmpty = ["durationH", "durationM", "durationS"].every(
+    (fieldName) => !formState[fieldName]?.value,
+  );
+
+  if (isDurationEmpty) {
+    return "Add duration in at least one field.";
+  }
+}
+
 export {
   validateUsername,
   validateEmail,
@@ -86,4 +96,5 @@ export {
   validateName,
   validateDistance,
   validateStartTime,
+  validateDuration,
 };
