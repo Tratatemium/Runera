@@ -82,14 +82,14 @@ function RunFormPage() {
   };
 
   const formStateHook = useFormState(runFields);
+  const { formState, resetWithValues } = formStateHook;
 
   useEffect(() => {
     if (!runId || !runs) return;
     const values = prepareRunStateValues(runs[runId]);
-    formStateHook.resetWithValues(values);
-  }, [runId, runs, formStateHook]);
+    resetWithValues(values);
+  }, [runId, runs, resetWithValues]);
 
-  const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     runFields,
     formStateHook,

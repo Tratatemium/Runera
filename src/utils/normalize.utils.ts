@@ -72,7 +72,12 @@ function normalizeLogin(value: string, _field: InputFieldConfig): string {
 }
 
 function normalizeLocalTime(value: string, _field: InputFieldConfig): string {
-  const date = new Date(value.trim());
+  const trimmed = value.trim();
+  if (trimmed === "") return "";
+  const date = new Date(trimmed);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
   return date.toISOString();
 }
 
