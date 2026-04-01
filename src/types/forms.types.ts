@@ -70,6 +70,18 @@ interface UseUserFormHandlersReturn {
   ) => void;
 }
 
+interface UseFormHandlersReturn {
+  inputHandlers: {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
+  };
+  handleSubmit: <T>(
+    e: React.SubmitEvent<HTMLFormElement>,
+    callback: (data: T) => void,
+  ) => void;
+}
+
 /* ────────────────────────────── */
 /* export                         */
 /* ────────────────────────────── */
@@ -82,4 +94,5 @@ export type {
   NormalizedFormValue,
   FormData,
   UseUserFormHandlersReturn,
+  UseFormHandlersReturn,
 };

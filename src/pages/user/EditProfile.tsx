@@ -2,7 +2,7 @@ import styles from "./EditProfile.module.css";
 
 import { useAuthContext } from "../../context/AuthContext";
 import { useFormState } from "../../hooks/form/useFormState";
-import { useUserFormHandlers } from "../../hooks/form/useUserFormHandlers";
+import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 import { useUser } from "../../hooks/useUser";
 
 import { inputFields } from "../../config/inputFields";
@@ -26,7 +26,7 @@ function EditProfile() {
   const { user } = useAuthContext();
   const formStateHook = useFormState(userFields, getUserData(user));
   const { formState } = formStateHook;
-  const { inputHandlers, handleSubmit } = useUserFormHandlers(
+  const { inputHandlers, handleSubmit } = useFormHandlers(
     userFields,
     formStateHook,
   );

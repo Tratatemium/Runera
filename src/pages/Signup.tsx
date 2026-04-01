@@ -3,7 +3,7 @@ import runners from "../assets/runners-wide-3.jpg";
 
 import { useAuth } from "../hooks/useAuth";
 import { useFormState } from "../hooks/form/useFormState";
-import { useUserFormHandlers } from "../hooks/form/useUserFormHandlers";
+import { useFormHandlers } from "../hooks/form/useFormHandlers";
 
 import { inputFields } from "../config/inputFields";
 
@@ -32,7 +32,7 @@ function Signup() {
 
   const formStateHook = useFormState(signupFields);
   const { formState, mergeErrors } = formStateHook;
-  const { inputHandlers, handleSubmit } = useUserFormHandlers(
+  const { inputHandlers, handleSubmit } = useFormHandlers(
     signupFields,
     formStateHook,
   );

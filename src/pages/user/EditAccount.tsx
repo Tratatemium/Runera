@@ -3,7 +3,7 @@ import styles from "./EditAccount.module.css";
 import { useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { useFormState } from "../../hooks/form/useFormState";
-import { useUserFormHandlers } from "../../hooks/form/useUserFormHandlers";
+import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 
 import { inputFields } from "../../config/inputFields";
 import { getUserData } from "../../utils/user.utils";
@@ -27,7 +27,7 @@ function EditAccount() {
   const { user } = useAuthContext();
   const formStateHook = useFormState(userFields, getUserData(user));
   const { formState } = formStateHook;
-  const { inputHandlers, handleSubmit } = useUserFormHandlers(
+  const { inputHandlers, handleSubmit } = useFormHandlers(
     userFields,
     formStateHook,
   );

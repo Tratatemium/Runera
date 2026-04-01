@@ -1,6 +1,6 @@
 import type {
   InputFieldConfig,
-  UseUserFormHandlersReturn,
+  UseFormHandlersReturn,
   UseFormStateReturn,
 } from "../../types/forms.types";
 
@@ -9,7 +9,7 @@ import { useMemo } from "react";
 import { getFormData } from "../../utils/form.utils";
 import { clampNumber } from "../../utils/normalize.utils";
 
-function useUserFormHandlers(
+function useFormHandlers(
   fields: readonly InputFieldConfig[],
   {
     formState,
@@ -18,7 +18,7 @@ function useUserFormHandlers(
     mergeErrors,
     clearErrors,
   }: UseFormStateReturn,
-): UseUserFormHandlersReturn {
+): UseFormHandlersReturn {
   const fieldMap = useMemo(
     () => Object.fromEntries(fields.map((field) => [field.id, field])),
     [fields],
@@ -77,4 +77,4 @@ function useUserFormHandlers(
   };
 }
 
-export { useUserFormHandlers };
+export { useFormHandlers };
