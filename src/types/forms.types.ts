@@ -58,7 +58,7 @@ interface UseFormStateReturn {
 type NormalizedFormValue = string | number | null;
 type FormData = Record<string, NormalizedFormValue>;
 
-interface UseFormHandlersReturn {
+interface UseUserFormHandlersReturn {
   inputHandlers: {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -81,5 +81,5 @@ export type {
   UseFormStateReturn,
   NormalizedFormValue,
   FormData,
-  UseFormHandlersReturn,
+  UseUserFormHandlersReturn,
 };
