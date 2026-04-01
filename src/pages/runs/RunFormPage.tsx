@@ -48,6 +48,17 @@ const fieldOptionsMap = Object.fromEntries(
 
 const ArrowBack = icons.arrowBack;
 
+const weatherIconsMap = {
+  sunny: icons.sunny,
+  partly_cloudy: icons.partlyCloudy,
+  cloudy: icons.cloudy,
+  rain: icons.rain,
+  snow: icons.snow,
+  windy: icons.windy,
+  hot: icons.hot,
+  cold: icons.cold,
+} as const;
+
 function RunFormPage() {
   /* ────────────────────────────── */
   /*  new or edit                   */
@@ -121,8 +132,8 @@ function RunFormPage() {
             {...inputHandlers}
           />
 
+          <span className={styles.durationLabel}>Duration *</span>
           <div className={styles.durationWrapper}>
-            <span className={styles.durationLabel}>Duration *</span>
             {durationFields.map((field) => (
               <FormField
                 key={field.id}
@@ -142,21 +153,33 @@ function RunFormPage() {
             {...inputHandlers}
           />
 
+          <span className={styles.weatherLabel}>Weather</span>
           <div className={styles.weatherWrapper}>
-            {weatherFields.map((field) => (
-              <FormField
-                key={field.id}
-                {...field}
-                value={field.value as string}
-                checked={formState["weather"].value === field.value}
-                {...inputHandlers}
-              />
-            ))}
+            {weatherFields.map((field) => {
+              const value = field.value as keyof typeof weatherIconsMap;
+              const WeatherIcon = weatherIconsMap[value];
+
+              return (
+                <FormField
+                  key={field.id}
+                  {...field}
+                  label={
+                    <span className={styles.weatherOptionLabel}>
+                      <WeatherIcon className={styles.weatherIcon} />
+                      <span className={styles.weatherOptionText}>{field.label}</span>
+                    </span>
+                  }
+                  value={value}
+                  checked={formState["weather"].value === value}
+                  {...inputHandlers}
+                />
+              );
+            })}
           </div>
 
           <FormField
             {...fieldOptionsMap.perceivedEffort}
-            label={`Effort lavel: ${formState[fieldOptionsMap.perceivedEffort.id].value || "-"}/10`}
+            label={`Effort level: ${formState[fieldOptionsMap.perceivedEffort.id].value || "-"}/10`}
             value={formState[fieldOptionsMap.perceivedEffort.id].value}
             {...inputHandlers}
           />

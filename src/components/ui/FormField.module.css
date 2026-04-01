@@ -7,6 +7,10 @@
   margin-bottom: 1.6em;
 }
 
+.choiceRow {
+  margin-bottom: 0.45em;
+}
+
 .formWrapper {
   display: flex;
   flex-direction: column;
@@ -29,6 +33,10 @@
   gap: 0;
 }
 
+.choiceField {
+  width: auto;
+}
+
 .error {
   margin-bottom: 0em;
 }
@@ -45,6 +53,27 @@
 
 .formWrapper.row .formLabel {
   margin-left: 0;
+}
+
+.choiceLabel {
+  position: relative;
+  margin-left: 0;
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: var(--font-weight-regular);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--secondary-color) 86%, white);
+  border: 1px solid color-mix(in srgb, var(--accent-color-1) 22%, white);
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
 }
 
 .inputWrapper {
@@ -70,6 +99,30 @@
     border-color 140ms ease,
     box-shadow 140ms ease,
     background-color 140ms ease;
+}
+
+.choiceInput {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.choiceLabel:focus-within {
+  border-color: color-mix(in srgb, var(--accent-color-1) 64%, white);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color-1) 22%, white);
+}
+
+.choiceChecked {
+  background: color-mix(in srgb, var(--accent-color-1) 15%, white);
+  border-color: color-mix(in srgb, var(--accent-color-1) 66%, white);
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--accent-color-1) 16%, transparent);
+  transform: translateY(-1px);
 }
 
 .formInput::placeholder {
