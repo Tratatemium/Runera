@@ -122,6 +122,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     min: 0,
     max: 999,
     step: 1,
+    validator: validators.validateDuration,
     normalizator: normalizeNumber,
   },
   durationM: {

@@ -19,6 +19,8 @@ function useFormHandlers(
     clearErrors,
   }: UseFormStateReturn,
 ): UseFormHandlersReturn {
+  const durationFieldNames = ["durationH", "durationM", "durationS"];
+
   const fieldMap = useMemo(
     () => Object.fromEntries(fields.map((field) => [field.name, field])),
     [fields],
@@ -62,13 +64,20 @@ function useFormHandlers(
         ? clampNumber(input.value, input.min, input.max)
         : input.value;
 
-    const error = validateField(field, {
+    const nextFormState = {
       ...formState,
       [name]: { ...formState[name], value },
-    });
+    };
+
+    const error = validateField(field, nextFormState);
 
     setValue(name, value);
     setError(name, error);
+
+    if (durationFieldNames.includes(name) && fieldMap.durationH) {
+      const durationError = validateField(fieldMap.durationH, nextFormState);
+      setError("durationH", durationError);
+    }
   }
 
   function handleSubmit<T>(

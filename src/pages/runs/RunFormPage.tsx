@@ -152,6 +152,7 @@ function RunFormPage() {
                 layout="columnReverse"
                 {...field}
                 value={formState[field.name].value}
+                inputError={formState[field.name].error}
                 {...inputHandlers}
               />
             ))}
