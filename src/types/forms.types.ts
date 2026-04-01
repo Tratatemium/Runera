@@ -60,27 +60,17 @@ interface UseFormStateReturn {
 type NormalizedFormValue = string | number | null | undefined;
 type FormData = Record<string, NormalizedFormValue>;
 
-interface UseUserFormHandlersReturn {
-  inputHandlers: {
-    onChange: (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => void;
-    onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  };
-  handleSubmit: <T>(
-    e: React.SubmitEvent<HTMLFormElement>,
-    callback: (data: T) => void,
-  ) => void;
-}
-
 interface UseFormHandlersReturn {
   inputHandlers: {
     onChange: (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => void;
-    onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onBlur: (
+      e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
+    onFocus: (
+      e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
   };
   handleSubmit: <T>(
     e: React.SubmitEvent<HTMLFormElement>,
@@ -99,6 +89,5 @@ export type {
   UseFormStateReturn,
   NormalizedFormValue,
   FormData,
-  UseUserFormHandlersReturn,
   UseFormHandlersReturn,
 };
