@@ -4,6 +4,10 @@ import type { InputFieldConfig } from "../types/forms.types";
 /* helpers                        */
 /* ────────────────────────────── */
 
+function normalizeFormValue(value: string | number | undefined): string {
+  return value == null ? "" : String(value);
+}
+
 function clampNumber(value: string, min?: string, max?: string): string {
   if (value.trim() === "") return value;
 
@@ -68,6 +72,7 @@ function normalizeLogin(value: string, _field: InputFieldConfig): string {
 }
 
 export {
+  normalizeFormValue,
   clampNumber,
   normalizeDate,
   normalizeTime,

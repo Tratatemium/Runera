@@ -1,5 +1,5 @@
 import type { UserState, UserApiResponse } from "../types/users.types";
-import { normalizeDate } from "./normalize.utils";
+import { normalizeDate, normalizeFormValue } from "./normalize.utils";
 
 const mapUserResponseToState = (data: UserApiResponse): UserState => ({
   account: {
@@ -29,10 +29,6 @@ type UserAccountKey = (typeof accountKeys)[number];
 type UserProfileKey = (typeof profileKeys)[number];
 type UserKey = UserAccountKey | UserProfileKey;
 
-function normalizeUserValue(value: string | number | undefined): string {
-  return value == null ? "" : String(value);
-}
-
 function getUserData(user: UserState | null) {
   if (!user) return undefined;
 
@@ -44,7 +40,7 @@ function getUserData(user: UserState | null) {
   return Object.fromEntries(
     Object.entries(merged).map(([key, value]) => [
       key,
-      normalizeUserValue(value as string | number | undefined),
+      normalizeFormValue(value as string | number | undefined),
     ]),
   );
 }
