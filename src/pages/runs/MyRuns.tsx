@@ -10,10 +10,16 @@ import { RunItem } from "../../components/runs/RunItem";
 import { Link } from "react-router-dom";
 
 const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
+type SortOption =
+  | "startTimeNewest"
+  | "startTimeOldest"
+  | "distanceLongest"
+  | "distanceShortest";
 
 function MyRuns() {
   const { runs, isHydaratingRuns } = useRunsContext();
   const { loading, loadingRunId, deleteRun } = useRuns();
+  const [sortBy, setSortBy] = useState<SortOption>("startTimeNewest");
   const [enteringRunIds, setEnteringRunIds] = useState<Record<string, true>>(
     {},
   );
@@ -24,6 +30,32 @@ function MyRuns() {
     if (!runs) return [];
     return Object.values(runs);
   }, [runs]);
+
+  const sortedRuns = useMemo(() => {
+    const nextRuns = [...runsArray];
+
+    switch (sortBy) {
+      case "distanceLongest":
+        nextRuns.sort((a, b) => b.distanceKm - a.distanceKm);
+        break;
+      case "distanceShortest":
+        nextRuns.sort((a, b) => a.distanceKm - b.distanceKm);
+        break;
+      case "startTimeOldest":
+        nextRuns.sort(
+          (a, b) =>
+            new Date(a.startTime).getTime() - new Date(b.startTime).getTime(),
+        );
+        break;
+      default:
+        nextRuns.sort(
+          (a, b) =>
+            new Date(b.startTime).getTime() - new Date(a.startTime).getTime(),
+        );
+    }
+
+    return nextRuns;
+  }, [runsArray, sortBy]);
 
   useEffect(() => {
     const currentRunIds = new Set(runsArray.map((run) => run.runId));
@@ -56,8 +88,24 @@ function MyRuns() {
 
   return !isHydaratingRuns ? (
     <main className={styles.main}>
+      <div className={styles.sortingRow}>
+        <label htmlFor="runs-sort" className={styles.sortingLabel}>
+          Sort by
+        </label>
+        <select
+          id="runs-sort"
+          className={styles.sortingSelect}
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as SortOption)}
+        >
+          <option value="startTimeNewest">Start time (newest first)</option>
+          <option value="startTimeOldest">Start time (oldest first)</option>
+          <option value="distanceLongest">Distance (longest first)</option>
+          <option value="distanceShortest">Distance (shortest first)</option>
+        </select>
+      </div>
       <div className={styles.runsWrapper}>
-        {runsArray.map((run) => (
+        {sortedRuns.map((run) => (
           <RunItem
             run={run}
             loading={loading}
