@@ -5,13 +5,8 @@ import { RequireAuth } from "./components/auth";
 
 import { NotFound, Home, Login, Signup } from "./pages/";
 
-import {
-  Dashboard,
-  UserInfo,
-  EditAccount,
-  EditProfile,
-  MyRuns,
-} from "./pages/user/";
+import { Dashboard, UserInfo, EditAccount, EditProfile } from "./pages/user/";
+import { MyRuns } from "./pages/runs";
 
 function RoutesProvider() {
   return (
