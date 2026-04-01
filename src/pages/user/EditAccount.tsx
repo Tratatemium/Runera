@@ -7,7 +7,7 @@ import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 
 import { inputFields } from "../../config/inputFields";
 
-import { Button, FormField } from "../../components/ui/";
+import { Button, ButtonLink, FormField, Panel } from "../../components/ui/";
 
 const userFields = [
   inputFields.username,
@@ -39,40 +39,50 @@ function EditAccount() {
 
   return (
     <main className={styles.main}>
-      <form className={styles.form} onSubmit={onSubmit} noValidate>
-        {userFields.map((field) => (
-          <FormField
-            key={field.id}
-            id={field.id}
-            label={field.label}
-            layout="row"
-            type={field.type}
-            min={field.min}
-            max={field.max}
-            step={field.step}
-            placeholder={field.placeholder}
-            value={formState[field.id].value}
-            inputError={formState[field.id].error}
-            {...inputHandlers}
-          />
-        ))}
-
-        <div className={styles.submitWrapper}>
-          {formError && (
-            <div role="alert" className={styles.errorWrapper}>
-              <p className={styles.errorText}>{formError}</p>
-            </div>
-          )}
-          <div className={`${styles.submit} ${formError ? styles.error : ""}`}>
-            <Button
-              buttonText="Save changes"
-              type="submit"
-              variant="primary"
-              isSubmitting={isSubmitting}
+      <Panel variant="frosted">
+        <form className={styles.form} onSubmit={onSubmit} noValidate>
+          {userFields.map((field) => (
+            <FormField
+              key={field.id}
+              id={field.id}
+              label={field.label}
+              layout="row"
+              type={field.type}
+              min={field.min}
+              max={field.max}
+              step={field.step}
+              placeholder={field.placeholder}
+              value={formState[field.id].value}
+              inputError={formState[field.id].error}
+              {...inputHandlers}
             />
+          ))}
+
+          <div className={styles.submitWrapper}>
+            {formError && (
+              <div role="alert" className={styles.errorWrapper}>
+                <p className={styles.errorText}>{formError}</p>
+              </div>
+            )}
+            <div
+              className={`${styles.submit} ${formError ? styles.error : ""}`}
+            >
+              <Button
+                buttonText="Save changes"
+                type="submit"
+                variant="primary"
+                isSubmitting={isSubmitting}
+              />
+              <ButtonLink
+                linkDirection="."
+                linkText="Go Back"
+                variant="secondary"
+                goBack={true}
+              />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </Panel>
     </main>
   );
 }

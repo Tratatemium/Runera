@@ -7,7 +7,7 @@ import { useUser } from "../../hooks/useUser";
 
 import { inputFields } from "../../config/inputFields";
 
-import { Button, ButtonLink, FormField } from "../../components/ui/";
+import { Button, ButtonLink, FormField, Panel } from "../../components/ui/";
 
 const userFields = [
   inputFields.firstName,
@@ -45,46 +45,50 @@ function EditProfile() {
 
   return (
     <main className={styles.main}>
-      <form className={styles.form} onSubmit={onSubmit} noValidate>
-        {userFields.map((field) => (
-          <FormField
-            key={field.id}
-            id={field.id}
-            label={field.label}
-            layout="row"
-            type={field.type}
-            min={field.min}
-            max={field.max}
-            step={field.step}
-            placeholder={field.placeholder}
-            value={formState[field.id].value}
-            inputError={formState[field.id].error}
-            {...inputHandlers}
-          />
-        ))}
+      <Panel variant="frosted">
+        <form className={styles.form} onSubmit={onSubmit} noValidate>
+          {userFields.map((field) => (
+            <FormField
+              key={field.id}
+              id={field.id}
+              label={field.label}
+              layout="row"
+              type={field.type}
+              min={field.min}
+              max={field.max}
+              step={field.step}
+              placeholder={field.placeholder}
+              value={formState[field.id].value}
+              inputError={formState[field.id].error}
+              {...inputHandlers}
+            />
+          ))}
 
-        <div className={styles.submitWrapper}>
-          {formError && (
-            <div role="alert" className={styles.errorWrapper}>
-              <p className={styles.errorText}>{formError}</p>
+          <div className={styles.submitWrapper}>
+            {formError && (
+              <div role="alert" className={styles.errorWrapper}>
+                <p className={styles.errorText}>{formError}</p>
+              </div>
+            )}
+            <div
+              className={`${styles.submit} ${formError ? styles.error : ""}`}
+            >
+              <Button
+                buttonText="Save changes"
+                type="submit"
+                variant="primary"
+                isSubmitting={isFetching}
+              />
+              <ButtonLink
+                linkDirection="."
+                linkText="Go Back"
+                variant="secondary"
+                goBack={true}
+              />
             </div>
-          )}
-          <div className={`${styles.submit} ${formError ? styles.error : ""}`}>
-            <Button
-              buttonText="Save changes"
-              type="submit"
-              variant="primary"
-              isSubmitting={isFetching}
-            />
-            <ButtonLink
-              linkDirection="."
-              linkText="Go Back"
-              variant="secondary"
-              goBack={true}
-            />
           </div>
-        </div>
-      </form>
+        </form>
+      </Panel>
     </main>
   );
 }

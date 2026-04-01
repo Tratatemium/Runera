@@ -32,11 +32,17 @@ function useRuns(): UseRunsReturn {
   const [loading, setLoading] = useState<LoadingState>("idle");
   const [loadingRunId, setLoadingRunId] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | undefined>(undefined);
-  const { hydrateRunsState, postNewRunState, updateRunState, deleteRunState } =
-    useRunsContext();
+  const {
+    setIsHydratingRuns,
+    hydrateRunsState,
+    postNewRunState,
+    updateRunState,
+    deleteRunState,
+  } = useRunsContext();
 
   const getMyRuns = useCallback(async () => {
     setLoading("fetchingRuns");
+    setIsHydratingRuns(true);
     try {
       const response = await apiGetMyRuns();
       hydrateRunsState(normalizeMyRuns(response));
@@ -44,8 +50,9 @@ function useRuns(): UseRunsReturn {
       console.error(err);
     } finally {
       setLoading("idle");
+      setIsHydratingRuns(false);
     }
-  }, [hydrateRunsState]);
+  }, [hydrateRunsState, setIsHydratingRuns]);
 
   const postNewRun = useCallback(
     async (payload: RunData) => {
@@ -99,7 +106,15 @@ function useRuns(): UseRunsReturn {
     [deleteRunState],
   );
 
-  return { loading, loadingRunId, formError, getMyRuns, postNewRun, updateRun, deleteRun };
+  return {
+    loading,
+    loadingRunId,
+    formError,
+    getMyRuns,
+    postNewRun,
+    updateRun,
+    deleteRun,
+  };
 }
 
 export { useRuns };

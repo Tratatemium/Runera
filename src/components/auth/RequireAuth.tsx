@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-import { useEffect, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
+import { useRuns } from "../../hooks/useRuns";
 import { useUser } from "../../hooks/useUser";
 
 import { mapUserResponseToState } from "../../utils/user.utils";
@@ -12,6 +13,7 @@ function RequireAuth() {
   const { user, loginUser } = useAuthContext();
   const location = useLocation();
   const { getMe } = useUser();
+  const { getMyRuns } = useRuns();
 
   const [checking, setChecking] = useState(!user);
 
@@ -24,7 +26,8 @@ function RequireAuth() {
         const userData = await getMe({ suppressUnauthorized: true });
         if (!mounted) return;
         loginUser(mapUserResponseToState(userData));
-      } catch (err) {
+        await getMyRuns();
+      } catch {
         // Expected: user not authenticated, nothing to do
       } finally {
         if (mounted) setChecking(false);
@@ -36,7 +39,7 @@ function RequireAuth() {
     return () => {
       mounted = false;
     };
-  }, [user, getMe, loginUser]);
+  }, [user, getMe, loginUser, getMyRuns]);
 
   if (checking) {
     return <Loading />;

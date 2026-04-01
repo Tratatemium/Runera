@@ -2,7 +2,6 @@ import type { RunData } from "../../types/runs.types";
 
 import styles from "./MyRuns.module.css";
 import { icons } from "../../components/icons/icons";
-import bg from "../../assets/bg1.png";
 
 import { useRuns } from "../../hooks/useRuns";
 import { useRunsContext } from "../../context/RunsContext";
@@ -14,19 +13,18 @@ import { RunItem } from "../../components/runs/RunItem";
 const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 
 function MyRuns() {
-  const { runs } = useRunsContext();
-  const { loading, loadingRunId, getMyRuns, postNewRun, deleteRun } = useRuns();
+  const { runs, isHydaratingRuns } = useRunsContext();
+  const { loading, loadingRunId, postNewRun, deleteRun } = useRuns();
   const [enteringRunIds, setEnteringRunIds] = useState<Record<string, true>>(
     {},
   );
   const prevRunIdsRef = useRef<Set<string>>(new Set());
   const hasInitializedRef = useRef(false);
 
-  useEffect(() => {
-    getMyRuns();
-  }, [getMyRuns]);
-
-  const runsArray = useMemo(() => Object.values(runs), [runs]);
+  const runsArray = useMemo(() => {
+    if (!runs) return [];
+    return Object.values(runs);
+  }, [runs]);
 
   useEffect(() => {
     const currentRunIds = new Set(runsArray.map((run) => run.runId));
@@ -80,8 +78,8 @@ function MyRuns() {
   //     updateRun(runId, payload);
   //   }
 
-  return loading !== "fetchingRuns" ? (
-    <main className={styles.main} style={{ backgroundImage: `url(${bg})` }}>
+  return !isHydaratingRuns ? (
+    <main className={styles.main}>
       <div className={styles.runsWrapper}>
         {runsArray.map((run) => (
           <RunItem

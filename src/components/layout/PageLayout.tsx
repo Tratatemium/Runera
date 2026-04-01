@@ -7,7 +7,7 @@ function PageLayout() {
   return (
     <div className={styles.layout}>
       <Header />
-      <div className={styles.contentWrapper}>
+      <div className={styles.contentWrapper} >
         <Outlet />
       </div>
       <Footer />
