@@ -7,13 +7,10 @@ import { Button, ButtonLink, FormField, Panel } from "../../components/ui/";
 import { useFormState } from "../../hooks/form/useFormState";
 import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 import { useRuns } from "../../hooks/useRuns";
-import { Run, RunData } from "../../types/runs.types";
-import { FormData } from "../../types/forms.types";
 import { useParams } from "react-router-dom";
-import { use, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRunsContext } from "../../context/RunsContext";
-import { getRunData } from "../../utils/runs.utils";
-import { normalizeFormValue } from "../../utils/normalize.utils";
+import { getRunData, prepareRunStateValues } from "../../utils/runs.utils";
 
 const durationFields = [
   inputFields.durationH,
@@ -61,11 +58,10 @@ function RunFormPage() {
 
   const isEdit = !!runId;
 
-  const [run, setRun] = useState<Run | undefined>(undefined);
-
   useEffect(() => {
     if (!runId || !runs) return;
-    setRun(runs[runId]);
+    const values = prepareRunStateValues(runs[runId]);
+    formStateHook.resetWithValues(values);
   }, [runId, runs]);
 
   /* ────────────────────────────── */
@@ -78,13 +74,6 @@ function RunFormPage() {
 
   const formStateHook = useFormState(runFields);
 
-  useEffect(() => {
-    if (!run) return;
-    const values = Object.fromEntries(
-      Object.entries(run).map(([k, v]) => [k, normalizeFormValue(v)]),
-    );
-    formStateHook.resetWithValues(values);
-  }, [run]);
   const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     runFields,
@@ -101,11 +90,6 @@ function RunFormPage() {
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     handleSubmit(e, submitRun);
   }
-
-  // useEffect(() =>{
-  //   console.log(run)
-  //   console.log(formState)
-  // }, [formState])
 
   return (
     <main className={styles.main}>
@@ -164,6 +148,7 @@ function RunFormPage() {
                 key={field.id}
                 {...field}
                 value={field.value as string}
+                checked={formState["weather"].value === field.value}
                 {...inputHandlers}
               />
             ))}

@@ -8,7 +8,12 @@ import type {
   RunData,
 } from "../types/runs.types";
 
-import { formatSeconds, normalizeDate, normalizeTime } from "./normalize.utils";
+import {
+  formatSeconds,
+  normalizeDate,
+  normalizeFormValue,
+  normalizeTime,
+} from "./normalize.utils";
 
 function normalizeRun(run: RunApi): Run {
   const { createdAt: _, updatedAt: __, ...rest } = run;
@@ -48,4 +53,22 @@ function getRunData(data: FormData): RunData {
   } as RunData;
 }
 
-export { normalizeMyRuns, normalizeRunData, getRunData };
+function splitDuration(durationSec: number) {
+  const durationH = Math.floor(durationSec / 3600);
+  const durationM = Math.floor((durationSec % 3600) / 60);
+  const durationS = durationSec % 60;
+
+  return { durationH, durationM, durationS };
+}
+
+function prepareRunStateValues(run: Run) {
+  const updated = {
+    ...run,
+    ...splitDuration(run.durationSec),
+  };
+  return Object.fromEntries(
+    Object.entries(updated).map(([k, v]) => [k, normalizeFormValue(v)]),
+  );
+}
+
+export { normalizeMyRuns, normalizeRunData, getRunData, prepareRunStateValues };

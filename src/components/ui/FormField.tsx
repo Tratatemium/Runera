@@ -11,6 +11,7 @@ interface FormFieldProps {
   min?: number;
   max?: number;
   step?: number;
+  checked?: boolean;
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -28,6 +29,7 @@ function FormField({
   min,
   max,
   step,
+  checked,
   placeholder,
   value,
   onChange,
@@ -61,6 +63,7 @@ function FormField({
             min={min}
             max={max}
             step={step}
+            checked={checked}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
