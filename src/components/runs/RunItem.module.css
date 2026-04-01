@@ -68,7 +68,6 @@
 }
 
 .runWrapper:hover {
-  transform: translateY(-2px);
   border-color: color-mix(
     in srgb,
     var(--accent-color-2) 45%,
