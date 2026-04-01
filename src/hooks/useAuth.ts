@@ -52,7 +52,7 @@ function useAuth(): UseAuthReturn {
       await apiLogin(payload);
       const userData = await getMe();
       loginUser(mapUserResponseToState(userData));
-      void getMyRuns();
+      await getMyRuns();
       navigate("/user/dashboard");
     } catch (err) {
       handleApiFormError(err, setFormError);
