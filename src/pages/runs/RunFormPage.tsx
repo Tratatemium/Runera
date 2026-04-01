@@ -47,10 +47,15 @@ function RunFormPage() {
 
   const { loading, formError, postNewRun, updateRun } = useRuns();
 
+  function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log(formState);
+  }
+
   return (
     <main className={styles.main}>
       <Panel variant="frosted">
-        <form className={styles.form} onSubmit={() => {}} noValidate>
+        <form className={styles.form} onSubmit={onSubmit} noValidate>
           <FormField
             {...fieldOptionsMap.title}
             value={formState[fieldOptionsMap.title.id].value}

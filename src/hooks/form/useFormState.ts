@@ -11,18 +11,13 @@ import { useReducer } from "react";
 /* initial state creator          */
 /* ────────────────────────────── */
 
-// function createFieldState(field: InputFieldConfig, user: UserState | null) {
-//   const value = user ? getUserValue(user, field.id as UserKey) : undefined;
-//   return [field.id, { value: normalizeUserValue(value), error: undefined }];
-// }
-
 function createFieldState(
   field: InputFieldConfig,
   initialValues?: Record<string, unknown>,
 ) {
-  const value = initialValues?.[field.id];
+  const value = initialValues?.[field.name];
   return [
-    field.id,
+    field.name,
     {
       value: value ?? "",
       error: undefined,

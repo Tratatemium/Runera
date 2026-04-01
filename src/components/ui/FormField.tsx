@@ -5,7 +5,7 @@ import { icons } from "../icons/icons";
 interface FormFieldProps {
   id: string;
   label: string;
-  name?: string;
+  name: string;
   layout?: "column" | "row";
   type?: string;
   min?: number;
@@ -56,7 +56,7 @@ function FormField({
             aria-invalid={!!inputError}
             aria-describedby={inputError ? `${id}-error` : undefined}
             id={id}
-            name={name ? name : id}
+            name={name}
             type={inputType}
             min={min}
             max={max}

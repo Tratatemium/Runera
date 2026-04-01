@@ -11,6 +11,7 @@ import {
 const inputFields: Record<string, InputFieldConfig> = {
   username: {
     id: "username",
+    name: "username",
     label: "Username",
     type: "text",
     placeholder: "Your username",
@@ -19,6 +20,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   email: {
     id: "email",
+    name: "email",
     label: "Email",
     type: "email",
     placeholder: "your@email.com",
@@ -27,6 +29,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   password: {
     id: "password",
+    name: "password",
     label: "Password",
     type: "password",
     placeholder: "Your password",
@@ -35,6 +38,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   confirmPassword: {
     id: "confirmPassword",
+    name: "confirmPassword",
     label: "Confirm password",
     type: "password",
     placeholder: "Re-enter password",
@@ -43,6 +47,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   login: {
     id: "login",
+    name: "login",
     label: "Login",
     type: "text",
     placeholder: "Your username or email",
@@ -51,6 +56,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   firstName: {
     id: "firstName",
+    name: "firstName",
     label: "First Name",
     type: "text",
     placeholder: "Your first name",
@@ -59,6 +65,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   lastName: {
     id: "lastName",
+    name: "lastName",
     label: "Last Name",
     type: "text",
     placeholder: "Your last name",
@@ -67,12 +74,14 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   dateOfBirth: {
     id: "dateOfBirth",
+    name: "dateOfBirth",
     label: "Date of birth",
     type: "date",
     normalizator: normalizeString,
   },
   heightCm: {
     id: "heightCm",
+    name: "heightCm",
     label: "Height, cm",
     type: "number",
     min: 1,
@@ -82,6 +91,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   weightKg: {
     id: "weightKg",
+    name: "weightKg",
     label: "Weight, kg",
     type: "number",
     min: 1,
@@ -91,12 +101,14 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   startTime: {
     id: "startTime",
+    name: "startTime",
     label: "Run start date and time *",
     type: "datetime-local",
     normalizator: normalizeString,
   },
   durationH: {
     id: "durationH",
+    name: "durationH",
     label: "Hours",
     type: "number",
     min: 1,
@@ -106,6 +118,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   durationM: {
     id: "durationM",
+    name: "durationM",
     label: "Minutes",
     type: "number",
     min: 1,
@@ -115,6 +128,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   durationS: {
     id: "durationS",
+    name: "durationS",
     label: "Seconds",
     type: "number",
     min: 1,
@@ -124,6 +138,7 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   distanceKm: {
     id: "distanceKm",
+    name: "distanceKm",
     label: "Distance (km) *",
     type: "number",
     min: 0.01,
@@ -133,18 +148,21 @@ const inputFields: Record<string, InputFieldConfig> = {
   },
   title: {
     id: "title",
+    name: "title",
     label: "Run title",
     type: "text",
     normalizator: normalizeString,
   },
   notes: {
     id: "notes",
+    name: "notes",
     label: "Notes",
     type: "text",
     normalizator: normalizeString,
   },
   perceivedEffort: {
     id: "perceivedEffort",
+    name: "perceivedEffort",
     label: "Effort Level:",
     type: "range",
     min: 1,

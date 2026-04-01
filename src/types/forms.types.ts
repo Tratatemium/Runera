@@ -1,7 +1,7 @@
 interface InputFieldConfig {
   id: string;
   label: string;
-  name?: string;
+  name: string;
   value?: string | number;
   type?:
     | "text"

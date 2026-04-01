@@ -45,14 +45,8 @@ function EditAccount() {
           {userFields.map((field) => (
             <FormField
               key={field.id}
-              id={field.id}
-              label={field.label}
+              {...field}
               layout="row"
-              type={field.type}
-              min={field.min}
-              max={field.max}
-              step={field.step}
-              placeholder={field.placeholder}
               value={formState[field.id].value}
               inputError={formState[field.id].error}
               {...inputHandlers}

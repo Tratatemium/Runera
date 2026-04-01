@@ -63,13 +63,7 @@ function Login() {
         {loginFields.map((field) => (
           <FormField
             key={field.id}
-            id={field.id}
-            label={field.label}
-            type={field.type}
-            min={field.min}
-            max={field.max}
-            step={field.step}
-            placeholder={field.placeholder}
+            {...field}
             value={formState[field.id].value}
             inputError={formState[field.id].error}
             {...inputHandlers}

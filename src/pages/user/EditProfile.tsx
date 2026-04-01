@@ -50,15 +50,9 @@ function EditProfile() {
         <form className={styles.form} onSubmit={onSubmit} noValidate>
           {userFields.map((field) => (
             <FormField
+              {...field}
               key={field.id}
-              id={field.id}
-              label={field.label}
               layout="row"
-              type={field.type}
-              min={field.min}
-              max={field.max}
-              step={field.step}
-              placeholder={field.placeholder}
               value={formState[field.id].value}
               inputError={formState[field.id].error}
               {...inputHandlers}
