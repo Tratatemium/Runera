@@ -29,21 +29,17 @@ type UserAccountKey = (typeof accountKeys)[number];
 type UserProfileKey = (typeof profileKeys)[number];
 type UserKey = UserAccountKey | UserProfileKey;
 
-function isAccountKey(key: UserKey): key is UserAccountKey {
-  return accountKeys.includes(key as UserAccountKey);
+function normalizeUserValue(value: string | number | undefined): string {
+  return value == null ? "" : String(value);
 }
 
-function isProfileKey(key: UserKey): key is UserProfileKey {
-  return profileKeys.includes(key as UserProfileKey);
-}
+function getUserData(user: UserState | null) {
+  if (!user) return undefined;
 
-function getUserValue(user: UserState, key: UserKey) {
-  if (isAccountKey(key)) {
-    return user.account[key];
-  }
-  if (isProfileKey(key)) {
-    return user.profile[key];
-  }
+  return {
+    ...user.account,
+    ...user.profile,
+  };
 }
 
 function normalizeProfile(profile: UserState["profile"]): UserState["profile"] {
@@ -73,7 +69,7 @@ function normalizeUserResponse(data: UserApiResponse): UserApiResponse {
 export type { UserKey };
 export {
   mapUserResponseToState,
-  getUserValue,
+  getUserData,
   normalizeProfile,
   normalizeUserResponse,
 };

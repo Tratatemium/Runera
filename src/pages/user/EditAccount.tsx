@@ -6,6 +6,7 @@ import { useFormState } from "../../hooks/form/useFormState";
 import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 
 import { inputFields } from "../../config/inputFields";
+import { getUserData } from "../../utils/user.utils";
 
 import { Button, ButtonLink, FormField, Panel } from "../../components/ui/";
 
@@ -24,7 +25,7 @@ function EditAccount() {
   // };
 
   const { user } = useAuthContext();
-  const formStateHook = useFormState(userFields, user);
+  const formStateHook = useFormState(userFields, getUserData(user));
   const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     userFields,

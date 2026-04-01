@@ -4,27 +4,37 @@ import type {
   FormAction,
   UseFormStateReturn,
 } from "../../types/forms.types";
-import type { UserState } from "../../types/users.types";
-import type { UserKey } from "../../utils/user.utils";
 
-import { getUserValue } from "../../utils/user.utils";
-import { normalizeUserValue } from "../../utils/form.utils";
 import { useReducer } from "react";
 
 /* ────────────────────────────── */
 /* initial state creator          */
 /* ────────────────────────────── */
 
-function createFieldState(field: InputFieldConfig, user: UserState | null) {
-  const value = user ? getUserValue(user, field.id as UserKey) : undefined;
-  return [field.id, { value: normalizeUserValue(value), error: undefined }];
+// function createFieldState(field: InputFieldConfig, user: UserState | null) {
+//   const value = user ? getUserValue(user, field.id as UserKey) : undefined;
+//   return [field.id, { value: normalizeUserValue(value), error: undefined }];
+// }
+
+function createFieldState(
+  field: InputFieldConfig,
+  initialValues?: Record<string, unknown>,
+) {
+  const value = initialValues?.[field.id];
+  return [
+    field.id,
+    {
+      value: value ?? "",
+      error: undefined,
+    },
+  ];
 }
 
 function createInitialState<T extends FormStateValue>(
   fields: readonly InputFieldConfig[],
-  user: UserState | null,
+  initialValues?: Record<string, unknown>,
 ): T {
-  const entries = fields.map((field) => createFieldState(field, user));
+  const entries = fields.map((field) => createFieldState(field, initialValues));
   return Object.fromEntries(entries) as T;
 }
 
@@ -81,11 +91,11 @@ function formReducer(
 
 function useFormState(
   fields: readonly InputFieldConfig[],
-  user: UserState | null,
+  initialValues?: Record<string, unknown>,
 ): UseFormStateReturn {
   const [state, dispatch] = useReducer(
     formReducer,
-    createInitialState(fields, user),
+    createInitialState(fields, initialValues),
   );
 
   const setValue = (key: string, value: string) =>
@@ -95,7 +105,10 @@ function useFormState(
   const mergeErrors = (errors: Record<string, string | undefined>) =>
     dispatch({ type: "mergeErrors", errors });
   const resetFormState = () =>
-    dispatch({ type: "reset", state: createInitialState(fields, user) });
+    dispatch({
+      type: "reset",
+      state: createInitialState(fields, initialValues),
+    });
   const clearErrors = () => dispatch({ type: "clearErrors" });
 
   return {
