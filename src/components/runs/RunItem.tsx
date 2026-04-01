@@ -7,6 +7,7 @@ import { icons } from "../icons/icons";
 
 import { getWeatherIcon } from "../../utils/icons.utils";
 import { useDialogContext } from "../../context/DialogContext";
+import { Link } from "react-router-dom";
 
 const {
   spinner: SpinnerIcon,
@@ -137,11 +138,9 @@ function RunItem({
             <DeleteIcon aria-hidden="true" focusable="false" />
           )}
         </button>
-        <button
+        <Link
+          to={`${run.runId}/edit`}
           className={styles.actionButton}
-          type="button"
-          onClick={() => {}}
-          disabled={disableActions}
           aria-label={`Edit ${run.distanceKm} kilometer run from ${run.date}`}
           title="Edit run"
         >
@@ -150,7 +149,7 @@ function RunItem({
           ) : (
             <EditIcon aria-hidden="true" focusable="false" />
           )}
-        </button>
+        </Link>
       </div>
     </article>
   );
