@@ -9,13 +9,13 @@ import { useRuns } from "../../hooks/useRuns";
 import { RunData } from "../../types/runs.types";
 import { FormData, FormStateValue } from "../../types/forms.types";
 
-const runFields = [
-  inputFields.title,
-  inputFields.distanceKm,
+const durationFields = [
   inputFields.durationH,
   inputFields.durationM,
   inputFields.durationS,
-  inputFields.startTime,
+];
+
+const weatherFields = [
   inputFields.weatherSunny,
   inputFields.weatherPartlyCloudy,
   inputFields.weatherCloudy,
@@ -24,6 +24,14 @@ const runFields = [
   inputFields.weatherWindy,
   inputFields.weatherHot,
   inputFields.weatherCold,
+];
+
+const runFields = [
+  inputFields.title,
+  inputFields.distanceKm,
+  ...durationFields,
+  inputFields.startTime,
+  ...weatherFields,
   inputFields.perceivedEffort,
   inputFields.notes,
 ] as const;
@@ -93,21 +101,14 @@ function RunFormPage() {
 
           <div className={styles.durationWrapper}>
             <span className={styles.durationLabel}>Duration *</span>
-            <FormField
-              {...fieldOptionsMap.durationH}
-              value={formState[fieldOptionsMap.durationH.id].value}
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.durationM}
-              value={formState[fieldOptionsMap.durationM.id].value}
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.durationS}
-              value={formState[fieldOptionsMap.durationS.id].value}
-              {...inputHandlers}
-            />
+            {durationFields.map((field) => (
+              <FormField
+                key={field.id}
+                {...field}
+                value={formState[field.name].value}
+                {...inputHandlers}
+              />
+            ))}
           </div>
 
           <div className={styles.averagePace}>Pace</div>
@@ -120,46 +121,14 @@ function RunFormPage() {
           />
 
           <div className={styles.weatherWrapper}>
-            <FormField
-              {...fieldOptionsMap.weatherSunny}
-              value="sunny"
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.weatherPartlyCloudy}
-              value="partly_cloudy"
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.weatherCloudy}
-              value="cloudy"
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.weatherRain}
-              value="rain"
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.weatherSnow}
-              value="snow"
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.weatherWindy}
-              value="windy"
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.weatherHot}
-              value="hot"
-              {...inputHandlers}
-            />
-            <FormField
-              {...fieldOptionsMap.weatherCold}
-              value="cold"
-              {...inputHandlers}
-            />
+            {weatherFields.map((field) => (
+              <FormField
+                key={field.id}
+                {...field}
+                value={field.value as string}
+                {...inputHandlers}
+              />
+            ))}
           </div>
 
           <FormField
