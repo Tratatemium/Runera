@@ -24,20 +24,26 @@ function useFormHandlers(
     [fields],
   );
 
-  function onChange(e: React.ChangeEvent<HTMLInputElement>): void {
+  function onChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
     const { name, value } = e.currentTarget;
     setValue(name, value);
   }
 
-  function onFocus(e: React.FocusEvent<HTMLInputElement>): void {
+  function onFocus(
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
     setError(e.currentTarget.name, undefined);
   }
 
-  function onBlur(e: React.FocusEvent<HTMLInputElement>): void {
+  function onBlur(
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
     const input = e.currentTarget;
     const name = input.name;
     const value =
-      input.type === "number"
+      input instanceof HTMLInputElement && input.type === "number"
         ? clampNumber(input.value, input.min, input.max)
         : input.value;
 

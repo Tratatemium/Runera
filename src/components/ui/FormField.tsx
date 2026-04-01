@@ -1,7 +1,9 @@
 import styles from "./FormField.module.css";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useState, useRef } from "react";
 import { icons } from "../icons/icons";
+
+type FormFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
 interface FormFieldProps {
   id: string;
@@ -15,9 +17,9 @@ interface FormFieldProps {
   checked?: boolean;
   placeholder?: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<FormFieldElement>) => void;
+  onFocus?: (e: React.FocusEvent<FormFieldElement>) => void;
+  onBlur?: (e: React.FocusEvent<FormFieldElement>) => void;
   inputError?: string;
 }
 
@@ -43,9 +45,24 @@ function FormField({
 
   const isPassword = type === "password";
   const isChoice = type === "radio" || type === "checkbox";
+  const isRange = type === "range";
+  const isTextArea = type === "textarea";
   const inputType = isPassword && showPassword ? "text" : type;
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const minValue = min ?? 0;
+  const maxValue = max ?? 100;
+  const numericValue = Number(value);
+  const clampedValue = Number.isFinite(numericValue)
+    ? Math.min(Math.max(numericValue, minValue), maxValue)
+    : minValue;
+  const rangeProgress =
+    maxValue > minValue
+      ? ((clampedValue - minValue) / (maxValue - minValue)) * 100
+      : 0;
+  const inputStyle = isRange
+    ? ({ "--range-progress": `${rangeProgress}%` } as CSSProperties)
+    : undefined;
 
   return (
     <div
@@ -81,24 +98,41 @@ function FormField({
               {label}
             </label>
             <div className={styles.inputWrapper}>
-              <input
-                ref={inputRef}
-                className={styles.formInput}
-                aria-invalid={!!inputError}
-                aria-describedby={inputError ? `${id}-error` : undefined}
-                id={id}
-                name={name}
-                type={inputType}
-                min={min}
-                max={max}
-                step={step}
-                checked={checked}
-                placeholder={placeholder}
-                value={value}
-                onChange={onChange}
-                onFocus={onFocus}
-                onBlur={onBlur}
-              />
+              {isTextArea ? (
+                <textarea
+                  className={`${styles.formInput} ${styles.textAreaInput}`}
+                  aria-invalid={!!inputError}
+                  aria-describedby={inputError ? `${id}-error` : undefined}
+                  id={id}
+                  name={name}
+                  placeholder={placeholder}
+                  rows={5}
+                  value={value}
+                  onChange={onChange}
+                  onFocus={onFocus}
+                  onBlur={onBlur}
+                />
+              ) : (
+                <input
+                  ref={inputRef}
+                  className={styles.formInput}
+                  style={inputStyle}
+                  aria-invalid={!!inputError}
+                  aria-describedby={inputError ? `${id}-error` : undefined}
+                  id={id}
+                  name={name}
+                  type={inputType}
+                  min={min}
+                  max={max}
+                  step={step}
+                  checked={checked}
+                  placeholder={placeholder}
+                  value={value}
+                  onChange={onChange}
+                  onFocus={onFocus}
+                  onBlur={onBlur}
+                />
+              )}
               {isPassword && (
                 <button
                   type="button"

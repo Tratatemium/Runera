@@ -64,10 +64,11 @@
 
 .weatherWrapper {
   display: flex;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 0.7rem;
+  gap: 1em;
+  margin: 1em 0 1.5em;
 }
 
 .weatherWrapper > * {

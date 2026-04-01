@@ -11,6 +11,7 @@ interface InputFieldConfig {
     | "number"
     | "datetime-local"
     | "range"
+    | "textarea"
     | "radio";
   min?: number;
   max?: number;
@@ -61,9 +62,11 @@ type FormData = Record<string, NormalizedFormValue>;
 
 interface UseUserFormHandlersReturn {
   inputHandlers: {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-    onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onChange: (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
+    onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   };
   handleSubmit: <T>(
     e: React.SubmitEvent<HTMLFormElement>,
@@ -73,9 +76,11 @@ interface UseUserFormHandlersReturn {
 
 interface UseFormHandlersReturn {
   inputHandlers: {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-    onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onChange: (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
+    onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   };
   handleSubmit: <T>(
     e: React.SubmitEvent<HTMLFormElement>,

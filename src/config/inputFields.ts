@@ -170,7 +170,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     id: "notes",
     name: "notes",
     label: "Notes",
-    type: "text",
+    type: "textarea",
     placeholder: "How did it feel?",
     normalizator: normalizeString,
   },
