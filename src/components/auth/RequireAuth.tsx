@@ -26,7 +26,7 @@ function RequireAuth() {
         const userData = await getMe({ suppressUnauthorized: true });
         if (!mounted) return;
         loginUser(mapUserResponseToState(userData));
-        await getMyRuns();
+        void getMyRuns();
       } catch {
         // Expected: user not authenticated, nothing to do
       } finally {
