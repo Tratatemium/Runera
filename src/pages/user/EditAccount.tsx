@@ -67,6 +67,8 @@ function EditAccount() {
                 type="submit"
                 variant="primary"
                 isSubmitting={isSubmitting}
+                disabled= {true}
+                title="Not implemented yet"
               />
               <ButtonLink
                 linkDirection="."
