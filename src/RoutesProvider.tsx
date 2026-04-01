@@ -6,7 +6,7 @@ import { RequireAuth } from "./components/auth";
 import { NotFound, Home, Login, Signup } from "./pages/";
 
 import { Dashboard, UserInfo, EditAccount, EditProfile } from "./pages/user/";
-import { MyRuns } from "./pages/runs";
+import { MyRuns, RunFormPage } from "./pages/runs";
 
 function RoutesProvider() {
   return (
@@ -22,6 +22,8 @@ function RoutesProvider() {
             <Route path="edit-account" element={<EditAccount />} />
             <Route path="edit-profile" element={<EditProfile />} />
             <Route path="runs" element={<MyRuns />} />
+            <Route path="new-run" element={<RunFormPage />} />
+            <Route path="edit-run" element={<RunFormPage />} />
           </Route>
         </Route>
       </Route>
