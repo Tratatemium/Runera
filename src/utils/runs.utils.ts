@@ -76,6 +76,9 @@ function calculatePace(formState: FormStateValue) {
     Number(formState.durationM.value) * 60 +
     Number(formState.durationS.value);
   const pace = durationSec / Number(formState.distanceKm.value);
+  if (!Number.isFinite(pace) || Number.isNaN(pace)) {
+    return "";
+  }
   return formatSeconds(pace);
 }
 
