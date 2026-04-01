@@ -7,7 +7,7 @@ interface FormFieldProps {
   id: string;
   label: ReactNode;
   name: string;
-  layout?: "column" | "row";
+  layout?: "column" | "row" | "columnReverse";
   type?: string;
   min?: number;
   max?: number;

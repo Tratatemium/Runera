@@ -137,7 +137,7 @@ function RunFormPage() {
           <div className={styles.durationWrapper}>
             {durationFields.map((field) => (
               <FormField
-                key={field.id}
+                layout="columnReverse"
                 {...field}
                 value={formState[field.name].value}
                 {...inputHandlers}

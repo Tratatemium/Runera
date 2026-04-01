@@ -97,6 +97,7 @@
 
 .averagePace {
   color: color-mix(in srgb, var(--accent-mix-2) 90%, white);
+  margin: 0.3em auto 1.5em 1em;
   font-size: 1.4em;
 }
 

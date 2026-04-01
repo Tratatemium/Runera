@@ -25,6 +25,12 @@
   align-items: start;
 }
 
+.formWrapper.columnReverse {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
 .formWrapper.row {
   display: grid;
   grid-template-columns: var(--form-label-width) minmax(0, 20rem);
@@ -49,6 +55,14 @@
 
 .formWrapper.column .formLabel {
   margin-left: 1em;
+  width: fit-content;
+}
+
+.formWrapper.columnReverse .formLabel {
+  margin: auto;
+  width: fit-content;
+  font-weight: var(--font-weight-regular);
+  font-size: 0.8em;
 }
 
 .formWrapper.column .choiceLabel {
