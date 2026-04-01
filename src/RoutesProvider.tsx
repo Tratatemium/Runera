@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import { PageLayout, UserPagesLauout } from "./components/layout/";
+import { PageLayout, UserPagesLayout } from "./components/layout/";
 import { RequireAuth } from "./components/auth";
 
 import { NotFound, Home, Login, Signup } from "./pages/";
@@ -21,7 +21,7 @@ function RoutesProvider() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/user" element={<RequireAuth />}>
-          <Route element={<UserPagesLauout />}>
+          <Route element={<UserPagesLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="edit-account" element={<EditAccount />} />
