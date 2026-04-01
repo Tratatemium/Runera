@@ -13,7 +13,7 @@ import { RunItem } from "../../components/runs/RunItem";
 const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 
 function MyRuns() {
-  const { runs } = useRunsContext();
+  const { runs, isHydaratingRuns } = useRunsContext();
   const { loading, loadingRunId, postNewRun, deleteRun } = useRuns();
   const [enteringRunIds, setEnteringRunIds] = useState<Record<string, true>>(
     {},
@@ -78,7 +78,7 @@ function MyRuns() {
   //     updateRun(runId, payload);
   //   }
 
-  return loading !== "fetchingRuns" ? (
+  return !isHydaratingRuns ? (
     <main className={styles.main}>
       <div className={styles.runsWrapper}>
         {runsArray.map((run) => (
