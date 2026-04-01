@@ -61,6 +61,18 @@ function validateName(value: string, _formState: FormStateValue) {
   );
 }
 
+function validateDistance(value: string, _formState: FormStateValue) {
+  return (
+    checkEmpty(value, "Distance") 
+  );
+}
+
+function validateStartTime(value: string, _formState: FormStateValue) {
+  return (
+    checkEmpty(value, "Start time") 
+  );
+}
+
 export {
   validateUsername,
   validateEmail,
@@ -68,4 +80,6 @@ export {
   validateConfirmPassword,
   validateLogin,
   validateName,
+  validateDistance,
+  validateStartTime,
 };

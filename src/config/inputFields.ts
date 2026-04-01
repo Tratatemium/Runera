@@ -6,6 +6,7 @@ import {
   normalizeNumber,
   normalizeEmail,
   normalizeLogin,
+  normalizeLocalTime,
 } from "../utils/normalize.utils";
 
 const inputFields: Record<string, InputFieldConfig> = {
@@ -104,7 +105,8 @@ const inputFields: Record<string, InputFieldConfig> = {
     name: "startTime",
     label: "Run start date and time *",
     type: "datetime-local",
-    normalizator: normalizeString,
+    validator: validators.validateStartTime,
+    normalizator: normalizeLocalTime,
   },
   durationH: {
     id: "durationH",
@@ -144,6 +146,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     min: 0.01,
     max: 999,
     step: 1,
+    validator: validators.validateDistance,
     normalizator: normalizeNumber,
   },
   title: {

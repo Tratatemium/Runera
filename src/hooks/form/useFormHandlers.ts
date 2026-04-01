@@ -20,7 +20,7 @@ function useFormHandlers(
   }: UseFormStateReturn,
 ): UseFormHandlersReturn {
   const fieldMap = useMemo(
-    () => Object.fromEntries(fields.map((field) => [field.id, field])),
+    () => Object.fromEntries(fields.map((field) => [field.name, field])),
     [fields],
   );
 

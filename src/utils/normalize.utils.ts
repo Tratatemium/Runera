@@ -71,6 +71,11 @@ function normalizeLogin(value: string, _field: InputFieldConfig): string {
   return value.includes("@") ? value.trim().toLowerCase() : value.trim();
 }
 
+function normalizeLocalTime(value: string, _field: InputFieldConfig): string {
+  const date = new Date(value.trim());
+  return date.toISOString();
+}
+
 export {
   normalizeFormValue,
   clampNumber,
@@ -81,4 +86,5 @@ export {
   normalizeNumber,
   normalizeEmail,
   normalizeLogin,
+  normalizeLocalTime,
 };
