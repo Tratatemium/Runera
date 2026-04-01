@@ -99,7 +99,14 @@ function RunFormPage() {
 
   async function submitRun(data: RunForm) {
     const payload = getRunData(data);
-    isEdit ? updateRun(runId, payload) : postNewRun(payload);
+
+    if (isEdit) {
+      if (!runId) return;
+      updateRun(runId, payload);
+      return;
+    }
+
+    postNewRun(payload);
   }
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
