@@ -9,6 +9,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Loading } from "../../components/ui/";
 import { RunItem } from "../../components/runs/RunItem";
+import { useNavigate } from "react-router-dom";
 
 const { spinner: SpinnerIcon, plus: PlusIcon } = icons;
 
@@ -54,18 +55,9 @@ function MyRuns() {
 
     prevRunIdsRef.current = currentRunIds;
   }, [runsArray]);
-
+  const navigate = useNavigate()
   function handleNewRun() {
-    const payload: RunData = {
-      startTime: "2026-03-29T19:42:31.123Z",
-      durationSec: 61,
-      distanceMeters: 378,
-      title: "Morning run",
-      notes: "Nice run overall.",
-      perceivedEffort: 5,
-      weather: "sunny",
-    };
-    postNewRun(payload);
+    navigate("/user/new-run")
   }
 
   //   function handleUpdate() {

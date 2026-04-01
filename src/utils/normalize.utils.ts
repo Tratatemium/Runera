@@ -76,6 +76,13 @@ function normalizeLocalTime(value: string, _field: InputFieldConfig): string {
   return date.toISOString();
 }
 
+function normalizeWeather(
+  value: string,
+  _field: InputFieldConfig,
+): string | undefined {
+  return value === "" ? undefined : value;
+}
+
 export {
   normalizeFormValue,
   clampNumber,
@@ -87,4 +94,5 @@ export {
   normalizeEmail,
   normalizeLogin,
   normalizeLocalTime,
+  normalizeWeather,
 };

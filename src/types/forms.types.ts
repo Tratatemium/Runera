@@ -20,7 +20,7 @@ interface InputFieldConfig {
   normalizator: (
     value: string,
     field: InputFieldConfig,
-  ) => string | number | null;
+  ) => string | number | null | undefined;
 }
 
 /* ────────────────────────────── */
@@ -55,7 +55,7 @@ interface UseFormStateReturn {
 /* useFormHandlers types          */
 /* ────────────────────────────── */
 
-type NormalizedFormValue = string | number | null;
+type NormalizedFormValue = string | number | null | undefined;
 type FormData = Record<string, NormalizedFormValue>;
 
 interface UseUserFormHandlersReturn {

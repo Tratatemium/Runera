@@ -1,6 +1,8 @@
 import type { RunData } from "../types/runs.types";
 
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRunsContext } from "../context/RunsContext";
 
 import {
   apiGetMyRuns,
@@ -8,7 +10,6 @@ import {
   apiUpdateRun,
   apiDeleteRun,
 } from "../api/runs.api";
-import { useRunsContext } from "../context/RunsContext";
 import { normalizeRunData, normalizeMyRuns } from "../utils/runs.utils";
 
 interface UseRunsReturn {
@@ -39,6 +40,7 @@ function useRuns(): UseRunsReturn {
     updateRunState,
     deleteRunState,
   } = useRunsContext();
+  const navigate = useNavigate();
 
   const getMyRuns = useCallback(async () => {
     setLoading("fetchingRuns");
@@ -61,6 +63,7 @@ function useRuns(): UseRunsReturn {
       try {
         const response = await apiPostNewRun(payload);
         postNewRunState(normalizeRunData(response));
+        navigate("/user/runs");
       } catch (err) {
         console.error(err);
       } finally {

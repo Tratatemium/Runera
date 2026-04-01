@@ -7,6 +7,7 @@ import {
   normalizeEmail,
   normalizeLogin,
   normalizeLocalTime,
+  normalizeWeather,
 } from "../utils/normalize.utils";
 
 const inputFields: Record<string, InputFieldConfig> = {
@@ -179,7 +180,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     value: "sunny",
     label: "Sunny",
     type: "radio",
-    normalizator: normalizeString,
+    normalizator: normalizeWeather,
   },
   weatherPartlyCloudy: {
     id: "weatherPartlyCloudy",
@@ -187,7 +188,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     value: "partly_cloudy",
     label: "Partly cloudy",
     type: "radio",
-    normalizator: normalizeString,
+    normalizator: normalizeWeather,
   },
   weatherCloudy: {
     id: "weatherCloudy",
@@ -195,7 +196,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     value: "cloudy",
     label: "Cloudy",
     type: "radio",
-    normalizator: normalizeString,
+    normalizator: normalizeWeather,
   },
   weatherRain: {
     id: "weatherRain",
@@ -203,7 +204,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     value: "rain",
     label: "Rain",
     type: "radio",
-    normalizator: normalizeString,
+    normalizator: normalizeWeather,
   },
   weatherSnow: {
     id: "weatherSnow",
@@ -211,7 +212,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     value: "snow",
     label: "Snow",
     type: "radio",
-    normalizator: normalizeString,
+    normalizator: normalizeWeather,
   },
   weatherWindy: {
     id: "weatherWindy",
@@ -219,7 +220,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     value: "windy",
     label: "Windy",
     type: "radio",
-    normalizator: normalizeString,
+    normalizator: normalizeWeather,
   },
   weatherHot: {
     id: "weatherHot",
@@ -227,7 +228,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     value: "hot",
     label: "Hot",
     type: "radio",
-    normalizator: normalizeString,
+    normalizator: normalizeWeather,
   },
   weatherCold: {
     id: "weatherCold",
@@ -235,7 +236,7 @@ const inputFields: Record<string, InputFieldConfig> = {
     value: "cold",
     label: "Cold",
     type: "radio",
-    normalizator: normalizeString,
+    normalizator: normalizeWeather,
   },
 };
 
