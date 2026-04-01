@@ -10,7 +10,11 @@ import { useRuns } from "../../hooks/useRuns";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useRunsContext } from "../../context/RunsContext";
-import { calculatePace, getRunData, prepareRunStateValues } from "../../utils/runs.utils";
+import {
+  calculatePace,
+  getRunData,
+  prepareRunStateValues,
+} from "../../utils/runs.utils";
 
 const durationFields = [
   inputFields.durationH,
@@ -69,12 +73,6 @@ function RunFormPage() {
 
   const isEdit = !!runId;
 
-  useEffect(() => {
-    if (!runId || !runs) return;
-    const values = prepareRunStateValues(runs[runId]);
-    formStateHook.resetWithValues(values);
-  }, [runId, runs]);
-
   /* ────────────────────────────── */
   /*  state and hooks               */
   /* ────────────────────────────── */
@@ -84,6 +82,12 @@ function RunFormPage() {
   };
 
   const formStateHook = useFormState(runFields);
+
+  useEffect(() => {
+    if (!runId || !runs) return;
+    const values = prepareRunStateValues(runs[runId]);
+    formStateHook.resetWithValues(values);
+  }, [runId, runs, formStateHook]);
 
   const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
@@ -146,7 +150,9 @@ function RunFormPage() {
             ))}
           </div>
 
-          <p className={styles.averagePace}>{`Pace: ${calculatePace(formState) || "-"} /km`}</p>
+          <p
+            className={styles.averagePace}
+          >{`Pace: ${calculatePace(formState) || "-"} /km`}</p>
 
           <FormField
             {...fieldOptionsMap.startTime}
@@ -168,7 +174,9 @@ function RunFormPage() {
                   label={
                     <span className={styles.weatherOptionLabel}>
                       <WeatherIcon className={styles.weatherIcon} />
-                      <span className={styles.weatherOptionText}>{field.label}</span>
+                      <span className={styles.weatherOptionText}>
+                        {field.label}
+                      </span>
                     </span>
                   }
                   value={value}

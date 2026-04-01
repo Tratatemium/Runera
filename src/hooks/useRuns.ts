@@ -70,7 +70,7 @@ function useRuns(): UseRunsReturn {
         setLoading("idle");
       }
     },
-    [postNewRunState],
+    [postNewRunState, navigate],
   );
 
   const updateRun = useCallback(
@@ -89,7 +89,7 @@ function useRuns(): UseRunsReturn {
         setLoadingRunId(null);
       }
     },
-    [updateRunState],
+    [updateRunState, navigate],
   );
 
   const deleteRun = useCallback(
