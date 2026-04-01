@@ -46,7 +46,6 @@ function useRuns(): UseRunsReturn {
     try {
       const response = await apiGetMyRuns();
       hydrateRunsState(normalizeMyRuns(response));
-      console.log("got runs");
     } catch (err) {
       console.error(err);
     } finally {
