@@ -104,6 +104,11 @@ function useFormState(
       type: "reset",
       state: createInitialState(fields, initialValues),
     });
+  const resetWithValues = (values?: Record<string, unknown>) =>
+    dispatch({
+      type: "reset",
+      state: createInitialState(fields, values),
+    });
   const clearErrors = () => dispatch({ type: "clearErrors" });
 
   return {
@@ -112,6 +117,7 @@ function useFormState(
     setError,
     mergeErrors,
     resetFormState,
+    resetWithValues,
     clearErrors,
   };
 }

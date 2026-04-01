@@ -48,6 +48,7 @@ interface UseFormStateReturn {
   setError: (key: string, error?: string) => void;
   mergeErrors: (errors: Record<string, string | undefined>) => void;
   resetFormState: () => void;
+  resetWithValues: (values?: Record<string, unknown>) => void;
   clearErrors: () => void;
 }
 

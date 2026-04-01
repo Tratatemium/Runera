@@ -10,7 +10,7 @@ import { useRuns } from "../../hooks/useRuns";
 import { Run, RunData } from "../../types/runs.types";
 import { FormData } from "../../types/forms.types";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRunsContext } from "../../context/RunsContext";
 import { getRunData } from "../../utils/runs.utils";
 import { normalizeFormValue } from "../../utils/normalize.utils";
@@ -68,12 +68,6 @@ function RunFormPage() {
     setRun(runs[runId]);
   }, [runId, runs]);
 
-  const initialValues = run
-    ? Object.fromEntries(
-        Object.entries(run).map(([k, v]) => [k, normalizeFormValue(v)]),
-      )
-    : undefined;
-
   /* ────────────────────────────── */
   /*  state and hooks               */
   /* ────────────────────────────── */
@@ -82,7 +76,15 @@ function RunFormPage() {
     [K in (typeof runFields)[number]["id"]]: string;
   };
 
-  const formStateHook = useFormState(runFields, initialValues);
+  const formStateHook = useFormState(runFields);
+
+  useEffect(() => {
+    if (!run) return;
+    const values = Object.fromEntries(
+      Object.entries(run).map(([k, v]) => [k, normalizeFormValue(v)]),
+    );
+    formStateHook.resetWithValues(values);
+  }, [run]);
   const { formState } = formStateHook;
   const { inputHandlers, handleSubmit } = useFormHandlers(
     runFields,
@@ -100,10 +102,14 @@ function RunFormPage() {
     handleSubmit(e, submitRun);
   }
 
+  // useEffect(() =>{
+  //   console.log(run)
+  //   console.log(formState)
+  // }, [formState])
+
   return (
     <main className={styles.main}>
       <Panel variant="frosted">
-        
         <ButtonLink
           linkDirection="."
           linkText="Go Back"
@@ -114,7 +120,9 @@ function RunFormPage() {
         </ButtonLink>
 
         <h1 className={styles.title}>{isEdit ? "Edit Run" : "Add New Run"}</h1>
-        Update your run details Log your running activity
+        <p className={styles.subTitle}>
+          {isEdit ? "Update your run details" : "Log your running activity"}
+        </p>
         <form className={styles.form} onSubmit={onSubmit} noValidate>
           <FormField
             {...fieldOptionsMap.title}
@@ -176,7 +184,7 @@ function RunFormPage() {
 
           <div className={`${styles.submit} ${formError ? styles.error : ""}`}>
             <Button
-              buttonText="Save Run"
+              buttonText={isEdit ? "Update Run" : "Save Run"}
               type="submit"
               variant="primary"
               isSubmitting={loading !== "idle"}
