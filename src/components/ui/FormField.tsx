@@ -5,6 +5,7 @@ import { icons } from "../icons/icons";
 interface FormFieldProps {
   id: string;
   label: string;
+  name?: string;
   layout?: "column" | "row";
   type?: string;
   min?: number;
@@ -21,6 +22,7 @@ interface FormFieldProps {
 function FormField({
   id,
   label,
+  name,
   layout = "column",
   type = "text",
   min,
@@ -54,7 +56,7 @@ function FormField({
             aria-invalid={!!inputError}
             aria-describedby={inputError ? `${id}-error` : undefined}
             id={id}
-            name={id}
+            name={name ? name : id}
             type={inputType}
             min={min}
             max={max}
@@ -82,7 +84,10 @@ function FormField({
         </div>
       </div>
       {inputError && (
-        <div id={`${id}-error`} className={`${styles.errorWrapper} ${styles[layout]}`}>
+        <div
+          id={`${id}-error`}
+          className={`${styles.errorWrapper} ${styles[layout]}`}
+        >
           <p className={styles.errorText}>{inputError}</p>
         </div>
       )}

@@ -1,7 +1,17 @@
 interface InputFieldConfig {
   id: string;
   label: string;
-  type?: "text" | "email" | "password" | "date" | "number";
+  name?: string;
+  value?: string | number;
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "date"
+    | "number"
+    | "datetime-local"
+    | "range"
+    | "radio";
   min?: number;
   max?: number;
   step?: number;
