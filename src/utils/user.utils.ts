@@ -36,10 +36,17 @@ function normalizeUserValue(value: string | number | undefined): string {
 function getUserData(user: UserState | null) {
   if (!user) return undefined;
 
-  return {
+  const merged = {
     ...user.account,
     ...user.profile,
   };
+
+  return Object.fromEntries(
+    Object.entries(merged).map(([key, value]) => [
+      key,
+      normalizeUserValue(value as string | number | undefined),
+    ]),
+  );
 }
 
 function normalizeProfile(profile: UserState["profile"]): UserState["profile"] {
