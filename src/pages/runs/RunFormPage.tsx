@@ -7,7 +7,7 @@ import { Button, ButtonLink, FormField, Panel } from "../../components/ui/";
 import { useFormState } from "../../hooks/form/useFormState";
 import { useFormHandlers } from "../../hooks/form/useFormHandlers";
 import { useRuns } from "../../hooks/useRuns";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useRunsContext } from "../../context/RunsContext";
 import {
@@ -64,6 +64,8 @@ const weatherIconsMap = {
 } as const;
 
 function RunFormPage() {
+  const navigate = useNavigate();
+
   /* ────────────────────────────── */
   /*  new or edit                   */
   /* ────────────────────────────── */
@@ -86,6 +88,10 @@ function RunFormPage() {
 
   useEffect(() => {
     if (!runId || !runs) return;
+    if (!runs[runId]) {
+      navigate("/not-found");
+      return;
+    }
     const values = prepareRunStateValues(runs[runId]);
     resetWithValues(values);
   }, [runId, runs, resetWithValues]);
