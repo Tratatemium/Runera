@@ -8,6 +8,7 @@ import { validateField, validateForm } from "../../validation/formValidation";
 import { useMemo } from "react";
 import { getFormData } from "../../utils/form.utils";
 import { clampNumber } from "../../utils/normalize.utils";
+import { scrollToTop } from "../../utils/app.utils";
 
 function useFormHandlers(
   fields: readonly InputFieldConfig[],
@@ -90,6 +91,7 @@ function useFormHandlers(
     if (hasErrors) {
       clearErrors();
       mergeErrors(errors);
+      scrollToTop();
       return;
     }
     const data = getFormData(formState, fieldMap) as T;
