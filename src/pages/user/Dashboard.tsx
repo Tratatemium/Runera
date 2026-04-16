@@ -14,6 +14,8 @@ function Dashboard() {
           <h1>Welcome back, {user.account.username}!</h1>
           <p>Here's a snapshot of your running journey.</p>
         </div>
+        {/* REVIEW: All four stat cards display hardcoded "—" placeholders. Wire them up to actual
+            data from RunsContext (total runs count, total distance, best pace, weekly distance). */}
         <div className={styles.stats}>
           <div className={styles.card}>
             <span className={styles.cardLabel}>Total Runs</span>

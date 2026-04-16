@@ -29,6 +29,9 @@ type UserAccountKey = (typeof accountKeys)[number];
 type UserProfileKey = (typeof profileKeys)[number];
 type UserKey = UserAccountKey | UserProfileKey;
 
+// REVIEW: The `as string | number | undefined` cast is unsafe — if `UserState` ever gains fields
+// with different types (e.g. nested objects), this will silently produce "[object Object]" strings.
+// Consider explicitly picking only the keys that belong to form fields.
 function getUserData(user: UserState | null) {
   if (!user) return undefined;
 

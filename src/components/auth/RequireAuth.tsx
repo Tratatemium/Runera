@@ -17,6 +17,10 @@ function RequireAuth() {
 
   const [checking, setChecking] = useState(!user);
 
+  // REVIEW: `getMe` and `getMyRuns` are in the dependency array but are recreated on every render
+  // of their respective hooks (useUser/useRuns use `useNavigate()` which changes on route change).
+  // This can cause the effect to re-fire unexpectedly. Consider stabilizing these references or
+  // using refs to hold the latest function without triggering the effect.
   useEffect(() => {
     if (user) return;
     let mounted = true;

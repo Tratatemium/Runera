@@ -13,6 +13,8 @@ function Home() {
 
   return (
     <main>
+      {/* REVIEW: Nesting `<section>` inside `<section>` (hero > cta) is semantically questionable.
+          The inner `.cta` block is better as a `<div>` since it's not a standalone document section. */}
       <section className={styles.hero}>
         <img src={runners1} alt="" className={styles.image} />
         <section className={styles.cta}>

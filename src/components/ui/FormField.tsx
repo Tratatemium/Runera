@@ -49,6 +49,9 @@ function FormField({
   const isTextArea = type === "textarea";
   const inputType = isPassword && showPassword ? "text" : type;
 
+  // REVIEW: `inputRef` is typed as HTMLInputElement but is never attached to `<textarea>`.
+  // This means the password toggle's `inputRef.current?.focus()` is fine, but the ref is also
+  // passed to checkbox/radio inputs where it's not needed. Consider splitting refs by input type.
   const inputRef = useRef<HTMLInputElement>(null);
   const minValue = min ?? 0;
   const maxValue = max ?? 100;

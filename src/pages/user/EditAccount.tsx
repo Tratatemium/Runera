@@ -17,12 +17,12 @@ const userFields = [
 ] as const;
 
 function EditAccount() {
+  // REVIEW: `submitUserEdit` is empty — this entire form is non-functional.
+  // `isSubmitting` and `formError` are never updated (setters are destructured away).
+  // The commented-out type and the `disabled={true}` on the button suggest this is intentionally
+  // unfinished, but this should be documented or the route should be hidden until implemented.
   const [isSubmitting] = useState(false);
   const [formError] = useState<string | undefined>(undefined);
-
-  // type UserEditForm = {
-  //   [K in (typeof userFields)[number]["id"]]: string;
-  // };
 
   const { user } = useAuthContext();
   const formStateHook = useFormState(userFields, getUserData(user));
@@ -67,7 +67,9 @@ function EditAccount() {
                 type="submit"
                 variant="primary"
                 isSubmitting={isSubmitting}
-                disabled= {true}
+                disabled={
+                  true
+                } /* REVIEW: Extra space before `{true}` — formatting issue. */
                 title="Not implemented yet"
               />
               <ButtonLink

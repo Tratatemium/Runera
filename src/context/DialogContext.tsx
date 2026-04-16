@@ -33,6 +33,8 @@ function DialogProvider({ children }: DialogProviderProps) {
     setDialog(null);
   }, []);
 
+  // REVIEW: `value` is a new object on every render, which will cause all consumers of
+  // DialogContext to re-render. Wrap it in `useMemo` like AuthContext and RunsContext do.
   const value = { openDialog, closeDialog };
 
   return (

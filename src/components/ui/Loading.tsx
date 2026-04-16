@@ -2,7 +2,7 @@ import styles from "./Loading.module.css";
 
 function Loading() {
   return (
-    <div 
+    <div
       className={styles.wrapper}
       role="status"
       aria-busy="true"
@@ -89,6 +89,8 @@ function Loading() {
           </g>
           <g data-idx="15" />
         </g>
+        {/* REVIEW: This renders a visible "LOADING.IO" watermark inside the loading spinner SVG.
+            Remove it or replace the SVG with a custom/properly-licensed loader. */}
         <text
           className={styles.watermark}
           data-watermark="true"

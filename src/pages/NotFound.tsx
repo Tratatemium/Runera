@@ -2,6 +2,8 @@ import styles from "./NotFound.module.css";
 
 import { ButtonLink } from "../components/ui/";
 
+// REVIEW: The inline SVG below is ~15 KB of path data. Extract it to a separate .svg file in assets/
+// and import it as an image. This will improve readability and allow the browser to cache the asset.
 function NotFound() {
   return (
     <div className={styles.wrapper}>

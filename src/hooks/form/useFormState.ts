@@ -11,6 +11,10 @@ import { useCallback, useReducer } from "react";
 /* initial state creator          */
 /* ────────────────────────────── */
 
+// REVIEW: Return type is inferred as `(string | { value: unknown; error: undefined })[]` — an untyped array.
+// Use `as const` or an explicit return type `[string, { value: string; error: undefined }]` so
+// `Object.fromEntries` produces correctly typed entries. Also, `value` is `unknown` and gets
+// coerced via `??` without a `String()` call, so numeric initial values will remain numbers in state.
 function createFieldState(
   field: InputFieldConfig,
   initialValues?: Record<string, unknown>,
@@ -108,18 +112,18 @@ function useFormState(
   );
   const resetFormState = useCallback(
     () =>
-    dispatch({
-      type: "reset",
-      state: createInitialState(fields, initialValues),
-    }),
+      dispatch({
+        type: "reset",
+        state: createInitialState(fields, initialValues),
+      }),
     [fields, initialValues],
   );
   const resetWithValues = useCallback(
     (values?: Record<string, unknown>) =>
-    dispatch({
-      type: "reset",
-      state: createInitialState(fields, values),
-    }),
+      dispatch({
+        type: "reset",
+        state: createInitialState(fields, values),
+      }),
     [fields],
   );
   const clearErrors = useCallback(() => dispatch({ type: "clearErrors" }), []);

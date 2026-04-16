@@ -20,6 +20,9 @@ function clampNumber(value: string, min?: string, max?: string): string {
   return String(Math.min(Math.max(num, minNum), maxNum));
 }
 
+// REVIEW: Neither `normalizeDate` nor `normalizeTime` handle invalid date strings.
+// `new Date("invalid")` produces an Invalid Date, and calling `.toISOString()` on it
+// will throw a RangeError at runtime. Add a guard: `if (isNaN(date.getTime())) return dateString;`
 function normalizeDate(dateString: string) {
   const date = new Date(dateString);
   return date.toISOString().slice(0, 10);

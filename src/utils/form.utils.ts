@@ -4,6 +4,9 @@ import type {
   NormalizedFormValue,
   FormData,
 } from "../types/forms.types";
+// REVIEW: `clampNumber` is re-exported from this file but it's imported from normalize.utils.
+// This barrel re-export is only used inside `useFormHandlers` which already imports from normalize.utils directly.
+// The re-export here is redundant and confusing — consumers should import from normalize.utils.
 import { clampNumber } from "./normalize.utils";
 
 function normalizeEntry(

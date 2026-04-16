@@ -18,6 +18,9 @@ function Footer() {
           </p>
         </div>
 
+        {/* REVIEW: Footer nav links are hardcoded and not auth-aware. "Sign Up" and "Log In" are
+            shown to logged-in users, and "Dashboard" (a protected route) is shown to guests.
+            Use the auth context to conditionally render the appropriate links. */}
         <nav className={styles.nav} aria-label="Footer navigation">
           <Link to="/" className={styles.navLink}>
             Home

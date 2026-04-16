@@ -103,6 +103,9 @@ function RunFormPage() {
 
   const { loading, formError, postNewRun, updateRun } = useRuns();
 
+  // REVIEW: `updateRun` and `postNewRun` return Promises but are not awaited here.
+  // This means errors won't be caught and the function resolves immediately.
+  // Also, `formError` from `useRuns()` is destructured but never rendered in this form's JSX.
   async function submitRun(data: RunForm) {
     const payload = getRunData(data);
 
