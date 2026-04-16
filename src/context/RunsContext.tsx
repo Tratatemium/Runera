@@ -20,8 +20,11 @@ type RunsProviderProps = {
 
 function RunsProvider({ children }: RunsProviderProps) {
   const [runs, setRuns] = useState<RunsState | undefined>(undefined);
+  // REVIEW: Typo — "isHydaratingRuns" should be "isHydratingRuns" (the setter is spelled correctly but the state variable is not).
   const [isHydaratingRuns, setIsHydratingRuns] = useState(false);
 
+  // REVIEW: `runExists` is a pure function with no dependencies — wrapping it in useCallback is unnecessary.
+  // Extract it as a plain helper function outside the component.
   const runExists = useCallback((prev: RunsState | undefined, id: string) => {
     if (!prev) return false;
     return Boolean(prev[id]);

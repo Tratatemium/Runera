@@ -29,6 +29,7 @@ type RunsState = Record<string, Run>;
 
 interface RunsContextValue {
   runs: RunsState | undefined;
+  // REVIEW: Typo — "isHydaratingRuns" should be "isHydratingRuns". This propagates to RunsContext and MyRuns.
   isHydaratingRuns: boolean;
   setIsHydratingRuns: Dispatch<SetStateAction<boolean>>;
   hydrateRunsState: (runs: RunsState) => void;

@@ -42,6 +42,9 @@ function normalizeRunData(runData: RunApiResponse): Run {
   return normalizeRun(runData.runData);
 }
 
+// REVIEW: The `as RunData` assertion bypasses type checking — `...rest` spreads all remaining form
+// fields (title, notes, perceivedEffort, weather, startTime, etc.) without validation. Build the
+// return object explicitly to ensure only valid RunData properties are included.
 function getRunData(data: FormData): RunData {
   const { distanceKm, durationH, durationM, durationS, ...rest } = data;
 

@@ -29,6 +29,9 @@ export type LoadingState =
   | "updatingRun"
   | "deletingRun";
 
+// REVIEW: `formError` state is declared and set to `undefined` on each operation, but errors caught
+// in postNewRun/updateRun/deleteRun are only sent to `console.error` — the error is never surfaced
+// to the UI via `formError`. Either wire `formError` into those catch blocks or remove the unused state.
 function useRuns(): UseRunsReturn {
   const [loading, setLoading] = useState<LoadingState>("idle");
   const [loadingRunId, setLoadingRunId] = useState<string | null>(null);

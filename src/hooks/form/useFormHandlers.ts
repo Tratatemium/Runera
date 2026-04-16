@@ -20,6 +20,7 @@ function useFormHandlers(
     clearErrors,
   }: UseFormStateReturn,
 ): UseFormHandlersReturn {
+  // REVIEW: This array is recreated on every render. Move it outside the hook as a module-level constant.
   const durationFieldNames = ["durationH", "durationM", "durationS"];
 
   const fieldMap = useMemo(
@@ -27,6 +28,9 @@ function useFormHandlers(
     [fields],
   );
 
+  // REVIEW: `onChange`, `onFocus`, and `onBlur` are recreated on every render since they are plain
+  // function declarations inside the hook. Wrap them with `useCallback` or memoize the returned
+  // `inputHandlers` object to prevent unnecessary re-renders of child `FormField` components.
   function onChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void {

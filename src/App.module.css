@@ -1,3 +1,5 @@
+/* REVIEW: Only `.App` is used. The rest (App-logo, App-header, App-link, App-logo-spin) is leftover
+   Create React App boilerplate — remove the dead CSS. */
 .App {
   text-align: center;
 }

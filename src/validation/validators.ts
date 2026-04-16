@@ -44,6 +44,8 @@ function validatePassword(value: string, _formState: FormStateValue) {
   );
 }
 
+// REVIEW: No guard for `formState.password` being undefined. If this validator is ever used
+// on a form without a "password" field, it will throw a TypeError accessing `.value`.
 function validateConfirmPassword(value: string, formState: FormStateValue) {
   if (formState.password.value !== value) {
     return "Passwords do not match.";

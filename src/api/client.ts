@@ -23,6 +23,8 @@ async function apiRequest<T>(
   config: ApiRequestOptions & { assertData: false },
 ): Promise<T | null>;
 
+// REVIEW: The parameter name `config` shadows the module-level import `config` from appConfig.
+// Rename the parameter (e.g. `requestConfig`) to avoid confusion.
 async function apiRequest<T>({
   path,
   assertData,
